@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVINCI-CODE | Mission Control</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #FAFAF8;
+            --color-surface: #FFFFFF;
+            --color-surface-2: #F3F3EF;
+            --color-border: #E5E5E3;
+            --color-accent: #E85A24;
+            --color-accent-soft: rgba(232, 90, 36, 0.1);
+            --color-text: #1A1A1A;
+            --color-text-sub: #6B6B6B;
+            --color-success: #10B981;
+            --color-error: #EF4444;
+            --color-sidebar: #F1F1EE;
+            --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --sidebar-width: 240px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-bg);
+            color: var(--color-text);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--color-sidebar);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 12px;
+            flex-shrink: 0;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 0 12px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-brand::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            background: var(--color-accent);
+            border-radius: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: var(--color-text-sub);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--color-text);
+        }
+
+        .nav-item.active {
+            background: white;
+            color: var(--color-text);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-item .material-icons-round {
+            font-size: 20px;
+        }
+
+        .nav-section {
+            margin-top: 32px;
+        }
+
+        .nav-section-title {
+            padding: 0 12px 12px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-sub);
+            opacity: 0.6;
+        }
+
+        /* Main Content wrapper */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Top Bar */
+        .topbar {
+            height: 64px;
+            padding: 0 32px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg);
+            gap: 16px;
+        }
+
+        .btn-ghost {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-sub);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-primary {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            background: #1A1A1A;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            display: flex;
+            padding: 40px;
+            gap: 40px;
+            overflow: hidden;
+        }
+
+        /* Left side: Build & Workflow */
+        .build-view {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-prompt {
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .hero-prompt h1 {
+            font-size: 36px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
+        }
+
+        .prompt-box {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .prompt-box:focus-within {
+            border-color: var(--color-accent);
+            box-shadow: 0 8px 24px rgba(232, 90, 36, 0.1);
+        }
+
+        .prompt-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: var(--font-sans);
+            font-size: 18px;
+            line-height: 1.6;
+            resize: none;
+            min-height: 100px;
+            color: var(--color-text);
+        }
+
+        .prompt-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag-btn {
+            background: var(--color-surface-2);
+            border: 1px solid var(--color-border);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--color-text-sub);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-btn:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        .fire-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(232, 90, 36, 0.3);
+            transition: all 0.2s;
+        }
+
+        .fire-btn:hover {
+            transform: scale(1.05);
+            background: #f36c39;
+        }
+
+        /* Execution Dashboard */
+        .execution-dash {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.5s var(--ease-out);
+        }
+
+        .execution-dash.active {
+            display: flex;
+        }
+
+        .phase-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .phase-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .phase-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-text-sub);
+        }
+
+        .phase-card.active .phase-number {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .phase-status {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-accent);
+            text-transform: uppercase;
+        }
+
+        .sub-tasks {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--color-text-sub);
+        }
+
+        .task-progress-bg {
+            flex: 1;
+            height: 4px;
+            background: var(--color-surface-2);
+            margin: 0 16px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-progress-fill {
+            height: 100%;
+            background: var(--color-accent);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Right Panel: Logs & Preview */
+        .right-panel {
+            width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex-shrink: 0;
+        }
+
+        .logs-panel {
+            flex: 1;
+            background: #1A1A1A;
+            border-radius: 16px;
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.6;
+            color: #A3A3A3;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .log-entry {
+            margin-bottom: 6px;
+            opacity: 0;
+            animation: logFade 0.3s forwards;
+        }
+
+        @keyframes logFade {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .log-t {
+            color: #525252;
+            margin-right: 8px;
+        }
+
+        .log-tag {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        .log-tag.planning {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60A5FA;
+        }
+
+        .log-tag.executing {
+            background: rgba(232, 90, 36, 0.2);
+            color: #E85A24;
+        }
+
+        .log-tag.verifying {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34D399;
+        }
+
+        .preview-box {
+            height: 320px;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-content {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .preview-skeleton {
+            width: 200px;
+            height: 140px;
+            background: var(--color-surface-2);
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-skeleton::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Architect Popup */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 250, 248, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .architect-modal {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            animation: modalScale 0.4s var(--ease-out);
+        }
+
+        @keyframes modalScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .architect-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .architect-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--color-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .architect-title {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .architect-query {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-text);
+            margin-bottom: 32px;
+        }
+
+        .architect-input-wrapper {
+            background: var(--color-surface-2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-sans);
+            font-size: 15px;
+            color: var(--color-text);
+        }
+
+        .modal-btns {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">DAVINCI-CODE</div>
+
+        <div class="nav-item active">
+            <span class="material-icons-round">add_circle</span>
+            New Task
+        </div>
+        <div class="nav-item">
+            <span class="material-icons-round">search</span>
+            Search
+        </div>
+        <div class="nav-item">
+            <span class="material-icons-round">auto_stories</span>
+            Library
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-section-title">Projects</div>
+            <div class="nav-item">
+                <span class="material-icons-round">folder_open</span>
+                E-commerce Bots
+            </div>
+            <div class="nav-item">
+                <span class="material-icons-round">folder_open</span>
+                Healthcare Agents
+            </div>
+            <div class="nav-item" style="opacity: 0.5;">
+                <span class="material-icons-round">add</span>
+                New Project
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-section-title">All Tasks</div>
+            <div class="nav-item active">
+                <span class="material-icons-round">engineering</span>
+                Building a Voice Agent...
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <header class="topbar">
+            <button class="btn-ghost">
+                <span class="material-icons-round" style="font-size: 18px;">preview</span>
+                Preview
+            </button>
+            <button class="btn-ghost">
+                <span class="material-icons-round" style="font-size: 18px;">terminal</span>
+                Console
+            </button>
+            <button class="btn-ghost">
+                <span class="material-icons-round" style="font-size: 18px;">share</span>
+                Share
+            </button>
+            <button class="btn-primary">Publish</button>
+        </header>
+
+        <main class="content-area">
+            <div class="build-view">
+
+                <!-- Initial Hero View -->
+                <div class="hero-prompt" id="heroPrompt">
+                    <h1>What can I do for you?</h1>
+
+                    <div class="prompt-box">
+                        <textarea class="prompt-input" id="mainInput"
+                            placeholder="Assign a task or ask anything..."></textarea>
+
+                        <div class="prompt-actions">
+                            <div class="tag-row">
+                                <button class="tag-btn">
+                                    <span class="material-icons-round">mic</span>
+                                    Voice Agent
+                                </button>
+                                <button class="tag-btn">
+                                    <span class="material-icons-round">language</span>
+                                    Build Website
+                                </button>
+                                <button class="tag-btn">
+                                    <span class="material-icons-round">code</span>
+                                    Custom App
+                                </button>
+                                <button class="tag-btn">
+                                    <span class="material-icons-round">more_horiz</span>
+                                </button>
+                            </div>
+
+                            <button class="fire-btn" id="fireBtn">
+                                <span class="material-icons-round">arrow_upward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Execution dashboard -->
+                <div class="execution-dash" id="executionDash">
+                    <!-- Phase 1 -->
+                    <div class="phase-card active" id="phase1">
+                        <div class="phase-header">
+                            <div class="phase-title">
+                                <div class="phase-number">1</div>
+                                Configuring your voice
+                            </div>
+                            <div class="phase-status">Running</div>
+                        </div>
+                        <div class="sub-tasks">
+                            <div class="task-item">
+                                ElevenLabs API Handshake
+                                <div class="task-progress-bg">
+                                    <div class="task-progress-fill" id="p1-t1"></div>
+                                </div>
+                                <span id="p1-t1-val">0%</span>
+                            </div>
+                            <div class="task-item">
+                                Voice ID Lock-in
+                                <div class="task-progress-bg">
+                                    <div class="task-progress-fill" id="p1-t2"></div>
+                                </div>
+                                <span id="p1-t2-val">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="phase-card" id="phase2">
+                        <div class="phase-header">
+                            <div class="phase-title">
+                                <div class="phase-number">2</div>
+                                Setting up agents
+                            </div>
+                            <div class="phase-status">Pending</div>
+                        </div>
+                        <div class="sub-tasks">
+                            <div class="task-item">
+                                Planner & Executor Init
+                                <div class="task-progress-bg">
+                                    <div class="task-progress-fill" id="p2-t1"></div>
+                                </div>
+                                <span id="p2-t1-val">0%</span>
+                            </div>
+                            <div class="task-item">
+                                Red-Team Verifier Setup
+                                <div class="task-progress-bg">
+                                    <div class="task-progress-fill" id="p2-t2"></div>
+                                </div>
+                                <span id="p2-t2-val">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="phase-card" id="phase3">
+                        <div class="phase-header">
+                            <div class="phase-title">
+                                <div class="phase-number">3</div>
+                                Building Multi-agentic Framework
+                            </div>
+                            <div class="phase-status">Pending</div>
+                        </div>
+                        <div class="sub-tasks">
+                            <div class="task-item">
+                                Firing M.M.A.R System
+                                <div class="task-progress-bg">
+                                    <div class="task-progress-fill" id="p3-t1"></div>
+                                </div>
+                                <span id="p3-t1-val">0%</span>
+                            </div>
+                            <div class="task-item">
+                                ONNX Conversion for Inference
+                                <div class="task-progress-bg">
+                                    <div class="task-progress-fill" id="p3-t2"></div>
+                                </div>
+                                <span id="p3-t2-val">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Panel -->
+            <aside class="right-panel">
+                <div class="logs-panel" id="logsPanel">
+                    <!-- Logs will appear here -->
+                    <div style="color: #525252; text-align: center; margin-top: 40px;">Logs will start after
+                        execution...</div>
+                </div>
+
+                <div class="preview-box">
+                    <div class="preview-content">
+                        <div class="preview-skeleton"></div>
+                        <p style="font-size: 14px; font-weight: 500; color: #1A1A1A;">Preview is generating...</p>
+                        <p style="font-size: 12px; color: #6B6B6B; margin-top: 8px;">Waiting for build process to start
+                        </p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Architect Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="architect-modal">
+                <div class="architect-header">
+                    <div class="architect-avatar">
+                        <span class="material-icons-round">architecture</span>
+                    </div>
+                    <div class="architect-title">Architect Consultation</div>
+                </div>
+
+                <div class="architect-query" id="architectQuery">
+                    "I see you're building a coffee shop agent. Do you have specific menu details or pricing that I
+                    should include in the knowledge base?"
+                </div>
+
+                <div class="architect-input-wrapper">
+                    <input type="text" class="modal-input" id="modalInput" placeholder="Type your answer here...">
+                </div>
+
+                <div class="modal-btns">
+                    <button class="btn-ghost" onclick="closeModal()">Skip</button>
+                    <button class="btn-primary" id="confirmConsult">Continue Building</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const logsPanel = document.getElementById('logsPanel');
+        const fireBtn = document.getElementById('fireBtn');
+        const heroPrompt = document.getElementById('heroPrompt');
+        const executionDash = document.getElementById('executionDash');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const confirmConsult = document.getElementById('confirmConsult');
+        const architectQuery = document.getElementById('architectQuery');
+        const modalInput = document.getElementById('modalInput');
+        const mainInput = document.getElementById('mainInput');
+
+        let session_id = 'session_' + Math.random().toString(36).substr(2, 9);
+        let lastResponse = null;
+        let pollingInterval = null;
+
+        function addLog(tag, message, ts) {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const timeStr = ts || new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+            let tagClass = tag.toLowerCase();
+            entry.innerHTML = `
+                <span class="log-t">${timeStr}</span>
+                <span class="log-tag ${tagClass}">${tag.toUpperCase()}</span>
+                ${message}
+            `;
+
+            logsPanel.appendChild(entry);
+            logsPanel.scrollTop = logsPanel.scrollHeight;
+        }
+
+        function updateProgress(id, val) {
+            const el = document.getElementById(id);
+            const valEl = document.getElementById(id + '-val');
+            if (el) el.style.width = val + '%';
+            if (valEl) valEl.innerText = Math.round(val) + '%';
+        }
+
+        async function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+        async function callArchitect(message) {
+            try {
+                const response = await fetch('http://localhost:8082/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, session_id })
+                });
+                return await response.json();
+            } catch (e) {
+                console.error("API Error:", e);
+                return { next_question: "Connection error with Architect. Starting build with defaults.", completeness_score: 100 };
+            }
+        }
+
+        async function triggerExecution() {
+            try {
+                await fetch('http://localhost:8082/api/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id })
+                });
+            } catch (e) {
+                console.error("Execution Trigger Error:", e);
+            }
+        }
+
+        async function pollLogs() {
+            try {
+                const response = await fetch('http://localhost:8082/api/logs');
+                const data = await response.json();
+
+                // Clear and repopulate logs
+                logsPanel.innerHTML = '';
+                data.logs.forEach(log => addLog(log.tag, log.msg, log.ts));
+
+                // Map progress to phases
+                const p = data.progress;
+                if (p > 0) {
+                    document.getElementById('phase1').classList.add('active');
+                    updateProgress('p1-t1', Math.min(p * 2, 100));
+                    updateProgress('p1-t2', Math.max(0, Math.min((p - 30) * 3, 100)));
+                }
+                if (p > 40) {
+                    document.getElementById('phase2').classList.add('active');
+                    updateProgress('p2-t1', Math.min((p - 40) * 3, 100));
+                    updateProgress('p2-t2', Math.max(0, Math.min((p - 70) * 3, 100)));
+                }
+                if (p > 80) {
+                    document.getElementById('phase3').classList.add('active');
+                    updateProgress('p3-t1', Math.min((p - 80) * 5, 100));
+                    updateProgress('p3-t2', Math.max(0, Math.min((p - 90) * 10, 100)));
+                }
+
+                if (data.complete) {
+                    clearInterval(pollingInterval);
+                    addLog('verifying', 'MISSION COMPLETE: Agent published to production cluster.');
+                    document.querySelectorAll('.phase-status').forEach(el => {
+                        el.innerText = 'Complete';
+                        el.style.color = 'var(--color-success)';
+                    });
+                }
+            } catch (e) {
+                console.error("Polling Error:", e);
+            }
+        }
+
+        fireBtn.onclick = async () => {
+            const prompt = mainInput.value.trim();
+            if (!prompt) return;
+
+            fireBtn.disabled = true;
+            fireBtn.innerHTML = '<span class="material-icons-round">sync</span>';
+
+            lastResponse = await callArchitect(prompt);
+
+            if (lastResponse.next_question && lastResponse.next_question !== "DONE") {
+                architectQuery.innerText = `"${lastResponse.next_question}"`;
+                modalOverlay.classList.add('active');
+            } else {
+                startworkflow();
+            }
+
+            fireBtn.disabled = false;
+            fireBtn.innerHTML = '<span class="material-icons-round">arrow_upward</span>';
+        };
+
+        confirmConsult.onclick = async () => {
+            const answer = modalInput.value.trim();
+            if (!answer) {
+                modalOverlay.classList.remove('active');
+                startworkflow();
+                return;
+            }
+
+            confirmConsult.disabled = true;
+            confirmConsult.innerText = "Consulting...";
+
+            lastResponse = await callArchitect(answer);
+            modalInput.value = "";
+
+            if (lastResponse.next_question && lastResponse.next_question !== "DONE" && lastResponse.completeness_score < 100) {
+                architectQuery.innerText = `"${lastResponse.next_question}"`;
+                confirmConsult.disabled = false;
+                confirmConsult.innerText = "Continue Building";
+            } else {
+                modalOverlay.classList.remove('active');
+                startworkflow();
+            }
+        };
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            startworkflow();
+        }
+
+        async function startworkflow() {
+            heroPrompt.style.opacity = '0';
+            await delay(300);
+            heroPrompt.style.display = 'none';
+            executionDash.classList.add('active');
+            logsPanel.innerHTML = '';
+
+            addLog('planning', 'Connecting to build engine...');
+
+            await triggerExecution();
+            pollingInterval = setInterval(pollLogs, 1000);
+        }
+    </script>
+</body>
+
+</html>

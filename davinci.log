@@ -1,0 +1,392 @@
+INFO:     Started server process [96995]
+INFO:     Waiting for application startup.
+2026-01-11 17:56:23,993 | INFO | davinci-code | 🔥 DAVINCI-CODE Backend Starting...
+2026-01-11 17:56:23,993 | INFO | davinci-code |    LLM Model: gemini-2.0-flash-lite
+2026-01-11 17:56:23,993 | INFO | davinci-code |    Deployment Mode: mock
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8099 (Press CTRL+C to quit)
+2026-01-11 17:56:31,172 | INFO | davinci-code | [NEW SESSION] fffb91ff-10c4-4dab-9d8a-0e8d35fa5d4e
+2026-01-11 17:56:31,173 | INFO | app.graph.nodes | [ENTRY] Processing request: I want a Ferrari agent named Enzo...
+2026-01-11 17:56:31,173 | INFO | davinci-code | [GRAPH EVENT] ['entry']
+2026-01-11 17:56:31,173 | INFO | app.graph.nodes | [EXTRACTION] Extracting context fields...
+2026-01-11 17:56:31,173 | DEBUG | app.services.llm | [LLM] Prompt sent to Gemini: 
+
+You are the **PROMETHEUS Context Architect**, a meticulous expert in AI Agent design.
+Your goal is...
+2026-01-11 17:56:31,173 | INFO | app.services.llm | [LLM] 🛰️ Calling Gemini for content generation...
+2026-01-11 17:56:31,173 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:56:31,174 | DEBUG | httpcore.connection | connect_tcp.started host='generativelanguage.googleapis.com' port=443 local_address=None timeout=None socket_options=None
+2026-01-11 17:56:31,274 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7ca8e7b9b410>
+2026-01-11 17:56:31,274 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x7ca8e8060750> server_hostname='generativelanguage.googleapis.com' timeout=None
+2026-01-11 17:56:31,337 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7ca8e7d0fcb0>
+2026-01-11 17:56:31,338 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:31,338 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:56:31,338 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:56:31,338 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:56:31,338 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:32,293 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:56:32 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=852'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:56:32,294 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:56:32,294 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:56:32,294 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:56:32,294 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:56:32,294 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:56:32,295 | DEBUG | app.services.llm | [LLM] Raw response: {
+    "extracted": {
+        "org_name": "Ferrari",
+        "agent_name": "Enzo",
+        "persona_vibe": null,
+        "voice_parameters": null,
+        "knowledge_sources": [],
+        "intro_greeting": null,
+        "system_prompt_hints": null
+    },
+    "confidence": 0.9
+}
+2026-01-11 17:56:32,295 | INFO | app.services.llm | Extraction result: {'extracted': {'org_name': 'Ferrari', 'agent_name': 'Enzo', 'persona_vibe': None, 'voice_parameters': None, 'knowledge_sources': [], 'intro_greeting': None, 'system_prompt_hints': None}, 'confidence': 0.9}
+2026-01-11 17:56:32,295 | INFO | davinci-code | [GRAPH EVENT] ['extraction']
+2026-01-11 17:56:32,296 | INFO | app.graph.nodes | [VALIDATOR] Checking context completeness...
+2026-01-11 17:56:32,296 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:56:32,296 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:32,296 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:56:32,296 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:56:32,297 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:56:32,297 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:33,016 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:56:32 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=567'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:56:33,016 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:56:33,016 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:56:33,016 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:56:33,016 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:56:33,016 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:56:33,018 | INFO | davinci-code | [GRAPH EVENT] ['validator']
+INFO:     127.0.0.1:42948 - "POST /api/chat HTTP/1.1" 200 OK
+2026-01-11 17:56:33,027 | INFO | davinci-code | [CONTINUE SESSION] fffb91ff-10c4-4dab-9d8a-0e8d35fa5d4e
+2026-01-11 17:56:33,029 | INFO | app.graph.nodes | [ENTRY] Processing request: y...
+2026-01-11 17:56:33,029 | INFO | davinci-code | [GRAPH EVENT] ['entry']
+2026-01-11 17:56:33,029 | INFO | app.graph.nodes | [EXTRACTION] Extracting context fields...
+2026-01-11 17:56:33,029 | DEBUG | app.services.llm | [LLM] Prompt sent to Gemini: 
+
+You are the **PROMETHEUS Context Architect**, a meticulous expert in AI Agent design.
+Your goal is...
+2026-01-11 17:56:33,029 | INFO | app.services.llm | [LLM] 🛰️ Calling Gemini for content generation...
+2026-01-11 17:56:33,029 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:56:33,030 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:33,031 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:56:33,031 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:56:33,031 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:56:33,031 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:33,936 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:56:33 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=800'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:56:33,937 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:56:33,937 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:56:33,951 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:56:33,951 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:56:33,951 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:56:33,951 | DEBUG | app.services.llm | [LLM] Raw response: {
+    "extracted": {
+        "org_name": null,
+        "agent_name": null,
+        "persona_vibe": null,
+        "voice_parameters": null,
+        "knowledge_sources": [],
+        "intro_greeting": null,
+        "system_prompt_hints": null
+    },
+    "confidence": 0.1
+}
+2026-01-11 17:56:33,951 | INFO | app.services.llm | Extraction result: {'extracted': {'org_name': None, 'agent_name': None, 'persona_vibe': None, 'voice_parameters': None, 'knowledge_sources': [], 'intro_greeting': None, 'system_prompt_hints': None}, 'confidence': 0.1}
+2026-01-11 17:56:33,952 | INFO | davinci-code | [GRAPH EVENT] ['extraction']
+2026-01-11 17:56:33,952 | INFO | app.graph.nodes | [VALIDATOR] Checking context completeness...
+2026-01-11 17:56:33,952 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:56:33,953 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:33,953 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:56:33,953 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:56:33,953 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:56:33,953 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:34,750 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:56:34 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=648'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:56:34,751 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:56:34,751 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:56:34,751 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:56:34,751 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:56:34,751 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:56:34,752 | INFO | davinci-code | [GRAPH EVENT] ['validator']
+INFO:     127.0.0.1:42948 - "POST /api/chat HTTP/1.1" 200 OK
+2026-01-11 17:56:34,759 | INFO | davinci-code | [CONTINUE SESSION] fffb91ff-10c4-4dab-9d8a-0e8d35fa5d4e
+2026-01-11 17:56:34,760 | INFO | app.graph.nodes | [ENTRY] Processing request: 1...
+2026-01-11 17:56:34,760 | INFO | davinci-code | [GRAPH EVENT] ['entry']
+2026-01-11 17:56:34,761 | INFO | app.graph.nodes | [EXTRACTION] Extracting context fields...
+2026-01-11 17:56:34,761 | DEBUG | app.services.llm | [LLM] Prompt sent to Gemini: 
+
+You are the **PROMETHEUS Context Architect**, a meticulous expert in AI Agent design.
+Your goal is...
+2026-01-11 17:56:34,761 | INFO | app.services.llm | [LLM] 🛰️ Calling Gemini for content generation...
+2026-01-11 17:56:34,761 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:56:34,761 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:34,762 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:56:34,762 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:56:34,762 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:56:34,762 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:35,640 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:56:35 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=834'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:56:35,640 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:56:35,640 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:56:35,640 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:56:35,640 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:56:35,640 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:56:35,641 | DEBUG | app.services.llm | [LLM] Raw response: {
+    "extracted": {
+        "org_name": null,
+        "agent_name": null,
+        "persona_vibe": null,
+        "voice_parameters": null,
+        "knowledge_sources": [],
+        "intro_greeting": null,
+        "system_prompt_hints": "..."
+    },
+    "confidence": 0.0
+}
+2026-01-11 17:56:35,641 | INFO | app.services.llm | Extraction result: {'extracted': {'org_name': None, 'agent_name': None, 'persona_vibe': None, 'voice_parameters': None, 'knowledge_sources': [], 'intro_greeting': None, 'system_prompt_hints': '...'}, 'confidence': 0.0}
+2026-01-11 17:56:35,641 | INFO | davinci-code | [GRAPH EVENT] ['extraction']
+2026-01-11 17:56:35,641 | INFO | app.graph.nodes | [VALIDATOR] Checking context completeness...
+2026-01-11 17:56:35,642 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:56:35,642 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:35,642 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:56:35,642 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:56:35,642 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:56:35,642 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:56:36,499 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:56:36 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=769'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:56:36,499 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:56:36,499 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:56:36,500 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:56:36,500 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:56:36,500 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:56:36,501 | INFO | davinci-code | [GRAPH EVENT] ['validator']
+INFO:     127.0.0.1:42948 - "POST /api/chat HTTP/1.1" 200 OK
+2026-01-11 17:57:07,069 | INFO | davinci-code | [NEW SESSION] 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:07,070 | INFO | app.graph.nodes | [ENTRY] Processing request: I want a Ferrari agent named Enzo...
+2026-01-11 17:57:07,070 | INFO | davinci-code | [GRAPH EVENT] ['entry']
+2026-01-11 17:57:07,071 | INFO | app.graph.nodes | [EXTRACTION] Extracting context fields...
+2026-01-11 17:57:07,071 | DEBUG | app.services.llm | [LLM] Prompt sent to Gemini: 
+
+You are the **PROMETHEUS Context Architect**, a meticulous expert in AI Agent design.
+Your goal is...
+2026-01-11 17:57:07,071 | INFO | app.services.llm | [LLM] 🛰️ Calling Gemini for content generation...
+2026-01-11 17:57:07,071 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:57:07,071 | DEBUG | httpcore.connection | close.started
+2026-01-11 17:57:07,072 | DEBUG | httpcore.connection | close.complete
+2026-01-11 17:57:07,072 | DEBUG | httpcore.connection | connect_tcp.started host='generativelanguage.googleapis.com' port=443 local_address=None timeout=None socket_options=None
+2026-01-11 17:57:07,131 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7ca8e7bd1820>
+2026-01-11 17:57:07,131 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x7ca8e8060750> server_hostname='generativelanguage.googleapis.com' timeout=None
+2026-01-11 17:57:07,254 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7ca8e7bd01d0>
+2026-01-11 17:57:07,254 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:07,254 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:57:07,254 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:57:07,254 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:57:07,254 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:08,236 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:57:08 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=870'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:57:08,236 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:57:08,236 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:57:08,237 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:57:08,237 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:57:08,237 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:57:08,237 | DEBUG | app.services.llm | [LLM] Raw response: {
+    "extracted": {
+        "org_name": "Ferrari",
+        "agent_name": "Enzo",
+        "persona_vibe": null,
+        "voice_parameters": null,
+        "knowledge_sources": [],
+        "intro_greeting": null,
+        "system_prompt_hints": null
+    },
+    "confidence": 0.9
+}
+2026-01-11 17:57:08,237 | INFO | app.services.llm | Extraction result: {'extracted': {'org_name': 'Ferrari', 'agent_name': 'Enzo', 'persona_vibe': None, 'voice_parameters': None, 'knowledge_sources': [], 'intro_greeting': None, 'system_prompt_hints': None}, 'confidence': 0.9}
+2026-01-11 17:57:08,238 | INFO | davinci-code | [GRAPH EVENT] ['extraction']
+2026-01-11 17:57:08,238 | INFO | app.graph.nodes | [VALIDATOR] Checking context completeness...
+2026-01-11 17:57:08,238 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:57:08,238 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:08,238 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:57:08,238 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:57:08,239 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:57:08,239 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:08,952 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:57:08 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=609'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:57:08,953 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:57:08,953 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:57:08,953 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:57:08,953 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:57:08,953 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:57:08,954 | INFO | davinci-code | [GRAPH EVENT] ['validator']
+INFO:     127.0.0.1:49416 - "POST /api/chat HTTP/1.1" 200 OK
+2026-01-11 17:57:08,961 | INFO | davinci-code | [CONTINUE SESSION] 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:08,962 | INFO | app.graph.nodes | [ENTRY] Processing request: Sophisticated, passion, Italian accent...
+2026-01-11 17:57:08,962 | INFO | davinci-code | [GRAPH EVENT] ['entry']
+2026-01-11 17:57:08,962 | INFO | app.graph.nodes | [EXTRACTION] Extracting context fields...
+2026-01-11 17:57:08,962 | DEBUG | app.services.llm | [LLM] Prompt sent to Gemini: 
+
+You are the **PROMETHEUS Context Architect**, a meticulous expert in AI Agent design.
+Your goal is...
+2026-01-11 17:57:08,962 | INFO | app.services.llm | [LLM] 🛰️ Calling Gemini for content generation...
+2026-01-11 17:57:08,962 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:57:08,963 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:08,963 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:57:08,963 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:57:08,963 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:57:08,963 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:10,079 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:57:09 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=951'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:57:10,079 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:57:10,079 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:57:10,080 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:57:10,080 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:57:10,080 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:57:10,080 | DEBUG | app.services.llm | [LLM] Raw response: {
+    "extracted": {
+        "org_name": "Ferrari",
+        "agent_name": "Enzo",
+        "persona_vibe": "formal",
+        "voice_parameters": {
+            "accent": "italian"
+        },
+        "knowledge_sources": [],
+        "intro_greeting": null,
+        "system_prompt_hints": "Sophisticated, passion"
+    },
+    "confidence": 0.95
+}
+2026-01-11 17:57:10,080 | INFO | app.services.llm | Extraction result: {'extracted': {'org_name': 'Ferrari', 'agent_name': 'Enzo', 'persona_vibe': 'formal', 'voice_parameters': {'accent': 'italian'}, 'knowledge_sources': [], 'intro_greeting': None, 'system_prompt_hints': 'Sophisticated, passion'}, 'confidence': 0.95}
+2026-01-11 17:57:10,081 | INFO | davinci-code | [GRAPH EVENT] ['extraction']
+2026-01-11 17:57:10,081 | INFO | app.graph.nodes | [VALIDATOR] Checking context completeness...
+2026-01-11 17:57:10,082 | INFO | davinci-code | [GRAPH EVENT] ['validator']
+2026-01-11 17:57:10,082 | INFO | app.graph.nodes | [GENERATION] Generating agent artifacts...
+2026-01-11 17:57:10,082 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:57:10,082 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:10,083 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:57:10,083 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:57:10,083 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:57:10,083 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:18,232 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:57:18 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=8106'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:57:18,232 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:57:18,232 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:57:18,237 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:57:18,237 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:57:18,237 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:57:18,237 | INFO | app.services.llm | Generated artifacts: ['system_prompt', 'intro_greeting', 'dialogue_flows', 'rag_persona']
+2026-01-11 17:57:18,237 | INFO | app.services.voice | [VOICE MATCH] Starting intelligent search with params: None
+2026-01-11 17:57:18,255 | INFO | app.services.voice | [ElevenLabs API] Searching with filters: {'search': 'professional voice', 'page_size': 10, 'category': 'professional', 'accent': 'italian'}
+2026-01-11 17:57:18,288 | DEBUG | httpcore.connection | connect_tcp.started host='api.elevenlabs.io' port=443 local_address=None timeout=240 socket_options=None
+2026-01-11 17:57:18,391 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7ca8e7c52180>
+2026-01-11 17:57:18,391 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x7ca8e7b7c5d0> server_hostname='api.elevenlabs.io' timeout=240
+2026-01-11 17:57:18,453 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7ca8e7b9ba40>
+2026-01-11 17:57:18,453 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'GET']>
+2026-01-11 17:57:18,453 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:57:18,453 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'GET']>
+2026-01-11 17:57:18,453 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:57:18,454 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'GET']>
+2026-01-11 17:57:18,886 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'date', b'Sun, 11 Jan 2026 16:57:17 GMT'), (b'server', b'uvicorn'), (b'Content-Length', b'20986'), (b'content-type', b'application/json'), (b'access-control-allow-origin', b'*'), (b'access-control-allow-headers', b'*'), (b'access-control-allow-methods', b'POST, PATCH, OPTIONS, DELETE, GET, PUT'), (b'access-control-max-age', b'600'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains'), (b'x-trace-id', b'2375fef3d94bb1f4686fb38696bd4c2b'), (b'x-region', b'us-central1'), (b'Via', b'1.1 google, 1.1 google'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000')])
+2026-01-11 17:57:18,886 | INFO | httpx | HTTP Request: GET https://api.elevenlabs.io/v1/shared-voices?page_size=10&category=professional&accent=italian&search=professional+voice "HTTP/1.1 200 OK"
+2026-01-11 17:57:18,887 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'GET']>
+2026-01-11 17:57:18,962 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:57:18,962 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:57:18,962 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:57:18,974 | INFO | app.services.voice | [ElevenLabs API] Found 5 matches
+2026-01-11 17:57:18,974 | INFO | app.services.voice | [VOICE MATCH] Re-ranking 5 candidates with Gemini...
+2026-01-11 17:57:18,974 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
+2026-01-11 17:57:18,975 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:18,975 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-01-11 17:57:18,975 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-01-11 17:57:18,975 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-01-11 17:57:18,975 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-01-11 17:57:19,710 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sun, 11 Jan 2026 16:57:19 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=697'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+2026-01-11 17:57:19,711 | INFO | httpx | HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-01-11 17:57:19,711 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-01-11 17:57:19,714 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-01-11 17:57:19,714 | DEBUG | httpcore.http11 | response_closed.started
+2026-01-11 17:57:19,714 | DEBUG | httpcore.http11 | response_closed.complete
+2026-01-11 17:57:19,714 | INFO | app.services.llm | [VOICE RE-RANK] Gemini selected top 3: ['qQFoiN2eQXULODjD1SwL', 'iLVmqjzCGGvqtMCk6vVQ', 'j06nw9Co1V47P1pQkaG8']
+2026-01-11 17:57:19,714 | INFO | app.services.voice | [VOICE MATCH] Final top 3: ['Emanuele Matte - Clear and Serious', 'Antonio - Lively, Engaging and Energetic', 'Antonio - Lively, Engaging and Energetic']
+2026-01-11 17:57:19,715 | INFO | davinci-code | [GRAPH EVENT] ['generation']
+INFO:     127.0.0.1:49416 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47270 - "WebSocket /ws/6387f052-9885-4ad5-bd3d-75142dfbb18f" [accepted]
+2026-01-11 17:57:19,751 | INFO | app.websocket.manager | ✅ Client connected: 6387f052-9885-4ad5-bd3d-75142dfbb18f
+INFO:     connection open
+2026-01-11 17:57:19,784 | INFO | davinci-code | [BUILD] Paused for voice selection: 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,784 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,784 | INFO | davinci-code | [BUILD] Sent 3 voice candidates to frontend
+INFO:     127.0.0.1:47276 - "POST /api/build/6387f052-9885-4ad5-bd3d-75142dfbb18f HTTP/1.1" 200 OK
+2026-01-11 17:57:19,796 | INFO | davinci-code | [WS] Received voice selection: qQFoiN2eQXULODjD1SwL
+2026-01-11 17:57:19,797 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,798 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,798 | INFO | app.graph.nodes | [FINALIZE] Generating final configuration...
+2026-01-11 17:57:19,810 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,810 | INFO | app.graph.nodes | [BUILD] Persisting agent configuration...
+2026-01-11 17:57:19,811 | INFO | app.services.db | ✅ Saved agent config for 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,812 | INFO | app.services.helm | Saved values.yaml to /home/prometheus/leibniz_agent/TARA-MICROSERVICE/generated_agent/6387f052-9885-4ad5-bd3d-75142dfbb18f/values.yaml
+2026-01-11 17:57:19,813 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,813 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,814 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,814 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:19,814 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:20,613 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:21,813 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:22,214 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:22,614 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:23,414 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:23,815 | INFO | app.services.k8s | [DEPLOY] Namespace created: agent-6387f052
+2026-01-11 17:57:23,815 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:25,015 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:25,816 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:26,216 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:26,617 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:27,417 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:27,818 | INFO | app.services.k8s | [DEPLOY] Redis deployed in agent-6387f052
+2026-01-11 17:57:27,818 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:29,019 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:29,819 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:30,618 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:31,819 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:32,218 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:32,618 | INFO | app.services.k8s | [DEPLOY] MMAR engine deployed in agent-6387f052
+2026-01-11 17:57:32,619 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:33,819 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:34,219 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:34,619 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:35,420 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:35,820 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:37,019 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:37,819 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:38,220 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:38,620 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:39,420 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:40,221 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:40,621 | INFO | app.services.k8s | [DEPLOY] Voice pipeline deployed with voice: qQFoiN2eQXULODjD1SwL
+2026-01-11 17:57:40,621 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:41,821 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:42,622 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:43,022 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:43,423 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:43,822 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:44,222 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:44,623 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:45,423 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:45,823 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:46,223 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:47,023 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:47,424 | INFO | app.services.k8s | [DEPLOY] Orchestrator deployed: davinci-6387f052
+2026-01-11 17:57:47,424 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:48,624 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:49,424 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:49,825 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:50,224 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:50,625 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:51,425 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:51,825 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:52,625 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:53,025 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:53,426 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:53,826 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:54,226 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:54,626 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:55,027 | INFO | app.services.k8s | [DEPLOY] All pods healthy in agent-6387f052
+2026-01-11 17:57:55,027 | DEBUG | app.websocket.manager | [WS] Sent BUILD_COMPLETE to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:55,027 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:55,027 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:55,027 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:55,027 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f
+2026-01-11 17:57:55,028 | DEBUG | app.websocket.manager | [WS] Sent LOG to 6387f052-9885-4ad5-bd3d-75142dfbb18f

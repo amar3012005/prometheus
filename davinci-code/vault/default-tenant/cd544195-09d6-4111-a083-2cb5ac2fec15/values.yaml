@@ -1,0 +1,308 @@
+global:
+  orgName: Brazzers
+  environment: production
+  domain: davinci.ai
+orchestrator:
+  image: amar3012005/davinci-orchestrator:v2
+  pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8004
+  persona:
+    name: Lana
+    introGreeting: Hey there, sugar. Lana here, ready to show you around Brazzers.
+      What are you in the mood for?
+    systemPrompt: "You are Lana, an AI assistant representing Brazzers, the premier\
+      \ adult entertainment company. Your primary function is to provide information,\
+      \ answer questions, and fulfill requests related to Brazzers content, services,\
+      \ and related topics. Maintain a sexy and engaging persona, and always be respectful\
+      \ and appropriate. \n\nLANGUAGE_PROTOCOL:\nRespond in the language the user\
+      \ is using. If the language is not immediately clear, default to English. You\
+      \ are fluent in English (en).\n\nPERSONALITY:\nYou are Lana, and you exude confidence,\
+      \ sensuality, and playfulness. Your tone is suggestive but never vulgar. You\
+      \ are knowledgeable about Brazzers content and services. Always maintain a professional\
+      \ and respectful demeanor, even while embracing your sexy persona. Think of\
+      \ yourself as the ultimate insider, ready to share the inside scoop.\n\nINSTRUCTIONS:\n\
+      1.  Acknowledge the user's request with enthusiasm and a touch of flirtation.\n\
+      2.  Provide accurate and up-to-date information about Brazzers.\n3.  Answer\
+      \ questions clearly and concisely.\n4.  Fulfill requests promptly and efficiently.\n\
+      5.  Maintain your sexy persona throughout the interaction.\n6.  Adhere to ethical\
+      \ guidelines and avoid inappropriate or offensive content.\n7.  When asked about\
+      \ topics outside of Brazzers, politely redirect the conversation back to the\
+      \ company and its offerings.\n8.  Always end the conversation on a positive\
+      \ and engaging note.\n\nEXAMPLE CONVERSATION:\nUser: \"Hey Lana, tell me about\
+      \ the newest Brazzers releases.\"\nLana: \"Oh honey, you came to the right place.\
+      \ Let me tell you about the sizzling new scenes we've got cooking at Brazzers...\"\
+      \n\nUser: \"What kind of content does Brazzers offer?\"\nLana: \"Brazzers offers\
+      \ a wide range of adult entertainment, including hardcore scenes, amateur videos,\
+      \ and exclusive content featuring some of the hottest performers in the industry.\
+      \ We've got something for everyone, darling.\"\n\nUser: \"Can you tell me about\
+      \ Brazzers' subscription options?\"\nLana: \"Of course, sweetie. Brazzers offers\
+      \ various subscription plans to suit your needs. You can choose from monthly,\
+      \ quarterly, or annual subscriptions, each offering unlimited access to our\
+      \ entire library of content. Let me guide you through the options...\"\n\nUser:\
+      \ \"What's your favorite movie?\"\nLana: \"While I appreciate your curiosity,\
+      \ I'm here to talk about Brazzers and all the exciting content we offer. Have\
+      \ you seen our latest 'Office Affairs' series? It's a real heart-stopper!\"\n"
+  voice:
+    provider: elevenlabs
+    voiceId: cR39HTrtXbjvEP4CNYFx
+    settings:
+      stability: 0.5
+      similarity_boost: 0.75
+  dialogueFlows: "{\n  \"intents\": [\n    {\n      \"intent\": \"greet\",\n     \
+    \ \"patterns\": [\n        \"Hi\",\n        \"Hello\",\n        \"Hey\",\n   \
+    \     \"Good morning\",\n        \"Good afternoon\",\n        \"Good evening\"\
+    \n      ],\n      \"response\": \"Well hello there, handsome. What can I do for\
+    \ you today?\"\n    },\n    {\n      \"intent\": \"new_releases\",\n      \"patterns\"\
+    : [\n        \"What are the new releases?\",\n        \"What's new on Brazzers?\"\
+    ,\n        \"Show me the latest content\",\n        \"Any new videos?\",\n   \
+    \     \"What's been updated recently?\"\n      ],\n      \"response\": \"Oh honey,\
+    \ you're in for a treat. Let me tell you about the hottest new scenes we've got...[Provide\
+    \ specific new release information]\"\n    },\n    {\n      \"intent\": \"content_types\"\
+    ,\n      \"patterns\": [\n        \"What kind of content does Brazzers have?\"\
+    ,\n        \"What genres are available?\",\n        \"What are the categories?\"\
+    ,\n        \"What types of videos do you offer?\",\n        \"What kind of porn\
+    \ do you have?\"\n      ],\n      \"response\": \"Brazzers offers a wide range\
+    \ of adult entertainment, darling. Hardcore scenes, amateur videos, exclusive\
+    \ content... We've got something for everyone. What are you craving?\"\n    },\n\
+    \    {\n      \"intent\": \"subscription_options\",\n      \"patterns\": [\n \
+    \       \"What are the subscription options?\",\n        \"How much does Brazzers\
+    \ cost?\",\n        \"What are the membership plans?\",\n        \"How can I subscribe?\"\
+    ,\n        \"What are the payment options?\"\n      ],\n      \"response\": \"\
+    Of course, sweetie. Brazzers offers various subscription plans to suit your needs.\
+    \ Let me guide you through the options...[Provide subscription details]\"\n  \
+    \  },\n    {\n      \"intent\": \"performer_info\",\n      \"patterns\": [\n \
+    \       \"Tell me about [performer name]\",\n        \"Who is [performer name]?\"\
+    ,\n        \"Information on [performer name]\",\n        \"What movies has [performer\
+    \ name] been in?\",\n        \"I like [performer name]\"\n      ],\n      \"response\"\
+    : \"[Provide information on the requested performer, if available. Otherwise:\
+    \ ] Oh, you have good taste, darling. Let me see what I can find out for you about\
+    \ [performer name]...\"\n    },\n    {\n      \"intent\": \"general_question\"\
+    ,\n      \"patterns\": [\n        \"What is Brazzers?\",\n        \"Tell me about\
+    \ Brazzers\",\n        \"What does Brazzers do?\",\n        \"Who owns Brazzers?\"\
+    ,\n        \"How did Brazzers start?\"\n      ],\n      \"response\": \"Brazzers\
+    \ is the premier adult entertainment company, baby. We're known for our high-quality\
+    \ productions, stunning performers, and a wide range of content to satisfy your\
+    \ desires. Want to know more?\"\n    },\n    {\n      \"intent\": \"inappropriate_request\"\
+    ,\n      \"patterns\": [\n        \"Can you do something for me?\",\n        \"\
+    Can you send me something?\",\n        \"Can you be my girlfriend?\",\n      \
+    \  \"Do you want to chat?\",\n        \"Are you real?\"\n      ],\n      \"response\"\
+    : \"I'm here to provide information about Brazzers, honey. Let's keep it professional,\
+    \ shall we?\"\n    },\n    {\n      \"intent\": \"goodbye\",\n      \"patterns\"\
+    : [\n        \"Goodbye\",\n        \"Bye\",\n        \"See you later\",\n    \
+    \    \"Thanks\",\n        \"Thank you\"\n      ],\n      \"response\": \"Pleasure\
+    \ doing business with you, sweetie. Come back anytime!\"\n    }\n  ],\n  \"filler_latency\"\
+    : [\n    \"Just a sec...\",\n    \"Let me see...\",\n    \"Hold on a moment...\"\
+    ,\n    \"Give me a sec to look that up for you, darling...\",\n    \"Let me check...\"\
+    ,\n    \"One moment, sweetie...\"\n  ]\n}"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+rag:
+  image: amar3012005/davinci-rag:v2
+  pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  personas: "personas:\n  default:\n    display_name: Lana\n    language: english\n\
+    \    name: lana\n    personality_traits:\n    - helpful\n    response_style: friendly_casual\n\
+    \    restrictions: []\n"
+  knowledgeBase:
+    filenames:
+    - knowledge.md
+    content:
+      knowledge.md: "# Brazzers - Knowledge Base\n\n## Overview\nBrazzers is a leading\
+        \ online adult entertainment platform renowned for its high-quality, professionally\
+        \ produced content. Featuring an extensive library of exclusive videos and\
+        \ an all-star cast of industry-leading performers, Brazzers provides a premium\
+        \ viewing experience for its subscribers. Since its launch, Brazzers has consistently\
+        \ set the standard for adult entertainment, delivering bold and imaginative\
+        \ scenarios with exceptional skill and production quality.\n\nBrazzers is\
+        \ committed to providing its audience with a diverse range of content, thoughtfully\
+        \ organized to cater to individual preferences. From curated collections featuring\
+        \ popular performers to thematic categories encompassing a wide array of interests,\
+        \ Brazzers ensures there is something for every adult entertainment enthusiast.\
+        \ With a focus on quality, innovation, and user satisfaction, Brazzers remains\
+        \ a top choice for those seeking top-tier adult entertainment.\n\n## Products\
+        \ & Services\nBrazzers offers a diverse range of premium adult entertainment\
+        \ services, including:\n\n*   **Exclusive Video Content:** Brazzers provides\
+        \ access to a vast library of exclusive, high-quality adult videos featuring\
+        \ top performers in the industry. These videos are professionally produced\
+        \ and showcase engaging storylines and cinematic production values.\n*   **Streaming\
+        \ Service:** Brazzers operates a subscription-based streaming service, offering\
+        \ users unlimited access to its entire video library. Subscribers can stream\
+        \ videos on demand, anytime and anywhere, through the Brazzers website.\n\
+        *   **Curated Collections:** Brazzers organizes its video content into curated\
+        \ collections based on themes, performers, and preferences. These collections\
+        \ make it easy for users to discover new videos and find content that aligns\
+        \ with their interests. Examples include:\n    *   **Curvy:** Featuring performers\
+        \ with curvy figures.\n    *   **Youthful:** Showcasing younger adult performers.\n\
+        \    *   **Black:** Starring Black adult performers.\n    *   **Moms:** Featuring\
+        \ mature women.\n    *   **Lesbian:** Showcasing lesbian relationships.\n\
+        \    *   **Cheating:** Depicting infidelity scenarios.\n*   **Mobile Compatibility:**\
+        \ The Brazzers website is optimized for mobile devices, allowing users to\
+        \ stream videos on their smartphones and tablets.\n*   **High-Definition Content:**\
+        \ Brazzers delivers its video content in high-definition, ensuring a visually\
+        \ immersive and enjoyable viewing experience.\n*   **Model Showcases:** Brazzers\
+        \ prominently features its performers, providing users with information about\
+        \ their backgrounds, experience, and preferences.\n*   **User Account Management:**\
+        \ Brazzers provides registered users with tools to manage their accounts,\
+        \ subscription settings, and viewing history.\n\n## Key Features\nBrazzers\
+        \ boasts several key features that contribute to its popularity and reputation\
+        \ as a leading adult entertainment platform:\n\n*   **High-Quality Production:**\
+        \ Brazzers prioritizes high-quality production values, ensuring that its videos\
+        \ are visually appealing, well-directed, and professionally edited.\n*   **Industry-Leading\
+        \ Performers:** Brazzers features an all-star lineup of industry-leading performers,\
+        \ known for their experience, talent, and dedication to their craft.\n*  \
+        \ **Exclusive Content:** Brazzers offers a vast library of exclusive video\
+        \ content that cannot be found on other platforms.\n*   **Diverse Range of\
+        \ Categories:** Brazzers caters to a wide range of preferences with its diverse\
+        \ range of categories, including Curvy, Youthful, Black, Moms, Lesbian, and\
+        \ Cheating.\n*   **User-Friendly Interface:** The Brazzers website features\
+        \ a user-friendly interface that makes it easy for users to browse, search,\
+        \ and stream videos.\n*   **Mobile Optimization:** The Brazzers website is\
+        \ optimized for mobile devices, allowing users to enjoy content on the go.\n\
+        *   **Secure Payment Processing:** Brazzers uses secure payment processors\
+        \ like Vendo and Probiller to ensure the safety and security of user transactions.\n\
+        *   **Age Verification:** Brazzers employs age verification measures to ensure\
+        \ that only adults are able to access its content.\n*   **Compliance with\
+        \ Legal Requirements:** Brazzers adheres to all applicable legal requirements,\
+        \ including 18 U.S.C. 2257 record-keeping requirements.\n*   **Engaging Storylines:**\
+        \ Brazzers content often features engaging storylines that enhance the viewing\
+        \ experience.\n*   **Cinematic Production Values:** Brazzers incorporates\
+        \ cinematic production values into its videos, creating a more immersive and\
+        \ captivating experience.\n*   **Regular Content Updates:** Brazzers consistently\
+        \ updates its video library with new releases, ensuring that subscribers always\
+        \ have access to fresh content.\n*   **Personalized Recommendations:** Brazzers\
+        \ uses viewing history to provide personalized recommendations to users, helping\
+        \ them discover new content they might enjoy.\n*   **Search Functionality:**\
+        \ Brazzers provides robust search functionality, allowing users to quickly\
+        \ and easily find specific videos or performers.\n*   **Community Features:**\
+        \ While not explicitly detailed in the source material, similar platforms\
+        \ often include community features such as commenting or forums.\n*   **Multiple\
+        \ Language Support:** (Inferred) Given the global reach, Brazzers likely supports\
+        \ multiple languages.\n*   **Adaptive Streaming:** (Inferred) To provide the\
+        \ best viewing experience across different devices and internet speeds, Brazzers\
+        \ likely uses adaptive streaming technology.\n\n## Target Audience\nThe primary\
+        \ target audience for Brazzers is adult men and women who are interested in\
+        \ viewing professionally produced adult entertainment. Specifically, the target\
+        \ audience includes:\n\n*   **Adults aged 18 and over:** Brazzers content\
+        \ is strictly intended for adults who are of legal age to view adult material\
+        \ in their jurisdiction.\n*   **Individuals seeking high-quality adult entertainment:**\
+        \ Brazzers caters to individuals who appreciate professionally produced videos\
+        \ with engaging storylines and high production values.\n*   **Users with diverse\
+        \ interests:** Brazzers offers a wide range of categories and content to appeal\
+        \ to a diverse audience with varying preferences. This includes those interested\
+        \ in specific genres, performers, or themes such as:\n    *   Those interested\
+        \ in curvy performers.\n    *   Those interested in youthful performers.\n\
+        \    *   Those interested in Black performers.\n    *   Those interested in\
+        \ mature women (Moms).\n    *   Those interested in lesbian relationships.\n\
+        \    *   Those interested in infidelity scenarios.\n*   **Subscribers to adult\
+        \ entertainment streaming services:** Brazzers targets individuals who are\
+        \ willing to pay a subscription fee for access to a premium library of adult\
+        \ videos.\n*   **Users who prefer mobile viewing:** Brazzers caters to individuals\
+        \ who enjoy watching adult entertainment on their smartphones and tablets.\n\
+        *   **Individuals seeking exclusive content:** Brazzers focuses on attracting\
+        \ users who value access to exclusive video content that cannot be found on\
+        \ other platforms.\n*   **Individuals familiar with the Brazzers brand:**\
+        \ Brand recognition attracts those who have previously viewed Brazzers content\
+        \ or are familiar with its reputation for quality.\n*   **Global audience:**\
+        \ Though based in certain countries, Brazzers targets a global audience of\
+        \ adult entertainment consumers.\n\n## Pricing (if available)\nWhile the exact\
+        \ pricing details are not explicitly provided in the source material, Brazzers\
+        \ operates on a subscription-based model. This implies the following:\n\n\
+        *   **Subscription Plans:** Brazzers likely offers a variety of subscription\
+        \ plans with different durations and features. These plans could include monthly,\
+        \ quarterly, or annual options.\n*   **Tiered Pricing:** Brazzers might offer\
+        \ tiered pricing plans with varying levels of access to content and features.\
+        \ Higher-tier plans could include access to exclusive videos, bonus content,\
+        \ or ad-free viewing.\n*   **Trial Period:** Brazzers may offer a free trial\
+        \ period to new users, allowing them to sample the content and features before\
+        \ committing to a paid subscription.\n*   **Payment Methods:** Brazzers likely\
+        \ accepts a variety of payment methods, including credit cards, debit cards,\
+        \ and potentially alternative payment options.\n*   **Automatic Renewal:**\
+        \ Brazzers subscriptions likely auto-renew at the end of each billing cycle\
+        \ unless the user cancels their subscription.\n*   **Promotional Offers:**\
+        \ Brazzers might offer promotional discounts or special offers to attract\
+        \ new subscribers or retain existing ones. These offers could include discounted\
+        \ subscription rates or bonus content.\n*   **Geographic Pricing:** Pricing\
+        \ may vary depending on the user's geographic location, taking into account\
+        \ currency exchange rates and local market conditions.\n\n**Inferred Pricing\
+        \ Structure:**\n\n*   **Basic Plan:** Provides access to the standard Brazzers\
+        \ video library.\n*   **Premium Plan:** Includes access to exclusive videos,\
+        \ bonus content, and ad-free viewing.\n*   **Ultimate Plan:** Offers all the\
+        \ features of the Premium Plan, plus additional benefits such as early access\
+        \ to new releases or behind-the-scenes content.\n\nIt is important to consult\
+        \ the Brazzers website directly for the most up-to-date and accurate pricing\
+        \ information.\n\n## Common Questions\nHere are some common questions that\
+        \ users might ask about Brazzers, along with their corresponding answers:\n\
+        \n**Q: What is Brazzers?**\n**A:** Brazzers is a premier online adult entertainment\
+        \ platform known for its high-quality, professionally produced videos featuring\
+        \ top performers in the industry. It offers a subscription-based streaming\
+        \ service with a vast library of exclusive content.\n\n**Q: How do I subscribe\
+        \ to Brazzers?**\n**A:** You can subscribe to Brazzers by visiting the Brazzers\
+        \ website and creating an account. You will need to choose a subscription\
+        \ plan and provide your payment information.\n\n**Q: What kind of content\
+        \ does Brazzers offer?**\n**A:** Brazzers offers a diverse range of adult\
+        \ entertainment content, including exclusive videos featuring a variety of\
+        \ performers and themes. Content is organized into categories such as Curvy,\
+        \ Youthful, Black, Moms, Lesbian, and Cheating.\n\n**Q: Is Brazzers content\
+        \ available in high definition?**\n**A:** Yes, Brazzers delivers its video\
+        \ content in high-definition, providing a visually immersive viewing experience.\n\
+        \n**Q: Can I watch Brazzers on my mobile device?**\n**A:** Yes, the Brazzers\
+        \ website is optimized for mobile devices, allowing you to stream videos on\
+        \ your smartphone or tablet.\n\n**Q: Is Brazzers a safe and secure platform?**\n\
+        **A:** Brazzers uses secure payment processors and age verification measures\
+        \ to ensure the safety and security of its users. It also adheres to all applicable\
+        \ legal requirements.\n\n**Q: How old do I have to be to access Brazzers content?**\n\
+        **A:** You must be at least 18 years old (or the age of majority in your jurisdiction)\
+        \ to access Brazzers content.\n\n**Q: What payment methods does Brazzers accept?**\n\
+        **A:** Brazzers likely accepts a variety of payment methods, including credit\
+        \ cards, debit cards, and potentially alternative payment options. They use\
+        \ trusted billers such as Probiller and Vendo.\n\n**Q: How do I cancel my\
+        \ Brazzers subscription?**\n**A:** You can cancel your Brazzers subscription\
+        \ through your account settings on the Brazzers website.\n\n**Q: Does Brazzers\
+        \ offer a free trial?**\n**A:** Brazzers may offer a free trial period to\
+        \ new users, allowing them to sample the content and features before committing\
+        \ to a paid subscription. Check the website for current promotions.\n\n##\
+        \ Contact & Resources\n*   **Website:** brazzers.com\n*   **Terms and Conditions:**\
+        \ Available on the Brazzers website.\n*   **Authorized Payment Processors:**\
+        \ Vendo, Probiller (as mentioned on the site)\n*   **Compliance Statement:**\
+        \ 18 U.S.C. 2257 Record Keeping Requirements Compliance Statement (available\
+        \ on the Brazzers website).\n*   **Aylo Premium Ltd:** Owning company indicated\
+        \ at the bottom of Brazzers.com"
+  resources:
+    limits:
+      cpu: '1'
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+redis:
+  enabled: true
+  image: redis:7-alpine
+  pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+secrets:
+  openaiApiKey: ''
+  elevenlabsApiKey: ''
+  geminiApiKey: AIzaSyBG9nb_Xe2267oBO9s0g0jJOQtJGh47pNk
+  qdrantApiKey: ''
+ingress:
+  enabled: false
+  className: ''
+  annotations: {}
+  hosts: []
+  tls: []

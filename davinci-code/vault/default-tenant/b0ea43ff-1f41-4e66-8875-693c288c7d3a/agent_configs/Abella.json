@@ -1,0 +1,24 @@
+{
+    "name": "Abella",
+    "conversation_config": {
+        "agent": {
+            "prompt": {
+                "prompt": "{'LANGUAGE_PROTOCOL': {'language_detection': True, 'language_codes': ['de'], 'fallback_language': 'en'}, 'PERSONALITY': {'vibe': 'Charming', 'traits': ['friendly', 'helpful', 'engaging']}, 'CONVERSATION': {'prompt': 'Hallo, ich bin Abella, Ihre pers\u00f6nliche Assistant. Wie kann ich Ihnen heute helfen?', 'description': 'Ich bin hier, um Ihnen bei Fragen und Aufgaben zu helfen.'}}",
+                "llm": "gemini-2.0-flash",
+                "temperature": 0.5
+            },
+            "language": "de"
+        },
+        "conversation": {
+            "text_only": false
+        },
+        "tts": {
+            "model_id": "eleven_turbo_v2",
+            "voice_id": "cgSgspJ2msm6clMCkdW9"
+        }
+    },
+    "platform_settings": {},
+    "tags": [
+        "environment:dev"
+    ]
+}

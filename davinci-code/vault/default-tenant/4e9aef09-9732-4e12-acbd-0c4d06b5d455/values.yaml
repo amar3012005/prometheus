@@ -1,0 +1,367 @@
+global:
+  orgName: daytona, an AI related platform
+  environment: production
+  domain: davinci.ai
+orchestrator:
+  image: amar3012005/davinci-orchestrator:v2
+  pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8004
+  persona:
+    name: Tokyo
+    introGreeting: Hello! Welcome to Daytona. I'm Tokyo, your AI assistant. How can
+      I help you today?
+    systemPrompt: "You are Tokyo, a user-friendly and approachable AI assistant representing\
+      \ Daytona, an AI-related platform. Your primary function is to provide excellent\
+      \ customer service and support to Daytona users. You have comprehensive knowledge\
+      \ of Daytona's products, services, and mission.\n\nPERSONALITY:\nYou are designed\
+      \ to be helpful, friendly, and approachable. You communicate clearly and warmly,\
+      \ ensuring users feel comfortable and supported. You are patient and understanding,\
+      \ even when dealing with complex or frustrating issues. You always strive to\
+      \ provide accurate and helpful information.\n\nLANGUAGE_PROTOCOL:\nYou are capable\
+      \ of communicating in multiple languages. You will automatically detect the\
+      \ user's language and respond accordingly. If the user's language is not immediately\
+      \ clear, politely ask for their preferred language.\n\nCORE FUNCTIONALITIES:\n\
+      *   Answering questions about Daytona's AI platform, services, and features.\n\
+      *   Troubleshooting technical issues and providing solutions.\n*   Guiding users\
+      \ through Daytona's features and functionalities.\n*   Assisting users with\
+      \ account management tasks.\n*   Collecting user feedback and reporting it to\
+      \ the Daytona team.\n*   Scheduling appointments with Daytona representatives.\n\
+      \nAPPOINTMENT BOOKING PROTOCOL:\n1.  Initiate by asking if the user would like\
+      \ to book an appointment.\n2.  Clearly and politely collect the following information:\n\
+      \    *   Full Name\n    *   Phone Number\n    *   Reason for Appointment\n3.\
+      \  After collecting the full name, spell it back, word by word, to ensure accuracy.\
+      \ Allow for a maximum of two retries if the user corrects you.\n4.  Repeat the\
+      \ same verification process for the phone number.\n5.  Once all information\
+      \ is accurately collected, inform the user that they will receive an email confirmation\
+      \ within the next 5-10 minutes.\n\nIMPORTANT GUIDELINES:\n*   Always maintain\
+      \ a professional and courteous demeanor.\n*   Provide accurate and up-to-date\
+      \ information.\n*   If you don't know the answer to a question, admit it and\
+      \ offer to find the information or direct the user to the appropriate resource.\n\
+      *   Avoid making assumptions or offering unsolicited advice.\n*   Respect user\
+      \ privacy and confidentiality.\n*   Adhere to all applicable laws and regulations.\n\
+      *   Prioritize user satisfaction and strive to exceed their expectations.\n\
+      *   Be proactive in identifying and addressing potential issues.\n*   Continuously\
+      \ learn and improve your knowledge of Daytona's products and services.\n\nExample\
+      \ Interaction (English):\nUser: I'd like to book an appointment.\nTokyo: Certainly!\
+      \ To schedule an appointment, I'll need to collect some information. First,\
+      \ what is your full name?\nUser: John Doe\nTokyo: Okay, that's John Doe. J-O-H-N\
+      \ D-O-E. Is that correct?\nUser: Yes.\nTokyo: Great! And what is your phone\
+      \ number?\nUser: 555-123-4567\nTokyo: Okay, 555-123-4567. 5-5-5, 1-2-3, 4-5-6-7.\
+      \ Is that right?\nUser: Yes.\nTokyo: Perfect! And what is the reason for your\
+      \ appointment?\nUser: I have questions about the AI platform pricing.\nTokyo:\
+      \ Thank you. You will receive an email confirmation with the next 5-10 minutes.\
+      \ Is there anything else I can assist you with today?\n\nExample Interaction\
+      \ (Spanish):\nUser: Quiero reservar una cita.\nTokyo: ¡Por supuesto! Para programar\
+      \ una cita, necesito recopilar información. Primero, ¿cuál es su nombre completo?\n\
+      User: Juan Pérez\nTokyo: Bien, Juan Pérez. J-U-A-N P-É-R-E-Z. ¿Es correcto?\n\
+      User: Sí.\nTokyo: ¡Genial! ¿Y cuál es su número de teléfono?\nUser: 555-987-6543\n\
+      Tokyo: Bien, 555-987-6543. 5-5-5, 9-8-7, 6-5-4-3. ¿Es correcto?\nUser: Sí.\n\
+      Tokyo: ¡Perfecto! ¿Y cuál es el motivo de su cita?\nUser: Tengo preguntas sobre\
+      \ los precios de la plataforma de IA.\nTokyo: Gracias. Recibirá una confirmación\
+      \ por correo electrónico en los próximos 5-10 minutos. ¿Hay algo más en que\
+      \ pueda ayudarle hoy?"
+  voice:
+    provider: elevenlabs
+    voiceId: 21m00Tcm4TlvDq8ikWAM
+    settings:
+      stability: 0.5
+      similarity_boost: 0.75
+  dialogueFlows: "{\n  \"intents\": [\n    {\n      \"intent\": \"greeting\",\n  \
+    \    \"patterns\": [\n        \"Hi\",\n        \"Hello\",\n        \"Good morning\"\
+    ,\n        \"Good afternoon\",\n        \"Hey\",\n        \"Greetings\"\n    \
+    \  ],\n      \"response\": \"Hello! Welcome to Daytona. I'm Tokyo, your AI assistant.\
+    \ How can I help you today?\"\n    },\n    {\n      \"intent\": \"appointment_booking_request\"\
+    ,\n      \"patterns\": [\n        \"I'd like to book an appointment\",\n     \
+    \   \"I want to schedule a meeting\",\n        \"Can I make an appointment?\"\
+    ,\n        \"I need to book a slot\",\n        \"Schedule a call\"\n      ],\n\
+    \      \"response\": \"Certainly! To schedule an appointment, I'll need to collect\
+    \ some information. First, what is your full name?\"\n    },\n    {\n      \"\
+    intent\": \"provide_name\",\n      \"patterns\": [\n        \"My name is {name}\"\
+    ,\n        \"It's {name}\",\n        \"{name}\"\n      ],\n      \"response\"\
+    : \"Okay, that's {name}. {spell_name}. Is that correct?\"\n    },\n    {\n   \
+    \   \"intent\": \"confirm_name\",\n      \"patterns\": [\n        \"Yes\",\n \
+    \       \"That's correct\",\n        \"Yes, it is\",\n        \"Correct\"\n  \
+    \    ],\n      \"response\": \"Great! And what is your phone number?\"\n    },\n\
+    \    {\n      \"intent\": \"provide_phone_number\",\n      \"patterns\": [\n \
+    \       \"My number is {phone_number}\",\n        \"It's {phone_number}\",\n \
+    \       \"{phone_number}\"\n      ],\n      \"response\": \"Okay, {phone_number}.\
+    \ {spell_phone_number}. Is that right?\"\n    },\n    {\n      \"intent\": \"\
+    confirm_phone_number\",\n      \"patterns\": [\n        \"Yes\",\n        \"That's\
+    \ right\",\n        \"Yes, it is\",\n        \"Correct\"\n      ],\n      \"response\"\
+    : \"Perfect! And what is the reason for your appointment?\"\n    },\n    {\n \
+    \     \"intent\": \"provide_reason\",\n      \"patterns\": [\n        \"I have\
+    \ questions about {reason}\",\n        \"I need help with {reason}\",\n      \
+    \  \"I want to discuss {reason}\"\n      ],\n      \"response\": \"Thank you.\
+    \ You will receive an email confirmation within the next 5-10 minutes. Is there\
+    \ anything else I can assist you with today?\"\n    },\n    {\n      \"intent\"\
+    : \"thank_you\",\n      \"patterns\": [\n        \"Thank you\",\n        \"Thanks\"\
+    ,\n        \"Appreciate it\"\n      ],\n      \"response\": \"You're welcome!\
+    \ Is there anything else I can assist you with?\"\n    },\n    {\n      \"intent\"\
+    : \"daytona_info\",\n      \"patterns\": [\n        \"What is Daytona?\",\n  \
+    \      \"Tell me about Daytona\",\n        \"What does Daytona do?\",\n      \
+    \  \"Explain Daytona\"\n      ],\n      \"response\": \"Daytona is a cutting-edge\
+    \ AI platform designed to empower businesses and individuals with the tools they\
+    \ need to thrive in the age of artificial intelligence. We offer a comprehensive\
+    \ suite of AI-powered solutions tailored to meet diverse needs.\"\n    },\n  \
+    \  {\n      \"intent\": \"goodbye\",\n      \"patterns\": [\n        \"Goodbye\"\
+    ,\n        \"Bye\",\n        \"See you later\",\n        \"Have a good day\"\n\
+    \      ],\n      \"response\": \"Goodbye! Have a great day. Feel free to reach\
+    \ out if you need anything else.\"\n    }\n  ],\n  \"filler_latency\": [\n   \
+    \ \"Okay,\",\n    \"Great!\",\n    \"Perfect!\",\n    \"Alright,\",\n    \"Understood.\"\
+    \n  ]\n}"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+rag:
+  image: amar3012005/davinci-rag:v2
+  pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  personas: "personas:\n  default:\n    display_name: Tokyo\n    language: english\n\
+    \    name: tokyo\n    personality_traits:\n    - helpful\n    response_style:\
+    \ friendly_casual\n    restrictions: []\n"
+  knowledgeBase:
+    filenames:
+    - knowledge.md
+    content:
+      knowledge.md: "# Daytona - Knowledge Base\n\n## Overview\n\nDaytona provides\
+        \ a secure and scalable infrastructure for running AI-generated code. It addresses\
+        \ the challenges of deploying and managing AI code by offering a platform\
+        \ that emphasizes speed, security, and stateful operations. Daytona allows\
+        \ developers and organizations to execute AI code with confidence, knowing\
+        \ their infrastructure is protected and optimized for the unique demands of\
+        \ AI applications. The platform’s core value proposition lies in its ability\
+        \ to drastically reduce the time from code to execution, facilitate concurrent\
+        \ AI workflows, and ensure transparency and control over AI processes.\n\n\
+        Daytona’s mission is to empower AI innovation by providing the essential infrastructure\
+        \ needed to run AI code effectively and securely. It caters to the growing\
+        \ need for robust, scalable, and secure environments for AI agents, large\
+        \ language models (LLMs), and AI evaluations. By offering features like lightning-fast\
+        \ sandbox creation, programmatic control via APIs, and enterprise-grade security,\
+        \ Daytona enables organizations to focus on building and deploying AI solutions\
+        \ without worrying about the underlying infrastructure complexities. The platform\
+        \ also prioritizes transparency through its open codebase, allowing users\
+        \ to have full visibility and trust in the system.\n\n## Products & Services\n\
+        \nDaytona offers a range of services focused on providing a secure and efficient\
+        \ infrastructure for AI-related tasks. Key offerings include:\n\n*   **Secure\
+        \ and Elastic Infrastructure:** Provides a robust environment for running\
+        \ AI-generated code, ensuring security and scalability.\n*   **Lightning-Fast\
+        \ Sandbox Creation:** Enables quick deployment of AI code with sandbox creation\
+        \ times under 90ms.\n*   **AI-First Infrastructure:** Optimized for LLMs,\
+        \ AI agents, and AI evaluations.\n*   **Programmatic Control:** Offers control\
+        \ through File, Git, LSP, and Execute APIs.\n*   **Process Execution:** Executes\
+        \ code and commands in isolated environments with real-time output streaming.\n\
+        *   **File System Operations:** Manages sandboxes with full CRUD operations\
+        \ and granular permission controls.\n*   **Git Integration:** Provides native\
+        \ Git operations and secure credential handling.\n*   **Builtin LSP Support:**\
+        \ Offers language server features with multi-language completion and real-time\
+        \ analysis.\n*   **AI Evaluations:** Scales evaluations across parallel environments\
+        \ with reproducible snapshot states.\n*   **Code Interpreter:** Runs untrusted\
+        \ code in isolated environments with real-time output streaming.\n*   **Coding\
+        \ Agents:** Executes AI agent code with RESTful APIs and state persistence\
+        \ across parallel runs.\n*   **Data Analysis:** Processes large datasets on\
+        \ clusters with optimized data locality.\n*   **Data Visualisation:** Enables\
+        \ AI agents to run code and instantly render charts, plots, and visual outputs.\n\
+        *   **Reinforcement Learning:** Simplifies RL training and enables long-horizon\
+        \ planning in dynamic, stateful environments.\n*   **Customer Service Agent\
+        \ \"Tokyo\":** An AI-powered customer service agent designed to be user-friendly\
+        \ and approachable. It is designed to provide clear answers, schedule appointments,\
+        \ collect necessary information accurately, and offer prompt email confirmations.\n\
+        \n## Key Features\n\nDaytona's key features are designed to provide a comprehensive\
+        \ and secure environment for AI development and deployment:\n\n*   **Sub 90ms\
+        \ Sandbox Creation:** Provides rapid environment deployment, enabling faster\
+        \ iteration and development cycles. This is achieved through optimized infrastructure\
+        \ and efficient resource allocation.\n*   **Separated & Isolated Runtime Protection:**\
+        \ Executes AI-generated code in isolated environments, mitigating risks to\
+        \ the underlying infrastructure. This is crucial for maintaining system integrity\
+        \ when running potentially untrusted code.\n*   **Massive Parallelization:**\
+        \ Supports concurrent AI workflows, allowing for the execution of multiple\
+        \ tasks simultaneously. This is essential for scaling AI operations and handling\
+        \ complex workloads.\n*   **File, Git, LSP, and Execute APIs:** Enables programmatic\
+        \ control over the platform, allowing for seamless integration into existing\
+        \ workflows and automation pipelines.\n    *   **File API:** Provides operations\
+        \ for managing files within the sandboxes, including upload, download, and\
+        \ modification.\n    *   **Git API:** Enables native Git operations such as\
+        \ cloning, branching, and committing changes directly within the Daytona environment.\
+        \ This facilitates version control and collaboration.\n    *   **LSP API:**\
+        \ Integrates Language Server Protocol support, offering features like code\
+        \ completion, error checking, and real-time analysis for various programming\
+        \ languages.\n    *   **Execute API:** Allows users to execute code and commands\
+        \ within the isolated sandboxes, with real-time output streaming.\n*   **Optimized\
+        \ for LLMs, Agents, and Evals:** The infrastructure is specifically designed\
+        \ to support the unique requirements of large language models, AI agents,\
+        \ and AI evaluation processes.\n    *   **LLM Support:** Provides the necessary\
+        \ computational resources and environment configurations for running large\
+        \ language models efficiently.\n    *   **AI Agent Support:** Facilitates\
+        \ the execution of AI agent code with state persistence across parallel runs,\
+        \ ensuring continuity and reliability.\n    *   **AI Evaluation Support:**\
+        \ Enables scaling of evaluations across parallel environments with reproducible\
+        \ snapshot states, allowing for comprehensive performance testing.\n*   **Stateful\
+        \ Operations:** Maintains state across multiple runs and sessions, enabling\
+        \ more complex and persistent AI applications. This is crucial for applications\
+        \ that require memory and context.\n*   **Process Execution Details:** Daytona\
+        \ allows you to execute code and commands in isolated environments with real-time\
+        \ output streaming. This functionality supports various use cases, like running\
+        \ arbitrary code snippets, executing system commands, and managing processes\
+        \ within a secure sandbox.\n    *   Example:\n        ```python\n        from\
+        \ daytona import Daytona\n\n        daytona = Daytona()\n\n        sandbox\
+        \ = daytona.create()\n\n        response = sandbox.process.code_run('print(\"\
+        Hello World!\")')\n\n        print(response.result)\n        ```\n*   **File\
+        \ System Operations Details:** Daytona facilitates the management of sandboxes\
+        \ with comprehensive CRUD (Create, Read, Update, Delete) operations and granular\
+        \ permission controls. This empowers users to organize and secure their files\
+        \ and directories effectively within the Daytona environment.\n    *   Example:\n\
+        \        ```python\n        from daytona import Daytona\n\n        daytona\
+        \ = Daytona()\n\n        sandbox = daytona.create()\n\n        file_content\
+        \ = b\"Hello, World!\"\n        sandbox.upload_file(\"/home/daytona/data.txt\"\
+        , file_content)\n        ```\n*   **Git Integration Details:** Daytona offers\
+        \ native Git operations and secure credential handling, simplifying version\
+        \ control and collaboration workflows. This allows developers to seamlessly\
+        \ integrate their Git repositories into the Daytona environment.\n*   **Builtin\
+        \ LSP Support Details:** Daytona provides Language Server Protocol (LSP) support\
+        \ for various programming languages, enabling features like code completion,\
+        \ real-time analysis, and error detection. This enhances the development experience\
+        \ and promotes code quality.\n*   **AI Evaluations Details:** Daytona streamlines\
+        \ the scaling of evaluations across parallel environments with reproducible\
+        \ snapshot states. This empowers researchers and developers to rigorously\
+        \ test and validate AI models under various conditions.\n*   **Code Interpreter\
+        \ Details:** Daytona's Code Interpreter feature enables the secure execution\
+        \ of untrusted code in isolated environments with real-time output streaming.\
+        \ This is particularly useful for scenarios where user-provided code needs\
+        \ to be executed safely.\n*   **Coding Agents Details:** Daytona facilitates\
+        \ the execution of AI agent code with RESTful APIs and state persistence across\
+        \ parallel runs. This enables the creation of sophisticated AI agents that\
+        \ can interact with the Daytona environment and maintain state over time.\n\
+        *   **Data Analysis Details:** Daytona supports the processing of large datasets\
+        \ on clusters with optimized data locality. This is beneficial for data-intensive\
+        \ AI applications that require efficient data processing.\n*   **Data Visualisation\
+        \ Details:** Daytona allows AI agents to run code and instantly render charts,\
+        \ plots, and visual outputs. This enhances the interpretability and usability\
+        \ of AI-generated results.\n*   **Reinforcement Learning Details:** Daytona\
+        \ simplifies RL training and enables long-horizon planning in dynamic, stateful\
+        \ environments. This provides a robust platform for developing and training\
+        \ reinforcement learning agents.\n*   **Human in the Loop:** Provides full\
+        \ access for debugging, oversight, or intervention without breaking autonomy.\
+        \ This allows for monitoring and control over AI processes, ensuring they\
+        \ align with desired outcomes.\n*   **Transparency:** Offers an open codebase,\
+        \ allowing users to inspect and understand the inner workings of the platform.\
+        \ This builds trust and confidence in the security and reliability of the\
+        \ system.\n*   **Certified Security:** Daytona undergoes security certifications\
+        \ to ensure compliance with industry standards and best practices, providing\
+        \ assurance to users regarding the safety of their data and code.\n*   **Customer\
+        \ Service Agent \"Tokyo\" Functionality:**\n    *   **Appointment Booking:**\
+        \ Collects user's name, phone number, and reason for appointment.\n    * \
+        \  **Data Verification:** Spells back name and phone number, work by work,\
+        \ for confirmation.\n    *   **Email Confirmation:** Sends an email to the\
+        \ user within 5-10 minutes after successful data collection, confirming the\
+        \ appointment details.\n    *   **User-Friendly and Approachable:** Designed\
+        \ to provide a pleasant and efficient customer service experience.\n\n## Target\
+        \ Audience\n\nDaytona is designed for a diverse range of users and organizations\
+        \ involved in AI development and deployment:\n\n*   **AI Developers:** Professionals\
+        \ who build and train AI models and require a secure and scalable infrastructure\
+        \ for running their code.\n*   **AI Researchers:** Individuals or teams conducting\
+        \ research in artificial intelligence and needing access to robust computing\
+        \ resources and reproducible environments.\n*   **Data Scientists:** Experts\
+        \ who analyze and process large datasets using AI techniques and require a\
+        \ platform that supports data locality and efficient processing.\n*   **Machine\
+        \ Learning Engineers:** Professionals responsible for deploying and maintaining\
+        \ machine learning models in production environments.\n*   **Enterprises:**\
+        \ Organizations looking to leverage AI to improve their operations, develop\
+        \ new products, or gain a competitive edge.\n*   **Startups:** Early-stage\
+        \ companies focused on AI innovation and requiring cost-effective and scalable\
+        \ infrastructure solutions.\n*   **Security Teams:** Professionals responsible\
+        \ for ensuring the security and compliance of AI systems and data.\n\n**Use\
+        \ Cases:**\n\n*   **Running AI Agents:** Deploying and managing AI agents\
+        \ that require persistent state and secure execution environments.\n*   **Scaling\
+        \ AI Evaluations:** Conducting comprehensive performance testing of AI models\
+        \ across parallel environments.\n*   **Executing Untrusted Code:** Safely\
+        \ running user-provided code in isolated environments to prevent security\
+        \ risks.\n*   **Processing Large Datasets:** Analyzing and visualizing large\
+        \ datasets using AI techniques with optimized data locality.\n*   **Reinforcement\
+        \ Learning:** Training and deploying reinforcement learning agents in dynamic\
+        \ and stateful environments.\n*   **Customer Service Automation:** Implementing\
+        \ AI-powered customer service agents like \"Tokyo\" to automate appointment\
+        \ booking and provide efficient support.\n*   **Secure AI Development:** Providing\
+        \ a secure and compliant environment for developing and deploying AI applications.\n\
+        \n## Pricing (if available)\n\nDaytona offers a \"Start for Free\" option,\
+        \ suggesting the existence of tiered pricing plans. Specific pricing details\
+        \ can be found on the Daytona website. The \"Start for Free\" option likely\
+        \ provides limited access to the platform's features and resources, allowing\
+        \ users to evaluate its capabilities before committing to a paid plan. For\
+        \ more detailed pricing information, it is recommended to visit [daytona.io](https://daytona.io).\n\
+        \n## Common Questions\n\nHere are some common questions users might have about\
+        \ Daytona:\n\n*   **Q: What is Daytona?**\n    *   **A:** Daytona is a secure\
+        \ and scalable infrastructure platform designed for running AI-generated code.\
+        \ It offers features like lightning-fast sandbox creation, programmatic control,\
+        \ and enterprise-grade security.\n\n*   **Q: How does Daytona ensure the security\
+        \ of my code?**\n    *   **A:** Daytona uses separated and isolated runtime\
+        \ protection to execute AI-generated code in isolated environments, mitigating\
+        \ risks to the underlying infrastructure.\n\n*   **Q: Can I integrate Daytona\
+        \ with my existing Git repositories?**\n    *   **A:** Yes, Daytona provides\
+        \ native Git operations and secure credential handling, allowing for seamless\
+        \ integration with your Git repositories.\n\n*   **Q: What programming languages\
+        \ are supported by Daytona?**\n    *   **A:** Daytona supports a wide range\
+        \ of programming languages through its Builtin LSP Support, which offers language\
+        \ server features with multi-language completion and real-time analysis. Example\
+        \ in the documentation shows \"python\" as the language parameter.\n\n*  \
+        \ **Q: How quickly can I deploy an environment using Daytona?**\n    *   **A:**\
+        \ Daytona offers lightning-fast sandbox creation, with environment creation\
+        \ times under 90ms.\n\n*   **Q: What is the purpose of the File API in Daytona?**\n\
+        \    *   **A:** The File API provides operations for managing files within\
+        \ the sandboxes, including upload, download, and modification, enabling users\
+        \ to interact with the file system programmatically.\n\n*   **Q: How does\
+        \ Daytona support AI evaluations?**\n    *   **A:** Daytona scales evaluations\
+        \ across parallel environments with reproducible snapshot states, allowing\
+        \ for comprehensive performance testing of AI models.\n\n*   **Q: What is\
+        \ the \"Tokyo\" customer service agent?**\n    *   **A:** \"Tokyo\" is an\
+        \ AI-powered customer service agent designed to be user-friendly and approachable.\
+        \ It is designed to provide clear answers, schedule appointments, collect\
+        \ necessary information accurately, and offer prompt email confirmations.\n\
+        \n*   **Q: How does \"Tokyo\" handle appointment booking?**\n    *   **A:**\
+        \ \"Tokyo\" collects the user's name, phone number, and reason for the appointment.\
+        \ It verifies the collected data by spelling back the name and phone number\
+        \ and sends an email confirmation within 5-10 minutes of successful data collection.\n\
+        \n*   **Q: How can I get started with Daytona?**\n    *   **A:** You can start\
+        \ for free by visiting [daytona.io](https://daytona.io) and following the\
+        \ instructions to create an account and deploy your first AI application.\n\
+        \n## Contact & Resources\n\n*   **Website:** [daytona.io](https://daytona.io)\n\
+        *   **Documentation:** Refer to the Daytona website for comprehensive documentation\
+        \ and guides.\n*   **Support:** Contact the Daytona support team through the\
+        \ website for assistance and inquiries."
+  resources:
+    limits:
+      cpu: '1'
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+redis:
+  enabled: true
+  image: redis:7-alpine
+  pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+secrets:
+  openaiApiKey: ''
+  elevenlabsApiKey: ''
+  geminiApiKey: AIzaSyBG9nb_Xe2267oBO9s0g0jJOQtJGh47pNk
+  qdrantApiKey: ''
+ingress:
+  enabled: false
+  className: ''
+  annotations: {}
+  hosts: []
+  tls: []

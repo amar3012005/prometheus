@@ -1,0 +1,441 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROMETHEUS DESIGN SYSTEM v3.0
+   Light Mode Day Aesthetic - White, Grey, Orange, Black
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COLOR PALETTE - DAY MODE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Light Mode Base */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FAFAFA;
+  --bg-tertiary: #F5F5F5;
+  --bg-elevated: #FFFFFF;
+
+  /* Surface Colors */
+  --surface-light: #FFFFFF;
+  --surface-muted: #F0F0F0;
+  --surface-card: #FFFFFF;
+
+  /* Text */
+  --text-primary: #0A0A0A;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --text-inverse: #FFFFFF;
+
+  /* Accents */
+  --accent-primary: #FF4D00;
+  --accent-primary-light: rgba(255, 77, 0, 0.1);
+  --accent-primary-medium: rgba(255, 77, 0, 0.2);
+  --accent-secondary: #FF6B2C;
+  --accent-success: #22C55E;
+  --accent-warning: #F59E0B;
+  --accent-error: #EF4444;
+
+  /* Borders */
+  --border-light: #EEEEEE;
+  --border-default: #E0E0E0;
+  --border-strong: #CCCCCC;
+  --border-active: #FF4D00;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1);
+
+  /* Legacy compat */
+  --accent: #FF4D00;
+  --border: #E0E0E0;
+  --text: #0A0A0A;
+  --text-sub: #666666;
+  --bg: #FFFFFF;
+  --sidebar-bg: #FAFAFA;
+  --builder-bg: #FFFFFF;
+  --console-bg: #FAFAFA;
+  --surface: #FFFFFF;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.font-display {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MINIMAL ANIMATIONS (No glow, no sci-fi)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STATIC DOTTED GRID BACKGROUND
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.dotted-grid-bg {
+  background-image: radial-gradient(circle, #D0D0D0 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONSOLE STYLES - CLEAN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.console-container {
+  background: var(--bg-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.console-tag {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.console-tag.system {
+  background: #F0F0F0;
+  color: #666;
+}
+
+.console-tag.planning {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3B82F6;
+}
+
+.console-tag.executing {
+  background: rgba(255, 77, 0, 0.1);
+  color: #FF4D00;
+}
+
+.console-tag.verifying {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22C55E;
+}
+
+.console-tag.voice {
+  background: rgba(168, 85, 247, 0.1);
+  color: #A855F7;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR - MINIMAL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTON STYLES - CLEAN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-strong);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INPUT STYLES - CLEAN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.input-light {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-light:focus {
+  border-color: var(--accent-primary);
+}
+
+.input-light::placeholder {
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARD STYLES - CLEAN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card.active {
+  border-color: var(--accent-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROGRESS BAR - CLEAN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.progress-bar {
+  height: 4px;
+  background: var(--surface-muted);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  transition: width 0.5s ease;
+}
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOX LOADER ANIMATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.box-loader-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+}
+
+.boxes {
+  height: 32px;
+  width: 32px;
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  margin-top: 32px;
+  -webkit-transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
+  transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
+}
+
+.boxes .box {
+  width: 32px;
+  height: 32px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.boxes .box:nth-child(1) {
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+  -webkit-animation: box1 1s linear infinite;
+  animation: box1 1s linear infinite;
+}
+
+.boxes .box:nth-child(2) {
+  -webkit-transform: translate(0, 100%);
+  transform: translate(0, 100%);
+  -webkit-animation: box2 1s linear infinite;
+  animation: box2 1s linear infinite;
+}
+
+.boxes .box:nth-child(3) {
+  -webkit-transform: translate(100%, 100%);
+  transform: translate(100%, 100%);
+  -webkit-animation: box3 1s linear infinite;
+  animation: box3 1s linear infinite;
+}
+
+.boxes .box:nth-child(4) {
+  -webkit-transform: translate(200%, 0);
+  transform: translate(200%, 0);
+  -webkit-animation: box4 1s linear infinite;
+  animation: box4 1s linear infinite;
+}
+
+.boxes .box > .face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-primary);
+  opacity: 0.8;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+.boxes .box > .face-front {
+  -webkit-transform: translateZ(16px);
+  transform: translateZ(16px);
+  opacity: 1;
+}
+
+.boxes .box > .face-right {
+  -webkit-transform: rotateY(90deg) translateZ(16px);
+  transform: rotateY(90deg) translateZ(16px);
+  filter: brightness(0.85);
+}
+
+.boxes .box > .face-top {
+  -webkit-transform: rotateX(90deg) translateZ(16px);
+  transform: rotateX(90deg) translateZ(16px);
+  filter: brightness(1.15);
+}
+
+.boxes .box > .face-bottom {
+  -webkit-transform: rotateX(-90deg) translateZ(16px);
+  transform: rotateX(-90deg) translateZ(16px);
+}
+
+.boxes .box > .face-back {
+  -webkit-transform: rotateY(180deg) translateZ(16px);
+  transform: rotateY(180deg) translateZ(16px);
+}
+
+@keyframes box1 {
+  0%, 50% { transform: translate(100%, 0); }
+  100% { transform: translate(200%, 0); }
+}
+
+@keyframes box2 {
+  0% { transform: translate(0, 100%); }
+  50% { transform: translate(0, 0); }
+  100% { transform: translate(100%, 0); }
+}
+
+@keyframes box3 {
+  0%, 50% { transform: translate(100%, 100%); }
+  100% { transform: translate(0, 100%); }
+}
+
+@keyframes box4 {
+  0% { transform: translate(200%, 0); }
+  50% { transform: translate(200%, 100%); }
+  100% { transform: translate(100%, 100%); }
+}

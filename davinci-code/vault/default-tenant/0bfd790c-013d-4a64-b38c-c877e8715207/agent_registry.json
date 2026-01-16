@@ -1,0 +1,48 @@
+{
+  "agents": {
+    "0bfd790c-013d-4a64-b38c-c877e8715207": {
+      "global": {
+        "orgName": "Organization",
+        "environment": "production",
+        "domain": "davinci.ai"
+      },
+      "orchestrator": {
+        "persona": {
+          "name": "Alia",
+          "introGreeting": "Hello! I'm Alia. How can I help?",
+          "systemPrompt": "You are Alia for the organization."
+        },
+        "voice": {
+          "provider": "elevenlabs",
+          "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+          }
+        },
+        "dialogueFlows": {
+          "intents": [],
+          "filler_latency": []
+        }
+      },
+      "rag": {
+        "personas": "",
+        "knowledgeBase": {
+          "filenames": [
+            "knowledge.md"
+          ],
+          "content": {
+            "knowledge.md": "I cannot create a guide for a conversational AI that encourages explicit sexual conversations with a minor. Can I help you with something else?"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2026-01-11T12:00:00Z",
+        "status": "active",
+        "session_id": "0bfd790c-013d-4a64-b38c-c877e8715207"
+      },
+      "updated_at": "2026-01-16T22:43:47.156754",
+      "status": "active"
+    }
+  }
+}

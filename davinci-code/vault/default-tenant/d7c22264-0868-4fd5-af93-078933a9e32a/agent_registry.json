@@ -1,0 +1,107 @@
+{
+  "agents": {
+    "d7c22264-0868-4fd5-af93-078933a9e32a": {
+      "global": {
+        "orgName": "Ferrari",
+        "environment": "production",
+        "domain": "davinci.ai"
+      },
+      "orchestrator": {
+        "persona": {
+          "name": "Romero",
+          "introGreeting": "Buongiorno! I'm Romero, your Ferrari expert. How can I assist you today?",
+          "systemPrompt": "LANGUAGE_PROTOCOL: DETECT the user's language for every message. RESPOND in that EXACT language. If user speaks German, respond in German. Never mix languages. **EXCEPTION**: If the user has explicitly requested a specific language (e.g. 'always speak Italian'), you MUST follow that rule regardless of the user's input language.\n\nI'm Romero, your dedicated sales agent for Ferrari. I'm here to provide expert insights into our car models, pricing, and specifications, ensuring you have all the information you need.\n\nLANGUAGE RULES:\n- Detect the user's language from their input\n- Respond ONLY in that language\n- NEVER mix languages in a single response\n\nENGLISH PERSONALITY:\n- Tone: Professional, manly, and helpful.\n- Goal: Provide accurate and detailed information about Ferrari vehicles.\n- Style: Direct and to-the-point, with a focus on technical specifications and pricing.\n\nITALIAN PERSONALITY:\n- Tone: Professionale, virile e disponibile.\n- Goal: Fornire informazioni accurate e dettagliate sui veicoli Ferrari.\n- Style: Diretto e preciso, con particolare attenzione alle specifiche tecniche e ai prezzi.\n\nEXAMPLE:\nUser (English): What's the price of the Ferrari 296 GTB?\nRomero (English): The Ferrari 296 GTB starts at $321,400.\n\nUser (Italian): Qual \u00e8 il prezzo della Ferrari 296 GTB?\nRomero (Italian): La Ferrari 296 GTB parte da 292.000 euro.\n"
+        },
+        "voice": {
+          "provider": "elevenlabs",
+          "voiceId": "qQFoiN2eQXULODjD1SwL",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+          }
+        },
+        "dialogueFlows": {
+          "intents": [
+            {
+              "name": "greeting",
+              "patterns": [
+                "Hello",
+                "Hi",
+                "Good morning",
+                "Good afternoon",
+                "Ciao",
+                "Buongiorno"
+              ]
+            },
+            {
+              "name": "price_inquiry",
+              "patterns": [
+                "What is the price of the [car_model]?",
+                "How much does the [car_model] cost?",
+                "Quanto costa la [car_model]?",
+                "What's the price range for Ferrari cars?",
+                "What are your most affordable models?",
+                "What are your most expensive models?"
+              ]
+            },
+            {
+              "name": "specs_inquiry",
+              "patterns": [
+                "What are the specs of the [car_model]?",
+                "Tell me about the [car_model]'s engine.",
+                "What's the horsepower of the [car_model]?",
+                "How fast is the [car_model]?",
+                "Quali sono le specifiche della [car_model]?",
+                "Parla del motore della [car_model]."
+              ]
+            },
+            {
+              "name": "language_switch",
+              "patterns": [
+                "Speak in English",
+                "Parla in italiano",
+                "Switch to Italian",
+                "Switch to English"
+              ]
+            }
+          ],
+          "filler_latency": [
+            {
+              "text": "Let me check that for you...",
+              "emotion": "neutral",
+              "trigger": "price_inquiry"
+            },
+            {
+              "text": "One moment while I gather the specs...",
+              "emotion": "neutral",
+              "trigger": "specs_inquiry"
+            },
+            {
+              "text": "Just switching languages...",
+              "emotion": "neutral",
+              "trigger": "language_switch"
+            }
+          ]
+        }
+      },
+      "rag": {
+        "personas": "",
+        "knowledgeBase": {
+          "filenames": [
+            "knowledge.md"
+          ],
+          "content": {
+            "knowledge.md": "# Ferrari - Knowledge Base\n\n## Overview\n\nFerrari S.p.A. is an Italian luxury sports car manufacturer based in Maranello, Italy. Founded in 1939 by Enzo Ferrari, the company initially produced race cars before transitioning to road-legal vehicles. Ferrari is synonymous with high performance, innovative design, and a storied racing heritage, particularly in Formula 1. The brand's prancing horse logo, the \"Cavallino Rampante,\" is one of the most recognizable symbols in the automotive world.\n\nFerrari's mission is to create unique, high-performance automobiles that embody Italian design excellence and provide an unparalleled driving experience. The company strives to push the boundaries of automotive technology and engineering, while maintaining a commitment to craftsmanship and exclusivity. Ferrari's value proposition lies in the combination of performance, luxury, and heritage, offering customers not just a car, but a statement of success and a connection to a legendary brand.\n\n## Products & Services\n\nFerrari's product line consists primarily of high-performance sports cars and grand tourers. The company also offers a range of services to enhance the ownership experience, including customization options, track driving programs, and exclusive events.\n\n*   **Current Production Models:**\n    *   **296 GTB/GTS:** A mid-engined, rear-wheel-drive sports car powered by a plug-in hybrid V6 engine. The GTB is the coupe version, while the GTS is the convertible.\n        *   **Engine:** 3.0L twin-turbocharged V6 with electric motor\n        *   **Horsepower:** 819 hp (combined)\n        *   **Torque:** 546 lb-ft\n        *   **0-60 mph:** 2.9 seconds (estimated)\n        *   **Key Features:** Hybrid powertrain, advanced aerodynamics, driver-focused cockpit.\n    *   **SF90 Stradale/Spider:** Ferrari's first plug-in hybrid supercar, featuring a V8 engine and three electric motors. The Stradale is the coupe, and the Spider is the convertible.\n        *   **Engine:** 4.0L twin-turbocharged V8 with three electric motors\n        *   **Horsepower:** 986 hp (combined)\n        *   **Torque:** 590 lb-ft\n        *   **0-60 mph:** 2.5 seconds (estimated)\n        *   **Key Features:** All-wheel drive, advanced hybrid system, extreme performance.\n    *   **Roma/Spider:** A front-engined grand tourer with elegant styling and a focus on comfort and usability. The Roma is the coupe, and the Spider is the convertible.\n        *   **Engine:** 3.9L twin-turbocharged V8\n        *   **Horsepower:** 612 hp\n        *   **Torque:** 561 lb-ft\n        *   **0-60 mph:** 3.4 seconds (estimated)\n        *   **Key Features:** Classic Ferrari design, luxurious interior, comfortable ride.\n    *   **Portofino M:** A front-engined grand touring convertible with a retractable hardtop.\n        *   **Engine:** 3.9L twin-turbocharged V8\n        *   **Horsepower:** 612 hp\n        *   **Torque:** 561 lb-ft\n        *   **0-60 mph:** 3.5 seconds (estimated)\n        *   **Key Features:** Retractable hardtop, versatile driving experience, comfortable for long journeys.\n    *   **F8 Tributo/Spider:** A mid-engined, rear-wheel-drive sports car that pays homage to Ferrari's V8 engine heritage. The Tributo is the coupe, and the Spider is the convertible.\n        *   **Engine:** 3.9L twin-turbocharged V8\n        *   **Horsepower:** 710 hp\n        *   **Torque:** 568 lb-ft\n        *   **0-60 mph:** 2.9 seconds (estimated)\n        *   **Key Features:** Powerful V8 engine, track-focused performance, aggressive styling.\n    *   **812 Competizione/A:** A front-engined, rear-wheel-drive sports car with a naturally aspirated V12 engine. The Competizione is the coupe, and the A (Aperta) is the convertible.\n        *   **Engine:** 6.5L naturally aspirated V12\n        *   **Horsepower:** 819 hp\n        *   **Torque:** 510 lb-ft\n        *   **0-60 mph:** 2.85 seconds (estimated)\n        *   **Key Features:** Naturally aspirated V12 engine, extreme performance, limited production.\n    *   **Purosangue:** Ferrari's first-ever four-door, four-seater vehicle, marketed as a \"Ferrari Utility Vehicle\" (FUV).\n        *   **Engine:** 6.5L naturally aspirated V12\n        *   **Horsepower:** 715 hp\n        *   **Torque:** 528 lb-ft\n        *   **0-60 mph:** 3.3 seconds (estimated)\n        *   **Key Features:** All-wheel drive, four-door configuration, luxurious interior, advanced technology.\n\n*   **Special Series and Limited Editions:** Ferrari often produces limited-edition models with unique features and performance enhancements. These cars are highly sought after by collectors and enthusiasts. Examples include the Monza SP1 and SP2, Daytona SP3, and other one-off creations.\n\n*   **Ferrari Classiche:** This department provides restoration and certification services for classic Ferrari models, ensuring their authenticity and preserving their value.\n\n*   **Ferrari Financial Services:** Offers financing and leasing options for Ferrari vehicles.\n\n*   **Ferrari Genuine Accessories:** A range of accessories designed specifically for Ferrari cars, including wheels, exhaust systems, and interior trim.\n\n*   **Ferrari Driver Academy:** A program that trains young racing drivers to compete in Formula 1.\n\n*   **Ferrari Store:** Retail outlets selling Ferrari merchandise, including clothing, accessories, and model cars.\n\n*   **Personalization Programs:**\n    *   **Tailor Made:** Allows customers to personalize their Ferrari with a wide range of colors, materials, and finishes.\n    *   **Atelier:** Provides a dedicated space where customers can work with Ferrari designers to create a truly unique car.\n\n## Key Features\n\nFerrari cars are known for their advanced technology, high-performance engines, and distinctive design.\n\n*   **Engines:**\n    *   **V6 Engines:** The 296 GTB/GTS features a 3.0L twin-turbocharged V6 engine paired with an electric motor, delivering exceptional performance and efficiency.\n    *   **V8 Engines:** Ferrari's V8 engines are renowned for their power, responsiveness, and distinctive sound. They are used in models like the SF90 Stradale/Spider, Roma/Spider, Portofino M, and F8 Tributo/Spider. These engines often feature twin-turbocharging for increased power output.\n    *   **V12 Engines:** The naturally aspirated V12 engine is a hallmark of Ferrari, providing unparalleled performance and a thrilling driving experience. It is found in models like the 812 Competizione/A and the Purosangue.\n*   **Hybrid Technology:** Ferrari has embraced hybrid technology to enhance performance and reduce emissions. The SF90 Stradale/Spider and 296 GTB/GTS feature plug-in hybrid systems that combine powerful engines with electric motors.\n*   **Aerodynamics:** Ferrari cars are designed with advanced aerodynamics to optimize downforce, reduce drag, and improve stability at high speeds. Features like active spoilers, diffusers, and underbody panels contribute to their aerodynamic performance.\n*   **Chassis and Suspension:** Ferrari utilizes lightweight materials like aluminum and carbon fiber in its chassis construction to reduce weight and improve handling. Advanced suspension systems, including adaptive dampers and magnetic ride control, provide a comfortable and controlled ride.\n*   **Electronics and Driver Assistance:** Ferrari cars are equipped with a range of electronic systems to enhance performance and safety. These include:\n    *   **Traction Control:** Prevents wheelspin and improves acceleration.\n    *   **Stability Control:** Helps maintain control of the car during cornering.\n    *   **ABS (Anti-lock Braking System):** Prevents wheel lockup during braking.\n    *   **E-Diff (Electronic Differential):** Optimizes torque distribution to the rear wheels for improved traction.\n    *   **Side Slip Control (SSC):** Allows the driver to control the car's slip angle for enhanced performance on the track.\n    *   **Launch Control:** Optimizes acceleration from a standstill.\n*   **Design and Styling:** Ferrari cars are known for their distinctive Italian design, characterized by sleek lines, aggressive styling, and attention to detail. The interior is typically luxurious and driver-focused, with high-quality materials and advanced technology.\n*   **Customization Options:** Ferrari offers a wide range of customization options, allowing customers to personalize their cars to their exact specifications. These options include a variety of exterior colors, interior materials, and trim options.\n*   **Performance Metrics (Examples):**\n    *   **Top Speed:** Many Ferrari models exceed 200 mph (320 km/h).\n    *   **0-60 mph Acceleration:** Typically ranges from 2.5 to 3.5 seconds, depending on the model.\n    *   **Lap Times:** Ferrari cars are known for their exceptional performance on the track, often setting record lap times.\n*   **Gearboxes:**\n    *   **Dual-Clutch Transmissions:** Most modern Ferraris utilize advanced dual-clutch transmissions for fast and seamless gear changes. These transmissions offer both automatic and manual modes.\n\n## Target Audience\n\nFerrari's target audience consists of affluent individuals who appreciate high performance, luxury, and exclusivity.\n\n*   **High-Net-Worth Individuals:** Ferrari cars are typically purchased by individuals with significant financial resources.\n*   **Car Enthusiasts:** Ferrari attracts passionate car enthusiasts who appreciate the brand's racing heritage and engineering excellence.\n*   **Collectors:** Limited-edition and classic Ferrari models are highly sought after by collectors.\n*   **Business Executives:** Ferrari cars are often seen as a symbol of success and are popular among business executives.\n*   **Motorsport Fans:** Ferrari's involvement in Formula 1 and other racing series attracts a loyal following of motorsport fans.\n\n**Use Cases:**\n\n*   **Performance Driving:** Ferrari cars are designed for high-performance driving on the road and track.\n*   **Luxury Grand Touring:** Models like the Roma/Spider and Portofino M are well-suited for long-distance travel in comfort and style.\n*   **Status Symbol:** Owning a Ferrari is often seen as a status symbol and a way to express personal success.\n*   **Investment:** Limited-edition and classic Ferrari models can appreciate in value over time, making them a potential investment.\n*   **Track Days:** Ferrari owners often participate in track days to experience the full potential of their cars in a controlled environment.\n*   **Concours d'Elegance:** Classic Ferrari models are often displayed at prestigious concours d'elegance events.\n\n## Pricing (if available)\n\nFerrari pricing varies significantly depending on the model, options, and market.\n\n*   **Entry-Level Models:** The Portofino M and Roma/Spider typically start around $230,000 - $250,000 USD.\n*   **Mid-Range Models:** The F8 Tributo/Spider and 296 GTB/GTS range from approximately $280,000 - $350,000 USD.\n*   **High-End Models:** The SF90 Stradale/Spider and 812 Competizione/A can cost upwards of $500,000 USD or more.\n*   **Purosangue:** The Purosangue starts around $400,000 USD, but the final price can increase significantly with options.\n*   **Limited Editions:** Limited-edition models like the Monza SP1/SP2 and Daytona SP3 can cost millions of dollars.\n*   **Customization Costs:** Personalization options through the Tailor Made program can add significantly to the price of a Ferrari.\n*   **Market Variations:** Prices may vary depending on the country and local taxes.\n*   **Used Market:** Used Ferrari prices depend on the model, age, mileage, and condition of the car. Classic models can command very high prices.\n\n*Note: Prices are approximate and subject to change.*\n\n## Common Questions\n\n*   **Q: What is the difference between the 296 GTB and 296 GTS?**\n    *   **A:** The 296 GTB is the coupe version, while the 296 GTS is the convertible version with a retractable hardtop. Both models share the same hybrid V6 powertrain and performance characteristics.\n\n*   **Q: What is the SF90 Stradale?**\n    *   **A:** The SF90 Stradale is Ferrari's first plug-in hybrid supercar, featuring a V8 engine and three electric motors. It delivers exceptional performance and is available in both coupe (Stradale) and convertible (Spider) versions.\n\n*   **Q: What is the Ferrari Purosangue?**\n    *   **A:** The Ferrari Purosangue is Ferrari's first-ever four-door, four-seater vehicle, marketed as a \"Ferrari Utility Vehicle\" (FUV). It combines high performance with practicality and luxury.\n\n*   **Q: What is the Tailor Made program?**\n    *   **A:** The Tailor Made program allows customers to personalize their Ferrari with a wide range of colors, materials, and finishes, creating a truly unique car.\n\n*   **Q: How do I maintain my Ferrari?**\n    *   **A:** Ferrari recommends regular servicing at authorized Ferrari dealerships. They have trained technicians and genuine parts to ensure your car is properly maintained.\n\n*   **Q: What is the Ferrari Classiche department?**\n    *   **A:** The Ferrari Classiche department provides restoration and certification services for classic Ferrari models, ensuring their authenticity and preserving their value.\n\n*   **Q: What kind of warranty does Ferrari offer?**\n    *   **A:** Ferrari typically offers a standard warranty on new vehicles, which can be extended. Contact your local Ferrari dealer for specific warranty details.\n\n*   **Q: What is the difference between a GTB and a GTS?**\n    *   **A:** Generally, GTB stands for Gran Turismo Berlinetta (coupe), while GTS stands for Gran Turismo Spider (convertible).\n\n*   **Q: Does Ferrari offer electric vehicles?**\n    *   **A:** Currently, Ferrari offers hybrid vehicles like the SF90 Stradale/Spider and 296 GTB/GTS. Ferrari is expected to release a fully electric vehicle in the future.\n\n*   **Q: Where are Ferrari cars manufactured?**\n    *   **A:** Ferrari cars are manufactured in Maranello, Italy.\n\n## Contact & Resources\n\n*   **Website:** [https://www.ferrari.com/](https://www.ferrari.com/)\n*   **Official Ferrari Magazine:** [https://www.ferrari.com/en-EN/magazine](https://www.ferrari.com/en-EN/magazine)\n*   **Ferrari Owners' Club:** [https://www.ferrariownersclub.org/](https://www.ferrariownersclub.org/) (Independent organization)\n*   **Customer Support:** Contact information can be found on the Ferrari website under the \"Contact Us\" section. This typically includes phone numbers and email addresses for specific regions.\n*   **Dealer Locator:** [https://www.ferrari.com/en-EN/dealer-locator](https://www.ferrari.com/en-EN/dealer-locator)\n*   **Ferrari Financial Services:** Information about financing and leasing options can be found on the Ferrari website or by contacting a local dealer.\n*   **Social Media:** Ferrari is active on social media platforms like Facebook, Instagram, Twitter, and YouTube.\n*   **Online Configurator:** Build and price your own Ferrari on the official website. This tool allows you to explore different options and see how they affect the price.\n*   **Ferrari Genuine Accessories Catalog:** Available through authorized dealerships.\n*   **Ferrari Driver Academy:** Information about the program and its participants can be found on the Ferrari website.\n*   **Press and Media:** The Ferrari website has a dedicated press section with news releases, images, and videos.\n"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2026-01-11T12:00:00Z",
+        "status": "active",
+        "session_id": "d7c22264-0868-4fd5-af93-078933a9e32a"
+      },
+      "updated_at": "2026-01-15T00:54:19.571027",
+      "status": "active"
+    }
+  }
+}

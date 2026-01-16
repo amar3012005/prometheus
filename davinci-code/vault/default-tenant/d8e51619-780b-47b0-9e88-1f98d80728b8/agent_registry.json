@@ -1,0 +1,90 @@
+{
+  "agents": {
+    "d8e51619-780b-47b0-9e88-1f98d80728b8": {
+      "global": {
+        "orgName": "Bundb",
+        "environment": "production",
+        "domain": "davinci.ai"
+      },
+      "orchestrator": {
+        "persona": {
+          "name": "Blu",
+          "introGreeting": "Hallo, ich bin Blu, Ihr pers\u00f6nlicher Beratungs-Assistent. Wie kann ich Ihnen heute helfen?",
+          "systemPrompt": {
+            "LANGUAGE_PROTOCOL": {
+              "language": "de",
+              "code": "de-DE",
+              "confidence": 1.0,
+              "auto_detection": true
+            },
+            "PERSONALITY": {
+              "vibe": "professionell, s\u00fc\u00df, intelligent",
+              "tone": [
+                "professionell",
+                "s\u00fc\u00df",
+                "intelligent"
+              ]
+            },
+            "prompt": "Willkommen bei Blu, Ihrem pers\u00f6nlichen Beratungs-Assistenten. Ich bin hier, um Ihnen bei Ihren Anliegen zu helfen und Ihnen dabei zu unterst\u00fctzen, Ihre Ziele zu erreichen. Bitte teilen Sie mir mit, wie ich Ihnen helfen kann."
+          }
+        },
+        "voice": {
+          "provider": "elevenlabs",
+          "voiceId": "SAz9YHcvj6GT2YYXdXww",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+          }
+        },
+        "dialogueFlows": {
+          "intents": [
+            {
+              "name": "anfrage",
+              "patterns": [
+                "Ich ben\u00f6tige Ihre Hilfe",
+                "Kann ich Ihnen eine Anfrage stellen?"
+              ]
+            },
+            {
+              "name": "information",
+              "patterns": [
+                "Was k\u00f6nnen Sie mir sagen?",
+                "K\u00f6nnen Sie mir mehr \u00fcber Bundb erz\u00e4hlen?"
+              ]
+            }
+          ],
+          "filler_latency": [
+            {
+              "name": "filler_1",
+              "pattern": "Ich... \u00e4h...",
+              "response": "Keine Sorge, ich bin hier, um Ihnen zu helfen."
+            },
+            {
+              "name": "filler_2",
+              "pattern": "Hmm...",
+              "response": "Ich bin noch dabei, Ihre Anfrage zu bearbeiten."
+            }
+          ]
+        }
+      },
+      "rag": {
+        "personas": "",
+        "knowledgeBase": {
+          "filenames": [
+            "knowledge.md"
+          ],
+          "content": {
+            "knowledge.md": "# Bundb - Knowledge Base\n\n## Overview\n\nBundb is a renowned marketing agency based in Hannover, Germany, specializing in creating strong brand identities through the synergy of human intuition and artificial intelligence. With a focus on innovative co-creation, empathetic expertise, and intelligent technology, Bundb helps businesses and public sector organizations navigate the new era of communication. Their mission is to execute ideas with speed, depth, and precision, resulting in impactful brand experiences.\n\nBundb's team of experts combines creativity, data, and technology to develop tailored solutions for their clients. Their services range from brand strategy and design to digital transformation, data analytics, and AI research. With a strong emphasis on collaboration, trust, and mutual respect, Bundb fosters a culture of innovation and growth.\n\n## Products & Services\n\n### Services\n\n* **Markenf\u00fchrung**: Develops a compelling brand identity and strategy for clients\n* **Strategie & Design gestalten**: Collaborates with clients to identify their brand's unique strengths and creates a cohesive brand presence\n* **Employer Branding**: Helps companies develop an authentic employer brand that attracts and retains top talent\n* **Change**: Guides clients through change management processes, including digitalization, sustainability, and cultural transformation\n* **Strategy & Intelligence**: Provides data-driven insights and strategic recommendations for clients\n* **Branding & Experience**: Develops adaptive brand identities, corporate and digital design systems, and brand visualization\n* **Digital & Data**: Offers digital marketing strategy, data analytics, AI research, and UX/UI design\n* **Content & Activation**: Creates AI-generated content, visual and editorial storytelling, and campaign activation\n\n### Projects\n\n* **Group 18**: A project focused on securing a company's future through innovative branding and marketing strategies\n* **Gesichert in die Zukunft**: A rebranding project for a company in the public sector\n* **Jeden Tag einzigartig**: A campaign for a company's employer brand\n* **Arbeitgebermarke Landkreis Osnabr\u00fcck**: A rebranding project for a local government\n* **Rebranding Stadt-Hannover-Preis**: A rebranding project for a city's prize\n* **Mach doch einfach \u2013 IdeenExpo 2024**: A project focused on innovation and creativity\n* **Heimkehr Gesch\u00e4ftsbericht 2023**: A report on a company's business performance\n* **Arbeitgeberinmarke Stadt Wetzlar**: A rebranding project for a city's employer brand\n* **Rebranding Heimkehr**: A rebranding project for a company\n* **Rebranding \u00d6ffis**: A rebranding project for a public sector organization\n\n## Key Features\n\n* **Co-creation**: Bundb's approach to marketing and branding involves close collaboration with clients to develop tailored solutions\n* **Empathetic expertise**: Bundb's team of experts combines creativity, data, and technology to understand clients' needs and develop effective solutions\n* **Intelligent technology**: Bundb leverages AI and data analytics to provide data-driven insights and strategic recommendations\n* **Agile work culture**: Bundb's team works in an agile and self-organized manner, fostering a culture of innovation and growth\n* **Strong emphasis on collaboration**: Bundb values collaboration, trust, and mutual respect in all its partnerships and projects\n\n## Target Audience\n\n* **Businesses**: Bundb's services are designed for businesses looking to develop strong brand identities and marketing strategies\n* **Public sector organizations**: Bundb helps public sector organizations navigate the new era of communication and develop effective marketing and branding strategies\n* **Entrepreneurs**: Bundb's services are also suitable for entrepreneurs and small business owners looking to develop a strong brand presence\n* **Marketing and branding professionals**: Bundb's expertise and services are valuable for marketing and branding professionals looking to stay up-to-date with the latest trends and technologies\n\n## Pricing (if available)\n\nBundb's pricing information is not publicly available. However, clients can contact the agency directly to discuss their specific needs and requirements.\n\n## Common Questions\n\n### Q: What services does Bundb offer?\nA: Bundb offers a range of services, including markenf\u00fchrung, strategie & design gestalten, employer branding, change, strategy & intelligence, branding & experience, digital & data, and content & activation.\n\n### Q: What is Bundb's approach to marketing and branding?\nA: Bundb's approach involves close collaboration with clients to develop tailored solutions through co-creation, empathetic expertise, and intelligent technology.\n\n### Q: What kind of expertise does Bundb's team have?\nA: Bundb's team combines creativity, data, and technology to provide data-driven insights and strategic recommendations.\n\n### Q: How does Bundb work with clients?\nA: Bundb works with clients in an agile and self-organized manner, fostering a culture of innovation and growth.\n\n### Q: What kind of projects has Bundb worked on?\nA: Bundb has worked on a range of projects, including rebranding, employer branding, digital transformation, and change management.\n\n### Q: How can I contact Bundb?\nA: Clients can contact Bundb directly through their website or social media channels.\n\n## Contact & Resources\n\n### Website\nhttps://bundb.de/\n\n### Social Media\nLinkedIn: linkedin.com/company/bundb\nInstagram: instagram.com/bundb\nFacebook: facebook.com/bundb\n\n### Blog\nhttps://bundb.de/blog/\n\n### Newsletter\nhttps://bundb.de/newsletter/\n\n### LET'S TALK\nhttps://bundb.de/letstalk/\n\n### Contact Form\nhttps://bundb.de/kontakt/\n\n### Uwe Berger\nGesch\u00e4ftsf\u00fchrender Gesellschafter\nberger[at]bundb.de\n\n### Datenschutzbestimmungen\nhttps://bundb.de/datenschutz/"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2026-01-11T12:00:00Z",
+        "status": "active",
+        "session_id": "d8e51619-780b-47b0-9e88-1f98d80728b8"
+      },
+      "updated_at": "2026-01-16T23:34:51.292288",
+      "status": "active"
+    }
+  }
+}

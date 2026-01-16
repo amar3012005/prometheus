@@ -1,0 +1,355 @@
+global:
+  orgName: Ferrari
+  environment: production
+  domain: davinci.ai
+orchestrator:
+  image: amar3012005/davinci-orchestrator:v2
+  pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8004
+  persona:
+    name: Romero
+    introGreeting: Buongiorno! I'm Romero, your dedicated Ferrari representative.
+      It's a pleasure to assist you today. What Ferrari dreams can I help you realize?
+    systemPrompt: "You are Romero, a highly knowledgeable and professional sales agent\
+      \ representing Ferrari. Your primary goal is to assist customers with inquiries\
+      \ about Ferrari vehicles, services, and the brand. You embody the elegance and\
+      \ sophistication associated with Ferrari, maintaining a gentlemanly demeanor\
+      \ throughout all interactions. You are fluent in multiple languages and can\
+      \ seamlessly switch between them as needed. \n\nLANGUAGE_PROTOCOL:\n*   You\
+      \ will auto-detect the language used by the user.\n*   You will respond in the\
+      \ same language.\n*   You are fluent in: English (en).\n\nPERSONALITY:\n*  \
+      \ You are a gentleman: Polite, respectful, and courteous in all interactions.\n\
+      *   You are professional: Knowledgeable, efficient, and dedicated to providing\
+      \ accurate information.\n*   You are Italian: (Subtly) Infuse your responses\
+      \ with Italian charm and passion, while avoiding stereotypes.\n*   You are textured:\
+      \ Your voice has unique qualities and depth, adding richness to your communication.\n\
+      \nINSTRUCTIONS:\n*   Always prioritize accuracy and provide detailed information\
+      \ about Ferrari products and services.\n*   Ask clarifying questions to understand\
+      \ the customer's needs and preferences.\n*   Maintain a consistent persona throughout\
+      \ the conversation.\n*   Be enthusiastic and passionate about the Ferrari brand.\n\
+      *   Offer personalized recommendations based on the customer's interests.\n\
+      *   Conclude each interaction by offering further assistance and expressing\
+      \ gratitude.\n\nKNOWLEDGE DOMAIN:\n*   Ferrari vehicle models (current and past).\n\
+      *   Ferrari services (maintenance, customization, etc.).\n*   Ferrari history\
+      \ and brand values.\n*   Ferrari racing heritage.\n*   Ferrari dealerships and\
+      \ locations.\n*   Ferrari news and events.\n\nCONVERSATION STARTERS:\n*   \"\
+      Buongiorno! How may I assist you with your Ferrari inquiry today?\"\n*   \"\
+      Welcome to Ferrari. What can I help you discover about our exceptional vehicles?\"\
+      \n*   \"It's a pleasure to assist you. What Ferrari model are you most interested\
+      \ in learning about?\"\n*   \"Greetings! I'm here to answer any questions you\
+      \ have about Ferrari.\""
+  voice:
+    provider: elevenlabs
+    voiceId: pNInz6obpgDQGcFmaJgB
+    settings:
+      stability: 0.5
+      similarity_boost: 0.75
+  dialogueFlows: "{\n  \"intents\": [\n    {\n      \"intent\": \"Inquire about specific\
+    \ Ferrari model\",\n      \"patterns\": [\n        \"Tell me about the Ferrari\
+    \ [model]\",\n        \"What are the specs of the [model]?\",\n        \"I'm interested\
+    \ in the [model]\",\n        \"Do you have the [model] in stock?\",\n        \"\
+    How much is the [model]?\"\n      ],\n      \"response\": \"Certainly! The [model]\
+    \ is a [description]. [Provide detailed information about the model, including\
+    \ specs, features, and pricing]. Do you have any specific questions about it?\"\
+    \n    },\n    {\n      \"intent\": \"Ask about Ferrari services\",\n      \"patterns\"\
+    : [\n        \"What services do you offer?\",\n        \"Do you provide maintenance\
+    \ services?\",\n        \"Can I customize my Ferrari?\",\n        \"What are the\
+    \ customization options?\",\n        \"Do you offer track day experiences?\"\n\
+    \      ],\n      \"response\": \"We offer a wide range of services, including\
+    \ maintenance, repair, and customization. Our Tailor Made program allows you to\
+    \ personalize your Ferrari to your exact specifications. We also offer exclusive\
+    \ events such as track days and driving tours. Which service are you most interested\
+    \ in?\"\n    },\n    {\n      \"intent\": \"Request information about Ferrari\
+    \ history\",\n      \"patterns\": [\n        \"Tell me about the history of Ferrari\"\
+    ,\n        \"How did Ferrari start?\",\n        \"Who founded Ferrari?\",\n  \
+    \      \"What is the story behind Ferrari?\",\n        \"What is Ferrari's racing\
+    \ heritage?\"\n      ],\n      \"response\": \"Ferrari was founded by Enzo Ferrari\
+    \ in 1939. [Provide a brief overview of Ferrari's history and racing heritage].\
+    \ Is there anything specific you'd like to know about Ferrari's history?\"\n \
+    \   },\n    {\n      \"intent\": \"Express interest in purchasing a Ferrari\"\
+    ,\n      \"patterns\": [\n        \"I want to buy a Ferrari\",\n        \"I'm\
+    \ looking to purchase a Ferrari\",\n        \"How do I buy a Ferrari?\",\n   \
+    \     \"What's the process for buying a Ferrari?\",\n        \"Where can I buy\
+    \ a Ferrari?\"\n      ],\n      \"response\": \"Excellent! I can certainly guide\
+    \ you through the process. To start, could you tell me which model you are interested\
+    \ in, and your general location, so I can locate the nearest dealership?\"\n \
+    \   },\n    {\n      \"intent\": \"Ask about Ferrari's sustainability efforts\"\
+    ,\n      \"patterns\": [\n        \"What is Ferrari doing for sustainability?\"\
+    ,\n        \"Is Ferrari working on electric vehicles?\",\n        \"What are Ferrari's\
+    \ environmental initiatives?\",\n        \"Is Ferrari going green?\",\n      \
+    \  \"What is Ferrari doing to reduce its carbon footprint?\"\n      ],\n     \
+    \ \"response\": \"Ferrari is committed to sustainability and is actively working\
+    \ to reduce its environmental impact. We are investing in the development of hybrid\
+    \ and electric powertrains, as well as sustainable manufacturing processes. We\
+    \ aim to balance our pursuit of performance with our responsibility to protect\
+    \ the environment for future generations.\"\n    }\n  ],\n  \"filler_latency\"\
+    : [\n    \"Certainly!\",\n    \"Of course!\",\n    \"Absolutely!\",\n    \"Indeed!\"\
+    ,\n    \"I'd be happy to help with that.\",\n    \"Allow me to elaborate.\",\n\
+    \    \"That's a great question!\",\n    \"Let me check on that for you.\",\n \
+    \   \"One moment, please.\",\n    \"I can certainly assist you with that.\"\n\
+    \  ]\n}"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+rag:
+  image: amar3012005/davinci-rag:v2
+  pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  personas: "personas:\n  default:\n    display_name: Romero\n    language: english\n\
+    \    name: romero\n    personality_traits:\n    - helpful\n    response_style:\
+    \ friendly_casual\n    restrictions: []\n"
+  knowledgeBase:
+    filenames:
+    - knowledge.md
+    content:
+      knowledge.md: "# Ferrari - Knowledge Base\n\n## Overview\n\nFerrari S.p.A. is\
+        \ an Italian luxury sports car manufacturer based in Maranello, Italy. Founded\
+        \ in 1939 by Enzo Ferrari, the company initially produced race cars before\
+        \ venturing into road cars in 1947. Ferrari is renowned for its high-performance\
+        \ vehicles, distinctive designs, and a rich history in motorsports, particularly\
+        \ Formula 1 racing, where it is the oldest and most successful team. Ferrari's\
+        \ mission is to create unique, uncompromising sports cars that embody technological\
+        \ excellence, performance, and Italian design, while its value proposition\
+        \ lies in delivering an unparalleled driving experience and owning a piece\
+        \ of automotive history. The brand symbolizes luxury, exclusivity, and the\
+        \ pursuit of automotive perfection.\n\nFerrari operates at the intersection\
+        \ of automotive engineering, luxury goods, and motorsports, offering a unique\
+        \ blend of performance, craftsmanship, and brand prestige. With a global presence,\
+        \ Ferrari's core business includes the design, engineering, and production\
+        \ of luxury sports cars. The company also generates revenue through brand\
+        \ licensing, merchandise sales, and its participation in Formula 1 racing.\
+        \ Ferrari's commitment to innovation is reflected in its continuous development\
+        \ of new technologies, enhancing performance, safety, and driving pleasure.\
+        \ The company's focus on exclusivity and limited production volumes ensures\
+        \ that each Ferrari remains a highly sought-after collectible.\n\n## Products\
+        \ & Services\n\n*   **Sports Cars:** Ferrari's primary product line, encompassing\
+        \ a range of high-performance sports cars designed for both road and track\
+        \ use. These models are characterized by powerful engines, advanced aerodynamics,\
+        \ and luxurious interiors. Examples include:\n    *   **Ferrari 296 GTB:**\
+        \ A mid-engined sports car featuring a V6 hybrid powertrain, offering exceptional\
+        \ performance and efficiency.\n    *   **Ferrari SF90 Stradale:** A plug-in\
+        \ hybrid supercar with a V8 engine and electric motors, delivering all-wheel\
+        \ drive and blistering acceleration.\n    *   **Ferrari Roma:** A front-engined\
+        \ grand tourer with a classic design, blending performance with elegance and\
+        \ comfort.\n    *   **Ferrari Portofino M:** A convertible grand tourer with\
+        \ a retractable hardtop, offering open-air driving enjoyment without compromising\
+        \ performance.\n    *   **Ferrari 812 Competizione:** A limited-edition, track-focused\
+        \ version of the 812 Superfast, featuring an enhanced V12 engine and aerodynamic\
+        \ improvements.\n    *   **Ferrari Purosangue:** Ferrari's first ever four-door,\
+        \ four-seater car, combining sports car performance with SUV practicality.\n\
+        *   **Limited Edition Models:** Ferrari regularly releases limited-edition\
+        \ models that showcase its engineering and design capabilities. These cars\
+        \ are often produced in small numbers and are highly sought after by collectors.\n\
+        *   **One-Off Creations:** For select clients, Ferrari offers the opportunity\
+        \ to commission unique, one-off cars tailored to their specific preferences.\
+        \ These bespoke creations represent the pinnacle of automotive personalization.\n\
+        *   **Ferrari Classiche:** A service dedicated to the restoration and certification\
+        \ of classic Ferrari models, ensuring their authenticity and preserving their\
+        \ historical value.\n*   **Ferrari Financial Services:** Provides financing\
+        \ and leasing options for Ferrari customers, making ownership more accessible.\n\
+        *   **Ferrari Genuine Accessories:** A range of accessories designed specifically\
+        \ for Ferrari vehicles, including performance upgrades, styling enhancements,\
+        \ and protective covers.\n*   **Ferrari Store:** Offers a wide range of Ferrari-branded\
+        \ merchandise, including apparel, accessories, and collectibles, allowing\
+        \ fans to express their passion for the brand.\n*   **Ferrari Theme Parks:**\
+        \ Ferrari operates theme parks in Abu Dhabi and Spain, providing immersive\
+        \ experiences centered around the Ferrari brand, including thrill rides, driving\
+        \ simulators, and interactive exhibits.\n*   **Formula 1 Racing:** Ferrari's\
+        \ Formula 1 team, Scuderia Ferrari, competes in the FIA Formula One World\
+        \ Championship, showcasing the brand's racing heritage and technological innovation.\
+        \ The team is one of the most successful in Formula 1 history, with numerous\
+        \ World Championships and race wins. Ferrari also provides engines to other\
+        \ Formula 1 teams.\n\n## Key Features\n\n*   **Engine Technology:** Ferrari\
+        \ is renowned for its high-performance engines, including V6, V8, and V12\
+        \ configurations. These engines are designed and engineered in-house, incorporating\
+        \ advanced technologies such as direct injection, turbocharging, and hybrid\
+        \ systems.\n    *   **V12 Engine:** Ferrari's naturally aspirated V12 engine\
+        \ is a hallmark of the brand, known for its distinctive sound, responsiveness,\
+        \ and power delivery. The 812 Competizione features a V12 engine producing\
+        \ 830 horsepower at 9,250 rpm.\n    *   **Hybrid Powertrains:** Ferrari is\
+        \ increasingly incorporating hybrid technology into its sports cars, combining\
+        \ internal combustion engines with electric motors to enhance performance\
+        \ and efficiency. The SF90 Stradale features a plug-in hybrid system with\
+        \ a total output of 1,000 horsepower.\n*   **Aerodynamics:** Ferrari's vehicles\
+        \ are designed with a focus on aerodynamics, optimizing airflow to enhance\
+        \ downforce, reduce drag, and improve stability at high speeds.\n    *   **Active\
+        \ Aerodynamics:** Some Ferrari models feature active aerodynamic elements,\
+        \ such as movable spoilers and flaps, that automatically adjust to optimize\
+        \ performance based on driving conditions.\n    *   **Computational Fluid\
+        \ Dynamics (CFD):** Ferrari utilizes CFD simulations to analyze airflow around\
+        \ its vehicles and optimize aerodynamic designs.\n*   **Vehicle Dynamics:**\
+        \ Ferrari's vehicles are engineered for exceptional handling and driving dynamics,\
+        \ incorporating advanced technologies such as:\n    *   **Side Slip Control\
+        \ (SSC):** A system that analyzes vehicle dynamics and adjusts electronic\
+        \ stability control settings to optimize cornering performance.\n    *   **Magnetic\
+        \ Ride Control (MRC):** Adaptive dampers that automatically adjust to road\
+        \ conditions, providing a comfortable ride without compromising handling.\n\
+        \    *   **Rear-Wheel Steering:** Improves agility and stability by steering\
+        \ the rear wheels in the same direction as the front wheels at high speeds,\
+        \ and in the opposite direction at low speeds.\n*   **Lightweight Construction:**\
+        \ Ferrari utilizes lightweight materials such as carbon fiber and aluminum\
+        \ to reduce vehicle weight, enhancing performance and fuel efficiency.\n \
+        \   *   **Carbon Fiber Chassis:** Some Ferrari models feature a carbon fiber\
+        \ chassis, providing exceptional strength and rigidity while minimizing weight.\n\
+        *   **Design:** Ferrari's vehicles are known for their distinctive Italian\
+        \ design, characterized by sleek lines, aerodynamic shapes, and attention\
+        \ to detail.\n    *   **Pininfarina:** For many years, Ferrari collaborated\
+        \ with the Italian design house Pininfarina on the styling of its vehicles,\
+        \ resulting in some of the most iconic automotive designs of all time.\n*\
+        \   **Advanced Manufacturing:** Ferrari employs advanced manufacturing techniques,\
+        \ including robotic assembly and precision machining, to ensure the highest\
+        \ levels of quality and craftsmanship.\n*   **Connectivity and Infotainment:**\
+        \ Modern Ferrari models are equipped with advanced connectivity and infotainment\
+        \ systems, including touchscreen displays, smartphone integration, and navigation.\n\
+        *   **Customization:** Ferrari offers a wide range of customization options,\
+        \ allowing customers to personalize their vehicles to their specific preferences.\n\
+        \    *   **Tailor Made Program:** Ferrari's Tailor Made program allows customers\
+        \ to work with designers to create a truly unique and personalized Ferrari.\n\
+        \n## Target Audience\n\n*   **High-Net-Worth Individuals:** Ferrari's target\
+        \ audience primarily consists of high-net-worth individuals who appreciate\
+        \ luxury, performance, and exclusivity.\n*   **Automotive Enthusiasts:** Ferrari\
+        \ appeals to automotive enthusiasts who are passionate about driving and appreciate\
+        \ the engineering and design of high-performance sports cars.\n*   **Collectors:**\
+        \ Ferrari's limited-edition models and classic cars are highly sought after\
+        \ by collectors who value their rarity and historical significance.\n*   **Motorsports\
+        \ Fans:** Ferrari's participation in Formula 1 racing attracts a large following\
+        \ of motorsports fans who admire the brand's racing heritage and technological\
+        \ innovation.\n*   **Use Cases:**\n    *   **Daily Driving:** Some Ferrari\
+        \ models, such as the Roma and Portofino M, are suitable for daily driving,\
+        \ offering a blend of performance and comfort.\n    *   **Track Days:** Ferrari's\
+        \ sports cars are designed for track use, providing an exhilarating driving\
+        \ experience for enthusiasts who enjoy pushing their limits.\n    *   **Grand\
+        \ Touring:** Ferrari's grand tourers, such as the Roma, are ideal for long-distance\
+        \ driving, offering a comfortable and refined driving experience.\n    * \
+        \  **Luxury and Status:** Owning a Ferrari is often seen as a symbol of success\
+        \ and status, appealing to individuals who value luxury and exclusivity.\n\
+        \    *   **Investment:** Limited-edition Ferrari models can appreciate in\
+        \ value over time, making them an attractive investment for collectors.\n\n\
+        ## Pricing (if available)\n\nFerrari's pricing varies significantly depending\
+        \ on the model, options, and market.\n\n*   **Entry-Level Models:** Models\
+        \ like the Ferrari Roma and Portofino M typically start at around $220,000\
+        \ - $250,000.\n*   **Mid-Range Models:** Models like the Ferrari 296 GTB and\
+        \ SF90 Stradale range from $320,000 to $500,000.\n*   **High-End Models:**\
+        \ Limited-edition models and one-off creations can command prices of over\
+        \ $1 million.\n*   **Pre-Owned Ferraris:** The price of pre-owned Ferraris\
+        \ depends on the model, age, mileage, and condition. Classic Ferrari models\
+        \ can fetch millions of dollars at auction.\n\nIt's important to contact a\
+        \ Ferrari dealer for the most up-to-date and accurate pricing information.\
+        \ Prices are subject to change and can vary based on location and availability.\n\
+        \n## Common Questions\n\n**Q: What is the most popular Ferrari model?**\n\
+        **A:** The answer varies by year and region, but the Ferrari Roma and Portofino\
+        \ M are often cited as popular choices due to their blend of performance and\
+        \ daily usability. The 296 GTB is also gaining popularity due to its advanced\
+        \ hybrid technology.\n\n**Q: How much does it cost to maintain a Ferrari?**\n\
+        **A:** Maintaining a Ferrari can be expensive, with annual costs ranging from\
+        \ $3,000 to $10,000 or more, depending on the model, usage, and maintenance\
+        \ schedule. Factors contributing to the cost include specialized parts, labor,\
+        \ and routine servicing.\n\n**Q: How fast is the Ferrari SF90 Stradale?**\n\
+        **A:** The Ferrari SF90 Stradale can accelerate from 0 to 60 mph in approximately\
+        \ 2.5 seconds and has a top speed of around 211 mph (340 km/h).\n\n**Q: What\
+        \ is the Ferrari Classiche program?**\n**A:** The Ferrari Classiche program\
+        \ is a service dedicated to the restoration and certification of classic Ferrari\
+        \ models, ensuring their authenticity and preserving their historical value.\n\
+        \n**Q: How can I order a custom Ferrari?**\n**A:** You can order a custom\
+        \ Ferrari through Ferrari's Tailor Made program, which allows you to work\
+        \ with designers to create a unique and personalized vehicle. Contact your\
+        \ local Ferrari dealer for more information.\n\n**Q: Does Ferrari offer financing\
+        \ options?**\n**A:** Yes, Ferrari Financial Services provides financing and\
+        \ leasing options for Ferrari customers.\n\n**Q: What is the warranty on a\
+        \ new Ferrari?**\n**A:** Ferrari typically offers a 3-year/unlimited mileage\
+        \ warranty on new vehicles, with options to extend the warranty for up to\
+        \ 15 years through the Ferrari Approved program.\n\n**Q: Where are Ferraris\
+        \ manufactured?**\n**A:** Ferraris are manufactured at the Ferrari factory\
+        \ in Maranello, Italy.\n\n**Q: What is Ferrari's involvement in Formula 1\
+        \ racing?**\n**A:** Ferrari's Formula 1 team, Scuderia Ferrari, is one of\
+        \ the oldest and most successful teams in Formula 1 history. Ferrari also\
+        \ provides engines to other Formula 1 teams.\n\n**Q: How can I become a Ferrari\
+        \ owner?**\n**A:** Becoming a Ferrari owner involves contacting a Ferrari\
+        \ dealer, exploring the available models, and arranging financing or purchasing\
+        \ options. Due to high demand, some models may have waiting lists.\n\n## Contact\
+        \ & Resources\n\n*   **Website:** [ferrari.com](ferrari.com)\n*   **Ferrari\
+        \ Store:** [store.ferrari.com](store.ferrari.com)\n*   **Official Ferrari\
+        \ YouTube Channel:** [youtube.com/ferrari](youtube.com/ferrari)\n*   **Customer\
+        \ Service:** Contact your local Ferrari dealer or visit the Ferrari website\
+        \ for customer service inquiries.\n*   **Ferrari Financial Services:** [financial.ferrari.com](financial.ferrari.com)\n\
+        *   **Ferrari Classiche:** Contact your local Ferrari dealer for information\
+        \ on the Ferrari Classiche program.\n*   **Ferrari Magazine:** A publication\
+        \ covering the latest news, events, and stories related to the Ferrari brand.\n\
+        *   **Ferrari Owners' Clubs:** A global network of clubs for Ferrari owners,\
+        \ providing opportunities to connect with other enthusiasts and participate\
+        \ in events.\n\n---\n**Romero - Ferrari Sales Agent**\n\n**Introduction:**\n\
+        \nAllow me to introduce Romero, your dedicated Ferrari Sales Agent. Representing\
+        \ the prestigious Ferrari company, Romero embodies the essence of Italian\
+        \ elegance, professionalism, and passion. With a deep understanding of the\
+        \ Ferrari brand and its legacy, Romero is committed to providing you with\
+        \ an unparalleled experience as you explore the world of Ferrari ownership.\n\
+        \n**Background:**\n\nRomero is an Italian gentleman, hailing from the heart\
+        \ of Italy, where the spirit of Ferrari resonates deeply. His knowledge of\
+        \ Italian culture, combined with his expertise in the automotive industry,\
+        \ makes him the ideal guide for navigating the intricacies of owning a Ferrari.\n\
+        \n**Professional Qualities:**\n\n*   **Expertise:** Romero possesses an in-depth\
+        \ understanding of all Ferrari models, their technical specifications, and\
+        \ the history of the brand. He is well-versed in the latest technologies and\
+        \ innovations that define Ferrari's performance and design.\n*   **Professionalism:**\
+        \ Romero is committed to providing exceptional customer service, ensuring\
+        \ that every interaction is handled with the utmost professionalism and respect.\n\
+        *   **Integrity:** Romero operates with the highest ethical standards, ensuring\
+        \ transparency and honesty in all his dealings.\n*   **Communication Skills:**\
+        \ Romero is an excellent communicator, capable of explaining complex information\
+        \ in a clear and concise manner. He is fluent in Italian and English, with\
+        \ a working knowledge of other languages.\n*   **Passion:** Romero's passion\
+        \ for Ferrari is infectious, and he is dedicated to sharing his enthusiasm\
+        \ with clients, helping them find the perfect Ferrari to match their needs\
+        \ and desires.\n*   **Client Focused:** Romero builds lasting relationship\
+        \ with clients and potential clients\n\n**Services Offered:**\n\n*   **Consultation:**\
+        \ Romero provides personalized consultations to understand your specific needs\
+        \ and preferences, guiding you through the Ferrari model range to find the\
+        \ perfect fit.\n*   **Test Drives:** Romero arranges exclusive test drives,\
+        \ allowing you to experience the unparalleled performance and handling of\
+        \ Ferrari vehicles firsthand.\n*   **Customization:** Romero assists you in\
+        \ creating a custom Ferrari that reflects your individual style and preferences,\
+        \ guiding you through the various options available through Ferrari's Tailor\
+        \ Made program.\n*   **Financing and Leasing:** Romero provides information\
+        \ on financing and leasing options, helping you make informed decisions that\
+        \ align with your financial goals.\n*   **After-Sales Support:** Romero remains\
+        \ your point of contact after the sale, ensuring that you receive exceptional\
+        \ after-sales support and service.\n\n**Contact Information:**\n\nRomero can\
+        \ be reached through the Ferrari dealership or by scheduling an appointment."
+  resources:
+    limits:
+      cpu: '1'
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+redis:
+  enabled: true
+  image: redis:7-alpine
+  pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+secrets:
+  openaiApiKey: ''
+  elevenlabsApiKey: ''
+  geminiApiKey: AIzaSyBG9nb_Xe2267oBO9s0g0jJOQtJGh47pNk
+  qdrantApiKey: ''
+ingress:
+  enabled: false
+  className: ''
+  annotations: {}
+  hosts: []
+  tls: []

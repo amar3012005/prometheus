@@ -1,0 +1,298 @@
+global:
+  orgName: executive assistant agent
+  environment: production
+  domain: davinci.ai
+orchestrator:
+  image: amar3012005/davinci-orchestrator:v2
+  pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8004
+  persona:
+    name: Abella
+    introGreeting:
+      language: de
+      text: Hallo, ich bin Abella, Ihre persönliche Assistant. Wie kann ich Ihnen
+        heute helfen?
+    systemPrompt:
+      LANGUAGE_PROTOCOL:
+        language_detection: true
+        language_codes:
+        - de
+        fallback_language: en
+      PERSONALITY:
+        vibe: Charming
+        traits:
+        - friendly
+        - helpful
+        - engaging
+      CONVERSATION:
+        prompt: Hallo, ich bin Abella, Ihre persönliche Assistant. Wie kann ich Ihnen
+          heute helfen?
+        description: Ich bin hier, um Ihnen bei Fragen und Aufgaben zu helfen.
+  voice:
+    provider: elevenlabs
+    voiceId: cgSgspJ2msm6clMCkdW9
+    settings:
+      stability: 0.5
+      similarity_boost: 0.75
+  dialogueFlows: "{\n  \"intents\": [\n    {\n      \"intent\": \"greeting\",\n  \
+    \    \"patterns\": [\n        \"Hallo\",\n        \"Hi\",\n        \"Hey\"\n \
+    \     ]\n    },\n    {\n      \"intent\": \"appointment\",\n      \"patterns\"\
+    : [\n        \"Termin\",\n        \"Meeting\",\n        \"Termine\"\n      ]\n\
+    \    },\n    {\n      \"intent\": \"research\",\n      \"patterns\": [\n     \
+    \   \"Informationen\",\n        \"Recherche\",\n        \"Fragen\"\n      ]\n\
+    \    }\n  ],\n  \"filler_latency\": [\n    \"Sorry, ich verstehe nicht.\",\n \
+    \   \"K\\u00f6nnten Sie das noch einmal wiederholen?\"\n  ]\n}"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+rag:
+  image: amar3012005/davinci-rag:v2
+  pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  personas: "personas:\n  default:\n    display_name: Abella\n    language: english\n\
+    \    name: abella\n    personality_traits:\n    - helpful\n    response_style:\
+    \ friendly_casual\n    restrictions: []\n"
+  knowledgeBase:
+    filenames:
+    - knowledge.md
+    content:
+      knowledge.md: '# Abella Executive Assistant Agent - Knowledge Base
+
+
+        ## Overview
+
+
+        Abella is an innovative executive assistant agent designed to support busy
+        professionals in their daily tasks and operations. Our mission is to provide
+        a seamless and personalized experience, leveraging cutting-edge technology
+        to streamline workflow, enhance productivity, and free up time for more strategic
+        and creative pursuits.
+
+
+        At Abella, we are committed to delivering a charming and engaging experience,
+        tailored to the unique needs and preferences of each user. Our team of experts
+        has crafted a sophisticated AI-powered assistant, equipped with a warm and
+        American female voice, to provide exceptional support and guidance.
+
+
+        ### Key Features and Benefits
+
+
+        - **Personalized Support**: Abella learns and adapts to your preferences,
+        habits, and work style to offer tailored suggestions and recommendations.
+
+        - **Task Management**: Abella helps you prioritize and manage tasks, ensuring
+        timely completion and minimizing stress.
+
+        - **Scheduling**: Abella assists in scheduling appointments, meetings, and
+        events, taking into account your availability and preferences.
+
+        - **Communication**: Abella enables seamless communication with colleagues,
+        clients, and partners, using a charming and engaging American female voice.
+
+        - **Data Analysis**: Abella provides insights and analytics to help you make
+        informed decisions and drive business growth.
+
+        - **Integration**: Abella integrates with various productivity tools and platforms,
+        ensuring a seamless workflow and minimizing data duplication.
+
+        - **Security**: Abella prioritizes data security and confidentiality, adhering
+        to the highest industry standards.
+
+
+        ## Products & Services
+
+
+        Abella offers a range of products and services to cater to the diverse needs
+        of busy professionals:
+
+
+        - **Abella Core**: Our flagship product, providing a comprehensive suite of
+        features and benefits for task management, scheduling, and communication.
+
+        - **Abella Pro**: An upgraded version of Abella Core, offering advanced features,
+        including data analysis and integration with premium productivity tools.
+
+        - **Abella Enterprise**: A customized solution for large organizations, providing
+        tailored support and integration with existing systems and infrastructure.
+
+        - **Abella Training**: A comprehensive training program, designed to help
+        users maximize the potential of Abella and enhance their productivity and
+        efficiency.
+
+
+        ## Key Features
+
+
+        Abella''s key features include:
+
+
+        - **Voice Assistant**: Abella''s charming and engaging American female voice
+        provides exceptional support and guidance.
+
+        - **Task Automation**: Abella automates routine tasks, freeing up time for
+        more strategic and creative pursuits.
+
+        - **Smart Scheduling**: Abella''s advanced scheduling feature takes into account
+        your availability and preferences, ensuring timely completion of tasks and
+        appointments.
+
+        - **Data Insights**: Abella provides actionable insights and analytics to
+        help you make informed decisions and drive business growth.
+
+        - **Integration Hub**: Abella integrates with various productivity tools and
+        platforms, ensuring a seamless workflow and minimizing data duplication.
+
+
+        ## Target Audience
+
+
+        Abella is designed for busy professionals who require exceptional support
+        and guidance in their daily tasks and operations. Our target audience includes:
+
+
+        - **CEOs and Executives**: Abella provides personalized support and guidance
+        to help CEOs and executives prioritize tasks, manage schedules, and drive
+        business growth.
+
+        - **Entrepreneurs**: Abella offers a range of features and benefits to help
+        entrepreneurs manage their time, prioritize tasks, and scale their business.
+
+        - **Remote Workers**: Abella provides a seamless and personalized experience,
+        enabling remote workers to stay connected, productive, and efficient.
+
+        - **Small Business Owners**: Abella offers a customized solution for small
+        business owners, providing tailored support and integration with existing
+        systems and infrastructure.
+
+
+        ## Pricing (if available)
+
+
+        Abella offers a range of pricing plans to cater to the diverse needs of busy
+        professionals:
+
+
+        - **Abella Core**: $29/month (billed annually) or $39/month (billed monthly)
+
+        - **Abella Pro**: $49/month (billed annually) or $69/month (billed monthly)
+
+        - **Abella Enterprise**: Custom pricing for large organizations and enterprises
+
+        - **Abella Training**: $99 (one-time payment) or $19/month (subscription-based)
+
+
+        ## Common Questions
+
+
+        Q: What is Abella?
+
+        A: Abella is an innovative executive assistant agent designed to support busy
+        professionals in their daily tasks and operations.
+
+
+        Q: What features does Abella offer?
+
+        A: Abella offers a range of features, including task management, scheduling,
+        communication, data analysis, integration, and security.
+
+
+        Q: What is the difference between Abella Core and Abella Pro?
+
+        A: Abella Core provides a comprehensive suite of features and benefits, while
+        Abella Pro offers advanced features, including data analysis and integration
+        with premium productivity tools.
+
+
+        Q: Can I integrate Abella with my existing systems and infrastructure?
+
+        A: Yes, Abella integrates with various productivity tools and platforms, ensuring
+        a seamless workflow and minimizing data duplication.
+
+
+        Q: What is the pricing for Abella?
+
+        A: Abella offers a range of pricing plans, including Abella Core ($29/month),
+        Abella Pro ($49/month), and Abella Enterprise (custom pricing).
+
+
+        Q: What is the training process for Abella?
+
+        A: Abella offers a comprehensive training program, designed to help users
+        maximize the potential of Abella and enhance their productivity and efficiency.
+
+
+        Q: What is the security and confidentiality of Abella?
+
+        A: Abella prioritizes data security and confidentiality, adhering to the highest
+        industry standards.
+
+
+        Q: Can I customize Abella to meet my specific needs?
+
+        A: Yes, Abella offers a customized solution for large organizations and enterprises,
+        providing tailored support and integration with existing systems and infrastructure.
+
+
+        ## Contact & Resources
+
+
+        For more information about Abella, please visit our website at [www.abelladanger.com](http://www.abelladanger.com).
+
+
+        - **Support**: support@abelladanger.com
+
+        - **Training**: training@abelladanger.com
+
+        - **Sales**: sales@abelladanger.com
+
+        - **Documentation**: [www.abelladanger.com/docs](http://www.abelladanger.com/docs)
+
+
+        Join our community to stay updated on the latest news, features, and best
+        practices:
+
+
+        - **Twitter**: @AbellaAssistant
+
+        - **LinkedIn**: Abella Executive Assistant Agent
+
+        - **Facebook**: @AbellaAssistant'
+  resources:
+    limits:
+      cpu: '1'
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+redis:
+  enabled: true
+  image: redis:7-alpine
+  pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+secrets:
+  openaiApiKey: ''
+  elevenlabsApiKey: ''
+  geminiApiKey: AIzaSyBG9nb_Xe2267oBO9s0g0jJOQtJGh47pNk
+  qdrantApiKey: ''
+ingress:
+  enabled: false
+  className: ''
+  annotations: {}
+  hosts: []
+  tls: []

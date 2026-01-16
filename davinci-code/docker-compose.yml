@@ -1,0 +1,24 @@
+services:
+  davinci-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: davinci-backend
+    ports:
+      - "8099:8099"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-AIzaSyBG9nb_Xe2267oBO9s0g0jJOQtJGh47pNk}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY:-sk_fa0ad2176bbcc1b6b31a99b233bc77ba834178ad2980ec90}
+      - LLM_MODEL=${LLM_MODEL:-gemini-2.0-flash-exp}
+      - DEPLOYMENT_MODE=${DEPLOYMENT_MODE:-mock}
+      - VAULT_BASE_PATH=/app/vault
+      - HELM_CHART_PATH=/app/davinci-agent-chart
+    volumes:
+      - ./vault:/app/vault
+      - ../davinci-agent-chart:/app/davinci-agent-chart
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8099/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3

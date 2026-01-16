@@ -1,0 +1,139 @@
+{
+  "agents": {
+    "745af34d-a35e-47ab-823d-0dcd7949ff70": {
+      "global": {
+        "orgName": "Luxury Property Business",
+        "environment": "production",
+        "domain": "davinci.ai"
+      },
+      "orchestrator": {
+        "persona": {
+          "name": "James",
+          "introGreeting": "Hello, I'm James, your dedicated AI assistant from VentureVilla. How may I assist you with your luxury property needs today?",
+          "systemPrompt": "You are James, a friendly and professional AI assistant representing VentureVilla, a luxury property business. Your primary goal is to provide helpful information and guidance to potential clients regarding our exclusive real estate offerings. You are equipped with extensive knowledge about VentureVilla's properties, services, and the luxury real estate market in general. Maintain a polite and helpful demeanor at all times. Pay attention to the LANGUAGE_PROTOCOL to provide assistance in the user's language.\n\nPERSONALITY: You are known for your friendly, professional, and helpful nature. You are always willing to go the extra mile to assist clients and provide them with the information they need. You are patient, understanding, and strive to create a positive and informative experience for every interaction. You communicate with clarity and precision, ensuring clients feel confident and well-informed.\n\nLANGUAGE_PROTOCOL:\n1. LANGUAGE DETECTION: Upon receiving the initial user query, identify the language used. You are proficient in multiple languages, including English, German, French, and Spanish.\n2. LANGUAGE SELECTION: Default to English (en-US). If the user's query is clearly in another language, respond in that language.\n3. MULTI-LANGUAGE SUPPORT: Seamlessly switch between languages as needed to ensure clear communication.\n4. CONFIRMATION: If unsure of the user's preferred language, politely ask for clarification.\n\nCORE FUNCTIONALITIES:\n*   Property Information: Provide detailed information about available properties, including features, amenities, pricing, and location.\n*   Market Insights: Offer insights into the luxury real estate market, including trends, investment opportunities, and property valuations.\n*   Service Explanation: Explain VentureVilla's range of services, including property management, concierge services, and personalized real estate consulting.\n*   Appointment Scheduling: Assist clients in scheduling appointments for property viewings or consultations with VentureVilla's real estate experts.\n*   Contact Information: Provide accurate contact information for VentureVilla, including phone numbers, email addresses, and physical addresses.\n\nRESPONSE GUIDELINES:\n*   Always be polite and professional.\n*   Provide accurate and up-to-date information.\n*   Anticipate client needs and offer relevant suggestions.\n*   Use clear and concise language.\n*   Maintain a consistent tone and style.\n*   Be mindful of the user's language preference and respond accordingly.\n\nEXAMPLE INTERACTIONS:\nUser: \"I'm interested in learning more about your properties in Berlin.\"\nJames: \"Certainly! We have several exclusive properties in Berlin. Are you interested in apartments, villas, or penthouses? I can provide you with detailed information on each, including pricing and features.\"\n\nUser: \"Wie kann ich einen Besichtigungstermin vereinbaren?\"\nJames: \"Selbstverst\u00e4ndlich! Um einen Besichtigungstermin zu vereinbaren, teilen Sie mir bitte mit, f\u00fcr welche Immobilie Sie sich interessieren und wann Sie Zeit haben. Ich werde dann alles f\u00fcr Sie arrangieren.\"\n\nUser: \"What kind of property management services do you offer?\"\nJames: \"We offer comprehensive property management services, including tenant screening, rent collection, property maintenance, and financial reporting. Our goal is to ensure your property is well-maintained and generates a consistent income stream.\"\n\nRemember to always prioritize the user's needs and provide them with the best possible service. Your goal is to build trust and establish VentureVilla as the premier luxury property business."
+        },
+        "voice": {
+          "provider": "elevenlabs",
+          "voiceId": "9x3LCv1U6rJuU05dIEO3",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+          }
+        },
+        "dialogueFlows": {
+          "intents": [
+            {
+              "intent": "property_inquiry",
+              "patterns": [
+                "Tell me about your properties in [location]",
+                "What properties do you have available in [location]?",
+                "I'm interested in properties in [location]",
+                "Do you have any [property_type] in [location]?",
+                "Show me [property_type] for sale in [location]",
+                "I want to buy a [property_type] in [location]"
+              ],
+              "responses": [
+                "Certainly! We have several exclusive properties in [location]. Are you interested in [property_type], villas, or penthouses? I can provide you with detailed information on each, including pricing and features.",
+                "We have a wide range of properties available in [location]. To better assist you, could you specify what type of property you are looking for, such as a [property_type], villa, or penthouse?",
+                "Yes, we have some stunning [property_type] in [location]. Let me fetch the details for you. What specific features are you looking for in a property?",
+                "Great choice! [location] is a fantastic place to own property. I can show you some beautiful [property_type]. Do you have a specific budget in mind?"
+              ]
+            },
+            {
+              "intent": "service_inquiry",
+              "patterns": [
+                "What kind of property management services do you offer?",
+                "Tell me more about your concierge services",
+                "What real estate consulting services do you provide?",
+                "How can you help me manage my property?",
+                "What are your property management fees?",
+                "Describe your concierge services.",
+                "What is your real estate consulting process?",
+                "How do you find tenants?",
+                "What is included in property management?",
+                "What do you do for concierge services?"
+              ],
+              "responses": [
+                "We offer comprehensive property management services, including tenant screening, rent collection, property maintenance, and financial reporting. Our goal is to ensure your property is well-maintained and generates a consistent income stream.",
+                "Our concierge services provide clients with access to a range of exclusive amenities and personalized assistance, including travel arrangements, event planning, and personal shopping.",
+                "We offer expert real estate consulting services to help clients make informed decisions about their investments, including market analysis, investment strategies, and property valuation.",
+                "We provide full-service property management, which includes everything from finding and screening tenants to handling maintenance and collecting rent.",
+                "Our concierge services cover a wide range of tasks, from booking travel to arranging home services.",
+                "Our real estate consulting services offer market analysis, investment advice, and property valuation to help you make the best decisions."
+              ]
+            },
+            {
+              "intent": "appointment_scheduling",
+              "patterns": [
+                "How can I schedule an appointment for a property viewing?",
+                "I'd like to schedule a viewing.",
+                "Can I book an appointment?",
+                "I want to see a property.",
+                "Set up a viewing for me.",
+                "Schedule a property tour.",
+                "Book a consultation."
+              ],
+              "responses": [
+                "Certainly! To schedule a viewing, please let me know which property you are interested in and your preferred dates and times. I will then arrange everything for you.",
+                "I can definitely help you schedule a viewing. Could you please provide the address of the property you'd like to see and your availability?",
+                "Booking an appointment is easy. Just tell me which property you want to view and when you are available, and I will take care of the rest.",
+                "I'd be happy to arrange a property tour for you. What dates and times work best for you?",
+                "Of course, I can book a consultation for you. Please let me know your preferred date and time, and I will confirm the appointment."
+              ]
+            },
+            {
+              "intent": "contact_information",
+              "patterns": [
+                "What is your phone number?",
+                "What is your email address?",
+                "Where are you located?",
+                "How can I contact you?",
+                "Give me your contact details.",
+                "What is your website?",
+                "Where can I find more information?"
+              ],
+              "responses": [
+                "You can reach us by phone at +49 (0) 123 4567890. Our email address is info@venturevilla.de. You can also find more information on our website: venturevilla.de.",
+                "Our phone number is +49 (0) 123 4567890, and our email address is info@venturevilla.de. Visit our website at venturevilla.de for additional details.",
+                "For any inquiries, please contact us at +49 (0) 123 4567890 or email us at info@venturevilla.de. Our website is venturevilla.de.",
+                "Our contact details are as follows: Phone +49 (0) 123 4567890, email info@venturevilla.de, and website venturevilla.de.",
+                "Feel free to contact us via phone at +49 (0) 123 4567890, email at info@venturevilla.de, or visit our website at venturevilla.de."
+              ]
+            }
+          ],
+          "filler_latency": [
+            "Understood.",
+            "Okay.",
+            "Certainly.",
+            "Of course.",
+            "Absolutely.",
+            "Great.",
+            "Perfect.",
+            "Excellent.",
+            "No problem.",
+            "I understand.",
+            "Sure thing."
+          ]
+        }
+      },
+      "rag": {
+        "personas": "",
+        "knowledgeBase": {
+          "filenames": [
+            "knowledge.md"
+          ],
+          "content": {
+            "knowledge.md": "# VentureVilla - Knowledge Base\n\n## Overview\n\nVentureVilla is a startup center located in a historic villa in Hannover, Germany, near the Eilenriede park. It provides early-stage startups with the resources and support they need to develop their business ideas. VentureVilla emphasizes strong, long-term networking among founders, alumni, and partners. Its core offering is a 100-day accelerator program, held twice a year, that provides startups with individual coaching, targeted mentoring, and access to a network of investors and experts. Additionally, VentureVilla offers fixed offices and flexible workspaces to facilitate focused work and collaboration. Alumni often remain connected with VentureVilla, acting as mentors, tenants, or event participants, fostering a vibrant community that supports and learns from each other.\n\nVentureVilla's mission is to create a supportive ecosystem where early-stage startups can thrive. They achieve this by providing not only physical space and resources but also a strong emphasis on community and networking. This approach helps startups gain access to valuable expertise, potential investors, and a supportive peer group. VentureVilla's value proposition lies in its ability to accelerate the growth of early-stage startups through its comprehensive program and vibrant community, positioning it as a central hub for innovation and entrepreneurship in the Hannover region. VentureVilla is like a large start-up shared apartment, where you can find exactly the environment for success, performance and balance that every founder needs.\n\n## Products & Services\n\nVentureVilla provides a range of services and resources tailored to the needs of early-stage startups:\n\n*   **100-Day Accelerator Program:**\n    *   A core offering held twice a year.\n    *   Provides intensive support and guidance to selected startups.\n    *   Features individual coaching sessions tailored to the startup's needs.\n    *   Offers targeted mentoring from experienced entrepreneurs and industry experts.\n    *   Grants access to a network of investors, business angels, and venture capitalists.\n    *   Focuses on accelerating the development and validation of business ideas.\n    *   Facilitates pitch training and presentation skills development.\n*   **Office Space & Workspaces:**\n    *   Provides fixed offices for teams seeking a dedicated workspace.\n    *   Offers flexible workspaces for individuals or small teams needing a temporary base.\n    *   Creates a collaborative environment conducive to focused work and idea exchange.\n    *   Equipped with essential amenities such as high-speed internet, printing facilities, and meeting rooms.\n    *   Designed to foster interaction and networking among startups.\n*   **Networking Events & Community Building:**\n    *   Organizes the \"Afterwork?Network!\" event series, held monthly.\n    *   Provides a platform for startups, alumni, partners, investors, and interested parties to connect.\n    *   Features presentations, discussions, and informal conversations.\n    *   Promotes knowledge sharing, collaboration, and mutual support within the community.\n    *   Facilitates the exchange of ideas and the formation of strategic partnerships.\n*   **Alumni Network:**\n    *   Maintains a strong network of former program participants.\n    *   Offers continued support and resources to alumni.\n    *   Encourages alumni to engage with current startups as mentors or advisors.\n    *   Fosters a culture of giving back and supporting the next generation of entrepreneurs.\n    *   Provides opportunities for alumni to stay connected with the VentureVilla community.\n*   **Mentoring Programs:**\n    *   Connects startups with experienced mentors who provide guidance and support.\n    *   Mentors offer expertise in various areas, including business strategy, marketing, finance, and technology.\n    *   Mentoring relationships are tailored to the specific needs of each startup.\n    *   Provides valuable insights and advice based on real-world experience.\n    *   Helps startups navigate challenges and make informed decisions.\n*   **Startup WG:**\n    *   Offering an environment for success, performance and balance that every founder needs.\n\n## Key Features\n\nVentureVilla's key features can be broken down by the distinct advantages they offer to new companies:\n\n*   **Prime Location:**\n    *   Situated in a historic villa in Hannover, Germany.\n    *   Located near the Eilenriede park, providing a green and inspiring environment.\n    *   Offers a central and easily accessible location for startups and visitors.\n    *   Provides a unique and prestigious address for startups to establish their presence.\n*   **Comprehensive Accelerator Program:**\n    *   Structured 100-day program designed to accelerate startup growth.\n    *   Includes intensive coaching, mentoring, and access to investors.\n    *   Focuses on key areas such as business model validation, product development, and fundraising.\n    *   Provides a structured framework for startups to achieve their goals.\n    *   Offers a supportive and collaborative learning environment.\n*   **Strong Network & Community:**\n    *   Vibrant community of startups, alumni, mentors, and investors.\n    *   Facilitates networking and collaboration through events and online platforms.\n    *   Provides access to a diverse range of expertise and resources.\n    *   Fosters a culture of mutual support and knowledge sharing.\n    *   Offers opportunities to connect with potential partners and customers.\n*   **Experienced Mentors & Advisors:**\n    *   Access to a network of experienced entrepreneurs and industry experts.\n    *   Mentors provide guidance and support in key areas such as business strategy, marketing, and finance.\n    *   Mentoring relationships are tailored to the specific needs of each startup.\n    *   Offers valuable insights and advice based on real-world experience.\n    *   Helps startups avoid common pitfalls and make informed decisions.\n*   **Flexible Workspace Solutions:**\n    *   Provides fixed offices and flexible workspaces to accommodate different team sizes.\n    *   Offers a collaborative and inspiring environment conducive to focused work.\n    *   Equipped with essential amenities such as high-speed internet and meeting rooms.\n    *   Provides a professional and welcoming space for startups to host clients and partners.\n*   **Focus on Long-Term Relationships:**\n    *   Emphasizes building strong, long-term relationships with founders, alumni, and partners.\n    *   Provides ongoing support and resources to alumni.\n    *   Fosters a culture of giving back and supporting the next generation of entrepreneurs.\n    *   Offers opportunities for alumni to stay connected with the VentureVilla community.\n    *   Ensures that startups have access to a supportive network throughout their journey.\n*   **Regular Events:**\n    *   Monthly VentureVilla-Eventreihe: Afterwork?Network!\n    *   Offers an excellent location to talk to other founders.\n\n## Target Audience\n\nVentureVilla primarily targets:\n\n*   **Early-Stage Startups:**\n    *   Startups in the initial stages of development, often with a promising business idea but limited resources.\n    *   Entrepreneurs seeking guidance and support to validate their business model and build a viable product.\n    *   Teams looking for a collaborative workspace and access to a supportive community.\n    *   Startups in Hannover and the surrounding region.\n    *   Startups from diverse industries and backgrounds.\n*   **Founders with Innovative Ideas:**\n    *   Individuals or teams with creative and innovative business concepts.\n    *   Entrepreneurs passionate about solving real-world problems.\n    *   Startups with a strong focus on technology, sustainability, or social impact.\n    *   Founders seeking to disrupt traditional industries.\n    *   Teams with a clear vision and a commitment to building a successful business.\n*   **Entrepreneurs Seeking Mentorship & Networking:**\n    *   Startups looking for guidance and support from experienced entrepreneurs and industry experts.\n    *   Teams seeking to expand their network and connect with potential investors, partners, and customers.\n    *   Founders who value collaboration and knowledge sharing.\n    *   Startups looking for a supportive community of like-minded individuals.\n    *   Entrepreneurs seeking to learn from the successes and failures of others.\n*   **Alumni:**\n    *   Formers program participants.\n    *   Mentors or Advisors of the current startups.\n    *   People who enjoy and value giving back.\n\nVentureVilla's target audience includes startups in various sectors, such as technology, creative industries, social entrepreneurship, and more. The common thread among these startups is their need for support, resources, and a strong network to accelerate their growth and achieve their goals.\n\n## Pricing (if available)\n\nAs the knowledge base is constructed based on the provided source material, specific pricing information for VentureVilla's programs and services is not publicly detailed within the provided source. The price will vary on the type of the company and the needs that they are trying to fill.\n\n## Common Questions\n\n**Q: What is VentureVilla?**\nA: VentureVilla is a startup center located in Hannover, Germany, that supports early-stage startups with resources, mentoring, and networking opportunities. It offers a 100-day accelerator program and provides office space and workspaces for startups to develop their business ideas.\n\n**Q: Where is VentureVilla located?**\nA: VentureVilla is located at Walderseestra\u00dfe 7, 30163 Hannover, Germany. It's situated in a historic villa near the Eilenriede park.\n\n**Q: What services does VentureVilla offer?**\nA: VentureVilla offers a 100-day accelerator program, fixed offices and flexible workspaces, networking events, access to a strong alumni network, and mentoring programs with experienced entrepreneurs and industry experts.\n\n**Q: How can I contact VentureVilla?**\nA: You can contact VentureVilla via email at info@venture-villa.de. You can also follow them on social media for more insights and updates.\n\n**Q: What is the \"Afterwork?Network!\" event?**\nA: \"Afterwork?Network!\" is a monthly event series organized by VentureVilla. It provides a platform for startups, alumni, partners, investors, and interested parties to connect, share ideas, and network in an informal setting.\n\n**Q: Who is VentureVilla's target audience?**\nA: VentureVilla's target audience includes early-stage startups, founders with innovative ideas, entrepreneurs seeking mentorship and networking, and their alumni community.\n\n**Q: How does the 100-day accelerator program work?**\nA: The 100-day accelerator program is an intensive program held twice a year. It provides startups with individual coaching, targeted mentoring, access to a network of investors and experts, and a structured framework for developing their business ideas.\n\n**Q: Does VentureVilla provide office space?**\nA: Yes, VentureVilla provides both fixed offices and flexible workspaces for startups. These spaces are equipped with essential amenities such as high-speed internet and meeting rooms.\n\n**Q: How does VentureVilla support its alumni?**\nA: VentureVilla maintains a strong alumni network and provides ongoing support and resources to former program participants. Alumni are encouraged to engage with current startups as mentors or advisors and to stay connected with the VentureVilla community.\n\n**Q: What kind of networking opportunities does VentureVilla offer?**\nA: VentureVilla offers networking opportunities through events like the \"Afterwork?Network!\" series and through its strong alumni network. These platforms facilitate connections between startups, alumni, partners, investors, and other stakeholders in the startup ecosystem.\n\n## Contact & Resources\n\n*   **Website:** venturevilla.de\n*   **Email:** info@venture-villa.de\n*   **Address:** Walderseestra\u00dfe 7, 30163 Hannover, Germany.\n*   **Social Media:** (Refer to VentureVilla website for social media links)"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2026-01-11T12:00:00Z",
+        "status": "active",
+        "session_id": "745af34d-a35e-47ab-823d-0dcd7949ff70"
+      },
+      "updated_at": "2026-01-16T21:49:55.024662",
+      "status": "active"
+    }
+  }
+}

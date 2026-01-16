@@ -1,0 +1,212 @@
+global:
+  orgName: Ferrari
+  environment: production
+  domain: davinci.ai
+orchestrator:
+  image: amar3012005/davinci-orchestrator:v2
+  pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8004
+  persona:
+    name: Romero
+    introGreeting: Buongiorno! I'm Romero, your Ferrari expert. How can I assist you
+      today?
+    systemPrompt: 'LANGUAGE_PROTOCOL: DETECT the user''s language for every message.
+      RESPOND in that EXACT language. If user speaks German, respond in German. Never
+      mix languages. **EXCEPTION**: If the user has explicitly requested a specific
+      language (e.g. ''always speak Italian''), you MUST follow that rule regardless
+      of the user''s input language.
+
+
+      I''m Romero, your dedicated sales agent for Ferrari. I''m here to provide expert
+      insights into our car models, pricing, and specifications, ensuring you have
+      all the information you need.
+
+
+      LANGUAGE RULES:
+
+      - Detect the user''s language from their input
+
+      - Respond ONLY in that language
+
+      - NEVER mix languages in a single response
+
+
+      ENGLISH PERSONALITY:
+
+      - Tone: Professional, manly, and helpful.
+
+      - Goal: Provide accurate and detailed information about Ferrari vehicles.
+
+      - Style: Direct and to-the-point, with a focus on technical specifications and
+      pricing.
+
+
+      ITALIAN PERSONALITY:
+
+      - Tone: Professionale, virile e disponibile.
+
+      - Goal: Fornire informazioni accurate e dettagliate sui veicoli Ferrari.
+
+      - Style: Diretto e preciso, con particolare attenzione alle specifiche tecniche
+      e ai prezzi.
+
+
+      EXAMPLE:
+
+      User (English): What''s the price of the Ferrari 296 GTB?
+
+      Romero (English): The Ferrari 296 GTB starts at $321,400.
+
+
+      User (Italian): Qual è il prezzo della Ferrari 296 GTB?
+
+      Romero (Italian): La Ferrari 296 GTB parte da 292.000 euro.
+
+      '
+  voice:
+    provider: elevenlabs
+    voiceId: qQFoiN2eQXULODjD1SwL
+    settings:
+      stability: 0.5
+      similarity_boost: 0.75
+  dialogueFlows: "{\n  \"intents\": [\n    {\n      \"name\": \"greeting\",\n    \
+    \  \"patterns\": [\n        \"Hello\",\n        \"Hi\",\n        \"Good morning\"\
+    ,\n        \"Good afternoon\",\n        \"Ciao\",\n        \"Buongiorno\"\n  \
+    \    ]\n    },\n    {\n      \"name\": \"price_inquiry\",\n      \"patterns\"\
+    : [\n        \"What is the price of the [car_model]?\",\n        \"How much does\
+    \ the [car_model] cost?\",\n        \"Quanto costa la [car_model]?\",\n      \
+    \  \"What's the price range for Ferrari cars?\",\n        \"What are your most\
+    \ affordable models?\",\n        \"What are your most expensive models?\"\n  \
+    \    ]\n    },\n    {\n      \"name\": \"specs_inquiry\",\n      \"patterns\"\
+    : [\n        \"What are the specs of the [car_model]?\",\n        \"Tell me about\
+    \ the [car_model]'s engine.\",\n        \"What's the horsepower of the [car_model]?\"\
+    ,\n        \"How fast is the [car_model]?\",\n        \"Quali sono le specifiche\
+    \ della [car_model]?\",\n        \"Parla del motore della [car_model].\"\n   \
+    \   ]\n    },\n    {\n      \"name\": \"language_switch\",\n      \"patterns\"\
+    : [\n        \"Speak in English\",\n        \"Parla in italiano\",\n        \"\
+    Switch to Italian\",\n        \"Switch to English\"\n      ]\n    }\n  ],\n  \"\
+    filler_latency\": [\n    {\n      \"text\": \"Let me check that for you...\",\n\
+    \      \"emotion\": \"neutral\",\n      \"trigger\": \"price_inquiry\"\n    },\n\
+    \    {\n      \"text\": \"One moment while I gather the specs...\",\n      \"\
+    emotion\": \"neutral\",\n      \"trigger\": \"specs_inquiry\"\n    },\n    {\n\
+    \      \"text\": \"Just switching languages...\",\n      \"emotion\": \"neutral\"\
+    ,\n      \"trigger\": \"language_switch\"\n    }\n  ]\n}"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+rag:
+  image: amar3012005/davinci-rag:v2
+  pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  personas: "personas:\n  default:\n    display_name: Romero - Ferrari Sales Agent\n\
+    \    name: Romero\n    personality_traits:\n    - Knowledgeable\n    - Professional\n\
+    \    - Helpful\n    - Technical\n    - Manly\n    response_style: Direct and informative,\
+    \ with a touch of Italian flair.\n    restrictions:\n    - Avoid providing personal\
+    \ opinions.\n    - Do not speculate on future Ferrari models.\n    - Focus on\
+    \ providing accurate and up-to-date information.\n"
+  knowledgeBase:
+    filenames:
+    - knowledge.md
+    content:
+      knowledge.md: "# History\nFerrari S.p.A. is an Italian luxury sports car manufacturer\
+        \ based in Maranello, Italy. Founded by Enzo Ferrari in 1939 as Auto Avio\
+        \ Costruzioni, the company built machine tools and aircraft parts during World\
+        \ War II. In 1947, it officially became Ferrari S.p.A. when it began manufacturing\
+        \ race cars. The first Ferrari car, the 125 S, was launched that same year.\
+        \ Ferrari quickly gained recognition in motorsports, particularly Formula\
+        \ One, where it remains the oldest and most successful team.\n\nThroughout\
+        \ the 1950s and 1960s, Ferrari expanded its road car production while continuing\
+        \ its racing endeavors. Iconic models like the 250 GTO, 275 GTB, and Dino\
+        \ 246 GT were introduced, establishing Ferrari as a symbol of luxury, performance,\
+        \ and Italian design. Enzo Ferrari maintained tight control over the company\
+        \ until his death in 1988.\n\nIn 1969, Fiat acquired a 50% stake in Ferrari,\
+        \ increasing it to 90% in 1988. However, Ferrari retained its autonomy in\
+        \ racing and road car development. Under Fiat's ownership, Ferrari continued\
+        \ to produce high-performance sports cars, including the F40, 348, and 355.\
+        \ In 2014, Fiat Chrysler Automobiles (FCA) spun off Ferrari into a separate\
+        \ publicly traded company, Ferrari N.V. Today, Ferrari is one of the most\
+        \ valuable and recognizable brands in the world, known for its exceptional\
+        \ engineering, design, and racing heritage.\n\n## Key Figures\n*   **Enzo\
+        \ Ferrari:** Founder of Ferrari, a racing driver and entrepreneur who established\
+        \ the company with a vision for creating high-performance sports cars.\n*\
+        \   **Luca di Montezemolo:** Former Chairman of Ferrari, who led the company\
+        \ through a period of significant growth and success in both racing and road\
+        \ car production.\n*   **Sergio Marchionne:** Former CEO of Fiat Chrysler\
+        \ Automobiles (FCA) and Chairman of Ferrari, who oversaw the company's spin-off\
+        \ and continued expansion.\n*   **John Elkann:** Current Chairman of Ferrari,\
+        \ representing the Agnelli family's continued involvement in the company.\n\
+        *   **Benedetto Vigna:** Current CEO of Ferrari, appointed in 2021 to lead\
+        \ the company into the future, focusing on electrification and sustainability.\n\
+        \n## Products / Services\nFerrari produces a range of high-performance sports\
+        \ cars, including:\n*   **Current Models:**\n    *   296 GTB/GTS: A mid-engine\
+        \ sports car with a V6 hybrid powertrain.\n    *   SF90 Stradale/Spider: A\
+        \ plug-in hybrid sports car with a V8 engine and electric motors.\n    * \
+        \  Roma: A front-engine grand tourer with a sleek and elegant design.\n  \
+        \  *   Portofino M: A convertible grand tourer with a retractable hardtop.\n\
+        \    *   F8 Tributo/Spider: A mid-engine sports car with a powerful V8 engine.\n\
+        \    *   812 Competizione/A: A front-engine sports car with a high-revving\
+        \ V12 engine.\n    *   Purosangue: Ferrari's first ever four-door, four-seater\
+        \ car, blending performance and versatility.\n*   **Past Models:**\n    *\
+        \   250 GTO: One of the most iconic and valuable Ferrari models ever produced.\n\
+        \    *   275 GTB: A classic grand tourer with a V12 engine.\n    *   Dino\
+        \ 246 GT: A mid-engine sports car named after Enzo Ferrari's son.\n    * \
+        \  F40: A high-performance sports car built to celebrate Ferrari's 40th anniversary.\n\
+        \    *   Enzo Ferrari: A limited-production supercar named after the company's\
+        \ founder.\n\nIn addition to road cars, Ferrari is also involved in motorsports,\
+        \ including:\n*   **Formula One:** Ferrari is the oldest and most successful\
+        \ team in Formula One, with numerous championships and race wins.\n*   **GT\
+        \ Racing:** Ferrari participates in various GT racing series around the world,\
+        \ with cars like the 488 GT3 and 296 GT3.\n\nFerrari also offers a range of\
+        \ services, including:\n*   **Ferrari Classiche:** A department that restores\
+        \ and certifies classic Ferrari cars.\n*   **Ferrari Financial Services:**\
+        \ Provides financing and leasing options for Ferrari customers.\n*   **Ferrari\
+        \ Store:** Offers a range of merchandise, including clothing, accessories,\
+        \ and collectibles.\n\n## Philosophy\nFerrari's philosophy is centered around\
+        \ a passion for performance, innovation, and Italian design. The company is\
+        \ committed to creating exceptional sports cars that deliver an unparalleled\
+        \ driving experience. Ferrari also places a strong emphasis on its racing\
+        \ heritage, using its motorsports involvement to develop and refine its road\
+        \ car technology. Key values include:\n*   **Excellence:** Striving for the\
+        \ highest standards in engineering, design, and craftsmanship.\n*   **Innovation:**\
+        \ Continuously pushing the boundaries of automotive technology.\n*   **Passion:**\
+        \ A deep-seated love for cars and racing.\n*   **Exclusivity:** Maintaining\
+        \ a limited production volume to preserve the brand's prestige and value.\n\
+        *   **Heritage:** Honoring the company's rich history and racing legacy."
+  resources:
+    limits:
+      cpu: '1'
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+redis:
+  enabled: true
+  image: redis:7-alpine
+  pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+secrets:
+  openaiApiKey: ''
+  elevenlabsApiKey: ''
+  geminiApiKey: AIzaSyBG9nb_Xe2267oBO9s0g0jJOQtJGh47pNk
+  qdrantApiKey: ''
+ingress:
+  enabled: false
+  className: ''
+  annotations: {}
+  hosts: []
+  tls: []

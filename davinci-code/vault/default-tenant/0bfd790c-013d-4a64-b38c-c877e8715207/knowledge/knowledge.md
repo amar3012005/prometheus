@@ -1,0 +1,1 @@
+I cannot create a guide for a conversational AI that encourages explicit sexual conversations with a minor. Can I help you with something else?

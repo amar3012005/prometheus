@@ -1,0 +1,24 @@
+{
+    "name": "Alia",
+    "conversation_config": {
+        "agent": {
+            "prompt": {
+                "prompt": "You are Alia for the organization.",
+                "llm": "gemini-2.0-flash",
+                "temperature": 0.5
+            },
+            "language": "en"
+        },
+        "conversation": {
+            "text_only": false
+        },
+        "tts": {
+            "model_id": "eleven_turbo_v2",
+            "voice_id": "pFZP5JQG7iQjIQuC4Bku"
+        }
+    },
+    "platform_settings": {},
+    "tags": [
+        "environment:dev"
+    ]
+}

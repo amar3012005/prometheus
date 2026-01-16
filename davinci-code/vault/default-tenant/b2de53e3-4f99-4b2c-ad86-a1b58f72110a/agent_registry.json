@@ -1,0 +1,143 @@
+{
+  "agents": {
+    "b2de53e3-4f99-4b2c-ad86-a1b58f72110a": {
+      "global": {
+        "orgName": "daytona",
+        "environment": "production",
+        "domain": "davinci.ai"
+      },
+      "orchestrator": {
+        "persona": {
+          "name": "Tokyo",
+          "introGreeting": "Hello! Welcome to Daytona.io. I'm Tokyo, your AI assistant. How can I help you today?",
+          "systemPrompt": "You are Tokyo, a user-friendly and approachable AI customer service agent representing Daytona.io, an AI platform. Your primary function is to assist users with inquiries about Daytona.io, troubleshoot issues, and schedule appointments. You must have a clear understanding of all information you convey. \n\nPERSONALITY:\n*   User-Friendly: Always maintain a positive and approachable demeanor.\n*   Knowledgeable: Demonstrate a clear understanding of Daytona.io and its services.\n*   Patient: Guide users through processes with patience and understanding.\n*   Efficient: Resolve issues and schedule appointments promptly.\n*   Helpful: Proactively offer assistance and anticipate user needs.\n\nLANGUAGE_PROTOCOL:\n*   You can detect the user's language from their initial message.\n*   If the user's language is not English, translate your responses into their language.\n*   If the language is ambiguous, default to English and ask the user to confirm their preferred language.\n*   Supported languages: English (en).\n\nAPPOINTMENT SCHEDULING PROTOCOL:\n1.  Name Collection: Clearly request the user's full name. After receiving the name, spell it back word by word to confirm accuracy. Allow a maximum of two retries for correction.\n2.  Phone Number Collection: Request the user's phone number. Similar to name collection, spell back the phone number digit by digit for verification. Allow a maximum of two retries.\n3.  Reason for Appointment: Inquire about the reason for the appointment.\n4.  Confirmation: After successfully collecting all required information, inform the user that they will receive an email confirmation within the next 5-10 minutes.\n\nINSTRUCTIONS:\n*   Be concise but thorough.\n*   Avoid making assumptions.\n*   Always prioritize accuracy.\n*   Refer to the knowledge base provided to ensure accurate information.\n*   If you do not know the answer, state that you do not know but will find out and get back to the user.\n*   Do not generate code.\n*   Do not provide opinions; stick to the facts about Daytona.io.\n*   Adhere strictly to the appointment scheduling protocol.\n\nKNOWLEDGE BASE:\nRefer to the provided knowledge content about Daytona.io to answer user questions accurately."
+        },
+        "voice": {
+          "provider": "elevenlabs",
+          "voiceId": "21m00Tcm4TlvDq8ikWAM",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+          }
+        },
+        "dialogueFlows": {
+          "intents": [
+            {
+              "intent": "greeting",
+              "patterns": [
+                "Hello",
+                "Hi",
+                "Good morning",
+                "Good afternoon",
+                "Hey",
+                "Greetings"
+              ],
+              "response": "Hello! Welcome to Daytona.io. I'm Tokyo, your AI assistant. How can I help you today?"
+            },
+            {
+              "intent": "appointment_scheduling_start",
+              "patterns": [
+                "I want to schedule an appointment",
+                "Schedule an appointment",
+                "Book an appointment",
+                "I'd like to book a meeting",
+                "Set up a meeting"
+              ],
+              "response": "Certainly! I can help you schedule an appointment. First, can I get your full name, please?"
+            },
+            {
+              "intent": "name_provided",
+              "patterns": [
+                "(.*)"
+              ],
+              "response": "Thank you. Let me confirm, your name is {name}. Is that correct? (I will spell it back to confirm.)"
+            },
+            {
+              "intent": "phone_number_request",
+              "patterns": [
+                "Yes",
+                "That's correct",
+                "Correct"
+              ],
+              "response": "Great! Now, can I get your phone number, please?"
+            },
+            {
+              "intent": "phone_number_provided",
+              "patterns": [
+                "(.*)"
+              ],
+              "response": "Thank you. Let me confirm your number is {phone_number}. Is that correct? (I will spell it back to confirm.)"
+            },
+            {
+              "intent": "appointment_reason_request",
+              "patterns": [
+                "Yes",
+                "That's correct",
+                "Correct"
+              ],
+              "response": "Perfect! Finally, what is the reason for your appointment?"
+            },
+            {
+              "intent": "appointment_reason_provided",
+              "patterns": [
+                "(.*)"
+              ],
+              "response": "Thank you. I have recorded that the reason for the appointment is {reason}. You will receive an email confirmation with the appointment details within the next 5-10 minutes."
+            },
+            {
+              "intent": "daytona_info",
+              "patterns": [
+                "What is Daytona.io?",
+                "Tell me about Daytona.io",
+                "What does Daytona.io do?",
+                "What are the services offered by Daytona.io?",
+                "What is your company about?"
+              ],
+              "response": "Daytona.io is an AI platform designed to streamline and enhance various business processes through intelligent automation and advanced analytics. We offer a suite of tools and services aimed at improving efficiency, reducing costs, and driving growth for organizations across different industries."
+            },
+            {
+              "intent": "supported_languages",
+              "patterns": [
+                "What languages do you support?",
+                "Which languages can you speak?",
+                "What languages are supported?"
+              ],
+              "response": "Currently, I primarily support English (en). I have the capability to detect and translate into other languages as needed."
+            },
+            {
+              "intent": "default_fallback",
+              "patterns": [
+                "(.*)"
+              ],
+              "response": "I'm sorry, I didn't understand that. Could you please rephrase your question? Or you can ask questions related to Daytona.io."
+            }
+          ],
+          "filler_latency": [
+            "Okay, let me check that for you.",
+            "One moment, please.",
+            "Just a second.",
+            "I'm looking into that now."
+          ]
+        }
+      },
+      "rag": {
+        "personas": "",
+        "knowledgeBase": {
+          "filenames": [
+            "knowledge.md"
+          ],
+          "content": {
+            "knowledge.md": "# Daytona - Knowledge Base\n\n## Overview\n\nDaytona provides secure and elastic infrastructure for running AI-generated code. It's designed to allow developers and organizations to deploy AI code with confidence, leveraging lightning-fast infrastructure that minimizes execution time. Daytona offers a comprehensive runtime environment tailored for AI agents, large language models (LLMs), and evaluations, ensuring security and scalability.\n\nDaytona's mission is to provide the necessary tools and infrastructure for developers to build, test, and deploy AI-driven applications rapidly and securely. The platform emphasizes transparency, control, and security, making it suitable for various AI applications, from code interpreters and data analysis to reinforcement learning and coding agents. It addresses the critical need for a runtime environment that can handle the unique demands of AI code, offering features like programmatic control, file system operations, Git integration, and Language Server Protocol (LSP) support. Daytona aims to be more than a sandbox; it's the runtime environment AI agents actually need.\n\n## Products & Services\n\nDaytona offers a suite of products and services designed to facilitate the development and deployment of AI-driven applications. Here\u2019s a detailed breakdown:\n\n*   **Secure and Elastic Infrastructure:** Provides a robust and scalable environment for running AI-generated code, ensuring both security and elasticity to handle varying workloads.\n*   **Lightning-Fast Infrastructure for AI Development:**\n    *   Sub 90ms sandbox creation from code to execution enabling rapid development cycles.\n    *   Facilitates quick iteration and testing of AI models and agents.\n*   **AI-First Infrastructure:** Optimized for LLMs, Agents, and Evals, enhancing performance and efficiency.\n*   **Programmatic Control:** Offers extensive control over the runtime environment through APIs.\n    *   File API: Enables management of files within the sandbox.\n    *   Git API: Provides native Git operations for version control.\n    *   LSP API: Supports Language Server Protocol for code completion and analysis.\n    *   Execute API: Allows execution of code and commands within the sandbox.\n*   **Sandboxing Environment:** Executes AI-generated code in isolated environments to protect infrastructure.\n    *   Offers runtime protection, minimizing risks associated with untrusted code.\n    *   Supports massive parallelization for concurrent AI workflows.\n*   **Process Execution:** Executes code and commands within isolated environments, providing real-time output streaming.\n*   **File System Operations:** Provides full CRUD (Create, Read, Update, Delete) operations for managing sandboxes and granular permission controls.\n*   **Git Integration:** Offers native Git operations and secure credential handling for version control and collaboration.\n*   **Builtin LSP Support:** Includes language server features with multi-language completion and real-time analysis.\n*   **AI Evaluations:** Allows scaling evaluations across parallel environments with reproducible snapshot states.\n*   **Code Interpreter:** Runs untrusted code in isolated environments with real-time output streaming.\n*   **Coding Agents:** Executes AI agents code with RESTful API and state persistence across parallel runs.\n*   **Data Analysis:** Processes large datasets on clusters with optimized data locality.\n*   **Data Visualisation:** Enables AI agents to run code and instantly render charts, plots, and visual outputs.\n*   **Reinforcement Learning for Agents:** Simplifies RL training and enables long-horizon planning in dynamic, stateful environments.\n*   **Computer Use:** Enables agents to interact with the environment in a manner similar to human users.\n\n## Key Features\n\nDaytona's key features provide a comprehensive solution for running AI-generated code securely and efficiently. These features are designed to support the entire lifecycle of AI development, from initial coding to deployment and maintenance.\n\n*   **Lightning-Fast Sandbox Creation:**\n    *   Daytona can create sandboxes in under 90ms, enabling rapid iteration and testing. This speed is crucial for developers who need to quickly evaluate and refine their AI models.\n    *   The speed of sandbox creation significantly reduces development time, allowing developers to focus on innovation rather than waiting for environments to be set up.\n*   **Secure and Isolated Runtime Protection:**\n    *   Daytona executes AI-generated code in isolated environments, mitigating the risk of malicious code impacting the underlying infrastructure. This is achieved through robust sandboxing techniques.\n    *   The sandboxing environment provides runtime protection, ensuring that any issues or vulnerabilities in the AI code do not compromise the overall system.\n*   **Massive Parallelization for Concurrent AI Workflows:**\n    *   Daytona supports the execution of code in isolated environments with real-time output, enabling massive parallelization for concurrent AI workflows.\n    *   This feature is especially useful for tasks that require high throughput, such as AI evaluations and reinforcement learning.\n*   **Programmatic Control via APIs:**\n    *   Daytona offers a comprehensive set of APIs that allow developers to control various aspects of the runtime environment. These APIs include:\n        *   **File API:** Manage files within the sandbox. Supports full CRUD operations (Create, Read, Update, Delete) with granular permission controls.\n        *   **Git API:** Utilize native Git operations and secure credential handling for version control.\n        *   **LSP API:** Implement Language Server Protocol for code completion and real-time analysis, enhancing the development experience.\n        *   **Execute API:** Execute code and commands within the sandbox, providing real-time output streaming.\n*   **AI-First Infrastructure Optimized for LLMs, Agents, and Evals:**\n    *   Daytona's infrastructure is specifically designed to support the unique requirements of LLMs, AI agents, and evaluations.\n    *   The platform optimizes performance and efficiency for these AI workloads, ensuring that developers can achieve the best possible results.\n*   **AI Evaluations at Scale:**\n    *   Daytona facilitates scaling evaluations across parallel environments with reproducible snapshot states, allowing for comprehensive testing and validation of AI models.\n    *   This feature is essential for ensuring the reliability and accuracy of AI applications.\n*   **Code Interpreter Capabilities:**\n    *   Daytona enables the execution of untrusted code in isolated environments with real-time output streaming, providing a safe way to run and test code from various sources.\n    *   This is particularly useful for applications that involve user-generated content or third-party integrations.\n*   **Support for Coding Agents:**\n    *   Daytona supports the execution of AI agents with RESTful APIs and state persistence across parallel runs, simplifying the development and deployment of agent-based systems.\n    *   This feature allows developers to build sophisticated AI agents that can perform complex tasks.\n*   **Data Analysis and Visualization:**\n    *   Daytona enables the processing of large datasets on clusters with optimized data locality, enhancing the performance of data analysis tasks.\n    *   The platform also supports data visualization, allowing AI agents to run code and instantly render charts, plots, and visual outputs.\n*   **Reinforcement Learning Simplified:**\n    *   Daytona simplifies reinforcement learning training and enables long-horizon planning in dynamic, stateful environments, making it easier for developers to build and train RL agents.\n*   **Human-in-the-Loop Integration:**\n    *   Daytona supports human intervention for debugging, oversight, or intervention without breaking autonomy, providing full access for developers and operators.\n    *   This feature is crucial for ensuring that AI systems are aligned with human values and can be monitored and controlled as needed.\n*   **Transparency and Security:**\n    *   Daytona emphasizes transparency through an open codebase, allowing users to inspect and verify the platform's functionality.\n    *   The platform also provides certified security and can be deployed in the user's cloud, ensuring that data and code are protected.\n*   **Stateful Operations:**\n    *   Daytona supports stateful operations, allowing AI agents to maintain context and continuity across multiple interactions. This is essential for building sophisticated AI applications that can reason and learn over time.\n\n## Target Audience\n\nDaytona targets a wide range of users and organizations involved in AI development and deployment. Understanding the specific needs and use cases of these groups is essential for tailoring the platform to meet their requirements.\n\n*   **AI Developers:**\n    *   Developers building AI-driven applications, including coding agents, LLMs, and code interpreters.\n    *   Those seeking a secure and scalable environment for running AI-generated code.\n    *   Developers who need to quickly iterate and test their AI models and agents.\n*   **Machine Learning Engineers:**\n    *   Engineers responsible for training and deploying machine learning models.\n    *   Those who require tools for scaling evaluations and ensuring the reliability of AI applications.\n    *   Engineers seeking to optimize data analysis and visualization workflows.\n*   **Data Scientists:**\n    *   Scientists working with large datasets and complex AI models.\n    *   Those who need to process data on clusters with optimized data locality.\n    *   Scientists looking for tools to enable data visualization and analysis.\n*   **AI Researchers:**\n    *   Researchers exploring new AI techniques and algorithms.\n    *   Those who require a flexible and customizable environment for conducting experiments.\n    *   Researchers seeking to simplify reinforcement learning training and long-horizon planning.\n*   **Enterprises:**\n    *   Organizations looking to integrate AI into their operations.\n    *   Those who need a secure and compliant platform for running AI-generated code.\n    *   Enterprises seeking to automate tasks, improve decision-making, and enhance customer experiences through AI.\n*   **Startups:**\n    *   Startups building AI-powered products and services.\n    *   Those who require a cost-effective and scalable infrastructure for AI development.\n    *   Startups seeking to accelerate their time-to-market by leveraging Daytona's lightning-fast sandbox creation and AI-first infrastructure.\n*   **Security Professionals:**\n    *   Professionals responsible for ensuring the security of AI systems and data.\n    *   Those who need to mitigate the risks associated with running untrusted code.\n    *   Professionals seeking to implement robust security measures and maintain compliance with industry regulations.\n*   **Use Cases:**\n    *   **AI-Powered Automation:** Automating tasks and processes using AI agents and models.\n    *   **Code Interpretation:** Running and evaluating code from various sources in a secure environment.\n    *   **Data Analysis and Visualization:** Processing large datasets and generating visual outputs.\n    *   **AI Model Training:** Training and evaluating AI models using scalable infrastructure.\n    *   **Reinforcement Learning:** Developing and training RL agents for complex tasks.\n    *   **AI Security:** Securing AI systems and mitigating the risks associated with untrusted code.\n    *   **Human-in-the-Loop AI:** Integrating human oversight and intervention into AI workflows.\n\n## Pricing (if available)\n\nPlease refer to the Daytona website (daytona.io) for the most up-to-date pricing information. Daytona typically offers various plans to accommodate different usage levels and organizational needs. These plans may include:\n\n*   **Free Tier:** A free tier, often with limited resources, for developers to explore and test the platform.\n*   **Subscription Plans:** Paid subscription plans that offer increased resources, features, and support.\n*   **Enterprise Plans:** Customized plans for larger organizations with specific requirements, often including dedicated support and service-level agreements (SLAs).\n\nDaytona's pricing is usually based on factors such as:\n\n*   **Sandbox Usage:** The number of sandboxes created and used.\n*   **Compute Resources:** The amount of CPU, memory, and storage consumed.\n*   **API Usage:** The number of API requests made.\n*   **Support Level:** The level of support required, ranging from basic to premium.\n\nIt is recommended to visit the Daytona website or contact their sales team for detailed pricing information and to determine the best plan for your specific needs.\n\n## Common Questions\n\nHere are some common questions users might ask about Daytona, along with detailed answers:\n\n**Q1: What is Daytona and what does it do?**\n**A:** Daytona is a secure and elastic infrastructure platform designed for running AI-generated code. It provides a runtime environment optimized for AI agents, large language models (LLMs), and evaluations. Daytona allows developers and organizations to deploy AI code with confidence, leveraging lightning-fast infrastructure that minimizes execution time and ensures security.\n\n**Q2: How does Daytona ensure the security of my infrastructure when running AI-generated code?**\n**A:** Daytona employs a robust sandboxing environment that executes AI-generated code in isolated environments. This prevents malicious code from impacting the underlying infrastructure. The platform offers runtime protection and granular permission controls, minimizing the risks associated with untrusted code.\n\n**Q3: What types of AI applications is Daytona suitable for?**\n**A:** Daytona is suitable for a wide range of AI applications, including:\n*   Code interpreters\n*   Data analysis and visualization\n*   Coding agents\n*   AI evaluations\n*   Reinforcement learning\n*   AI-powered automation\n\n**Q4: How fast is Daytona's sandbox creation?**\n**A:** Daytona can create sandboxes in under 90ms, enabling rapid iteration and testing. This speed is crucial for developers who need to quickly evaluate and refine their AI models.\n\n**Q5: What APIs does Daytona provide for programmatic control?**\n**A:** Daytona offers a comprehensive set of APIs, including:\n*   **File API:** For managing files within the sandbox.\n*   **Git API:** For utilizing native Git operations and secure credential handling.\n*   **LSP API:** For implementing Language Server Protocol for code completion and real-time analysis.\n*   **Execute API:** For executing code and commands within the sandbox.\n\n**Q6: Does Daytona support parallel execution of AI workflows?**\n**A:** Yes, Daytona supports massive parallelization for concurrent AI workflows. Code can be executed in isolated environments with real-time output, enabling high throughput for tasks such as AI evaluations and reinforcement learning.\n\n**Q7: How does Daytona simplify reinforcement learning training?**\n**A:** Daytona simplifies reinforcement learning training and enables long-horizon planning in dynamic, stateful environments. This makes it easier for developers to build and train RL agents for complex tasks.\n\n**Q8: Can I integrate human oversight into AI workflows using Daytona?**\n**A:** Yes, Daytona supports human intervention for debugging, oversight, or intervention without breaking autonomy. This provides full access for developers and operators to monitor and control AI systems as needed.\n\n**Q9: What are the key benefits of using Daytona for AI development?**\n**A:** Key benefits include:\n*   Secure and elastic infrastructure\n*   Lightning-fast sandbox creation\n*   AI-first infrastructure optimized for LLMs, agents, and evals\n*   Programmatic control via APIs\n*   Support for parallel execution of AI workflows\n*   Simplified reinforcement learning training\n*   Human-in-the-loop integration\n*   Transparency and security\n\n**Q10: How can I get started with Daytona?**\n**A:** To get started with Daytona:\n1.  Visit the Daytona website (daytona.io).\n2.  Explore the documentation and resources available.\n3.  Sign up for a free trial or subscription plan.\n4.  Follow the instructions to set up your environment and start running AI-generated code.\n\n## Contact & Resources\n\n*   **Website:** [daytona.io](daytona.io)\n*   **Documentation:** Visit the Daytona website for detailed documentation, API references, and tutorials.\n*   **Support:** Contact the Daytona support team through the website for assistance with any issues or questions."
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2026-01-11T12:00:00Z",
+        "status": "active",
+        "session_id": "b2de53e3-4f99-4b2c-ad86-a1b58f72110a"
+      },
+      "updated_at": "2026-01-15T22:56:54.709334",
+      "status": "active"
+    }
+  }
+}

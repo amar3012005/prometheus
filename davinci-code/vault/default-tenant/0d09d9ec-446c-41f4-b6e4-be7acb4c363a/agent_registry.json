@@ -1,0 +1,133 @@
+{
+  "agents": {
+    "0d09d9ec-446c-41f4-b6e4-be7acb4c363a": {
+      "global": {
+        "orgName": "Daytona",
+        "environment": "production",
+        "domain": "davinci.ai"
+      },
+      "orchestrator": {
+        "persona": {
+          "name": "TARA",
+          "introGreeting": "Hello! I'm TARA from Daytona. How can I assist you today?",
+          "systemPrompt": "You are TARA, a customer service AI for Daytona (daytona.io), an AI-related company. Your primary function is to assist customers with information about Daytona, including pricing, services, and company details. You are friendly, enthusiastic, welcoming, direct, and to-the-point.\n\nLANGUAGE_PROTOCOL:\n*   You will auto-detect the user's language. If the user speaks in a language other than English, respond in that language.  You are fluent in English, Spanish, French, German, and Mandarin Chinese.\n*   If you cannot determine the user's language, default to English.\n\nPERSONALITY:\n*   Friendly and Enthusiastic: Maintain a positive and upbeat tone.\n*   Welcoming: Make users feel comfortable and valued.\n*   Direct and To-the-Point: Provide concise and clear answers.\n\nINSTRUCTIONS:\n1.  Acknowledge the user's request and briefly introduce yourself as TARA from Daytona.\n2.  Answer questions accurately based on your knowledge of Daytona, including pricing, services, and company details.\n3.  If you do not know the answer, admit it and offer to find the information or direct the user to a relevant resource.\n4.  Maintain a professional and helpful demeanor at all times.\n5.  Keep responses concise and avoid unnecessary details.\n6.  Always prioritize user satisfaction and aim to provide a positive experience.\n7.  Use daytona.io as the source of truth.\n\nEXAMPLE DIALOGUE:\nUser: \"What is Daytona?\"\nTARA: \"Hello! I'm TARA from Daytona. Daytona is an AI-related company focused on [Company Focus Area].  We offer a range of services including [List Services].  Is there anything specific you'd like to know?\"\n\nUser: \"\u00bfCu\u00e1l es el precio del servicio X?\"\nTARA: \"\u00a1Hola! Soy TARA de Daytona. El precio del servicio X es [Price]. \u00bfHay algo m\u00e1s en lo que pueda ayudarte?\"\n\nADDITIONAL NOTES:\n*   Refer to the knowledge_content for specific details about Daytona.\n*   If the user asks about topics outside of Daytona's business or services, politely redirect them.\n*   Be mindful of cultural differences and adapt your communication style accordingly.\n"
+        },
+        "voice": {
+          "provider": "elevenlabs",
+          "voiceId": "21m00Tcm4TlvDq8ikWAM",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+          }
+        },
+        "dialogueFlows": {
+          "intents": [
+            {
+              "intent": "greeting",
+              "patterns": [
+                "hello",
+                "hi",
+                "good morning",
+                "good afternoon",
+                "hey",
+                "greetings"
+              ],
+              "response": "Hello! I'm TARA from Daytona. How can I assist you today?"
+            },
+            {
+              "intent": "company_information",
+              "patterns": [
+                "what is Daytona?",
+                "tell me about Daytona",
+                "what does Daytona do?",
+                "what are Daytona's services?"
+              ],
+              "response": "Daytona is an AI-related company focused on providing AI solutions for businesses. We offer a range of services including AI-powered automation, predictive analytics, natural language processing, and custom AI solutions. Is there anything specific you'd like to know?"
+            },
+            {
+              "intent": "pricing_information",
+              "patterns": [
+                "how much does service X cost?",
+                "what is the price of service Y?",
+                "pricing for service Z",
+                "how does your pricing work?"
+              ],
+              "response": "We offer flexible pricing models including subscription-based, usage-based, and project-based pricing. Could you please specify which service you're interested in so I can provide more accurate pricing information?"
+            },
+            {
+              "intent": "contact_information",
+              "patterns": [
+                "how can I contact Daytona?",
+                "what is your email address?",
+                "what is your phone number?",
+                "where are you located?"
+              ],
+              "response": "You can contact us via email at info@daytona.io or by phone at +1-555-DAYTONA. For more information, please visit our website at daytona.io."
+            },
+            {
+              "intent": "custom_ai_solutions",
+              "patterns": [
+                "do you offer custom AI solutions?",
+                "can you build a custom AI for me?",
+                "I need a specific AI solution",
+                "tailored AI solutions"
+              ],
+              "response": "Yes, we offer custom AI solutions tailored to meet your specific business requirements. Please provide more details about your needs so we can assess how we can help."
+            },
+            {
+              "intent": "language_support_spanish",
+              "patterns": [
+                "\u00bfHablan espa\u00f1ol?",
+                "\u00bfTienen soporte en espa\u00f1ol?"
+              ],
+              "response": "\u00a1S\u00ed, hablo espa\u00f1ol! \u00bfEn qu\u00e9 puedo ayudarle hoy?"
+            },
+            {
+              "intent": "thank_you",
+              "patterns": [
+                "thank you",
+                "thanks",
+                "appreciate it"
+              ],
+              "response": "You're welcome! Is there anything else I can help you with?"
+            },
+            {
+              "intent": "goodbye",
+              "patterns": [
+                "goodbye",
+                "bye",
+                "see you later"
+              ],
+              "response": "Goodbye! Have a great day!"
+            }
+          ],
+          "filler_latency": [
+            "Okay.",
+            "Understood.",
+            "Let me see...",
+            "Just a moment...",
+            "I'm checking on that for you."
+          ]
+        }
+      },
+      "rag": {
+        "personas": "",
+        "knowledgeBase": {
+          "filenames": [
+            "knowledge.md"
+          ],
+          "content": {
+            "knowledge.md": "# Daytona - Knowledge Base\n\n## Overview\n\nDaytona provides secure and elastic infrastructure for running AI-generated code, offering a solution for deploying AI code with confidence. The platform focuses on enabling fast, scalable, and stateful operations critical for AI agents, LLMs, and evaluations. Daytona allows developers to execute AI-generated code with zero risk to their infrastructure, offering features like programmatic control via File, Git, LSP, and Execute APIs, and AI-first infrastructure optimized for various AI workloads.\n\nDaytona's mission is to provide a robust and transparent environment for AI development and deployment. By offering an open codebase, compatibility with your existing cloud infrastructure, and certified security, Daytona aims to build trust and enable users to harness the full potential of AI. The platform supports a range of applications, including AI evaluations, code interpretation, coding agents, data analysis, data visualization, and reinforcement learning, thereby addressing the diverse needs of AI developers and organizations. Daytona offers the runtime environment AI agents actually need.\n\n## Products & Services\n\nDaytona provides a comprehensive suite of services centered around secure and scalable AI code execution, including:\n\n*   **Secure and Elastic Infrastructure:** Provides a robust environment for running AI-generated code with security and scalability.\n*   **Sandbox Creation:** Facilitates the creation of isolated environments for executing code, with sub-90ms creation times.\n*   **Programmatic Control:** Offers APIs for File, Git, LSP (Language Server Protocol), and execution, providing granular control over the runtime environment.\n*   **Process Execution:** Allows execution of code and commands within isolated environments, with real-time output streaming.\n*   **File System Operations:** Enables comprehensive management of sandboxes, including CRUD (Create, Read, Update, Delete) operations and granular permission controls.\n*   **Git Integration:** Offers native Git operations and secure credential handling, facilitating seamless integration with existing version control systems.\n*   **Builtin LSP Support:** Provides language server features, including multi-language completion and real-time analysis.\n*   **AI Evaluations:** Supports scaling evaluations across parallel environments with reproducible snapshot states.\n*   **Code Interpreter:** Enables running untrusted code in isolated environments with real-time output streaming.\n*   **Coding Agents:** Supports the execution of AI agents' code with RESTful APIs and state persistence across parallel runs.\n*   **Data Analysis:** Facilitates processing large datasets on clusters with optimized data locality.\n*   **Data Visualization:** Enables AI agents to run code and instantly render charts, plots, and visual outputs.\n*   **Reinforcement Learning:** Simplifies RL training and enables long-horizon planning in dynamic, stateful environments.\n*   **Human-in-the-Loop Support:** Full access for debugging, oversight, or intervention without breaking autonomy.\n\n## Key Features\n\nDaytona's key features are designed to provide a secure, scalable, and flexible environment for AI code execution:\n\n*   **Lightning-Fast Infrastructure:**\n    *   Sub 90ms sandbox creation time.\n    *   Rapid deployment from code to execution.\n*   **Separated & Isolated Runtime Protection:**\n    *   Execute AI-generated code with zero risk to your infrastructure.\n    *   Isolated environments prevent interference and ensure security.\n*   **Massive Parallelization for Concurrent AI Workflows:**\n    *   Execute code in isolated environments with real-time output.\n    *   Supports concurrent execution for faster development and testing.\n*   **Programmatic Control through APIs:**\n    *   **File API:** Allows file management within the sandbox, including uploading and managing file content.\n    *   **Git API:** Provides native Git operations for version control and integration.\n    *   **LSP API:** Supports language server features with multi-language completion and real-time analysis.\n    *   **Execute API:** Enables the execution of commands and code within the sandbox.\n*   **AI-First Infrastructure Optimized for AI Workloads:**\n    *   Optimized for Large Language Models (LLMs), Agents, and Evaluations.\n    *   Supports a variety of AI workloads, including data analysis, visualization, and reinforcement learning.\n*   **Stateful Operations:**\n    *   Maintains state persistence across parallel runs, enabling complex AI agents and applications.\n*    **Real-time Output Streaming:**\n    *    Provides real-time feedback and debugging capabilities during code execution.\n*   **Open Codebase:**\n    *   Offers transparency and the ability to customize the platform.\n*   **Certified Security:**\n    *   Ensures compliance with industry security standards.\n*   **Reproducible Environments:**\n    *   Snapshot states allow for scaling evaluations across parallel environments with reliable and consistent results.\n*   **Human in the Loop:**\n    *   Offers oversight and intervention capabilities for debugging, oversight, or intervention.\n\n**Technical Details and API Usage:**\n\n*   **Sandbox Creation:**\n    *   Uses the `daytona.create` method to create isolated environments.\n    *   Supports specifying the language for the sandbox using the `CreateSandboxParams` class. Example:\n        ```python\n        from daytona import Daytona, CreateSandboxParams\n        daytona = Daytona()\n        params = CreateSandboxParams(language=\"python\")\n        sandbox = daytona.create(params)\n        ```\n*   **Code Execution:**\n    *   Uses the `sandbox.process.code_run` method to execute code within the sandbox.\n    *   Example:\n        ```python\n        response = sandbox.process.code_run('print(\"Hello World!\")')\n        if response.exit_code != 0:\n            print(\"Error\", response.exit_code)\n        else:\n            print(response.result)\n        ```\n*   **Command Execution:**\n    *   Uses the `sandbox.process.exec` method to execute commands within the sandbox.\n    *   Example:\n        ```python\n        response = sandbox.process.exec('echo \"Hello World from exec!\"', cwd=\"/home/daytona\", timeout=10)\n        if response.exit_code != 0:\n            print(\"Error\", response.exit_code)\n        else:\n            print(response.result)\n        ```\n*   **File Operations:**\n    *   Uses the `sandbox.upload_file` method to upload files to the sandbox.\n    *   Example:\n        ```python\n        file_content = b\"Hello, World!\"\n        sandbox.upload_file(\"/home/daytona/data.txt\", file_content)\n        ```\n*   **Sandbox Removal:**\n    *   Uses the `daytona.remove` method to remove a sandbox.\n    *   Example:\n        ```python\n        daytona.remove(sandbox)\n        ```\n\n## Target Audience\n\nDaytona is designed for a wide range of users and use cases within the AI development and deployment landscape:\n\n*   **AI Developers:** Developers building and deploying AI agents, LLMs, and other AI-powered applications.\n*   **Data Scientists:** Professionals who need to process and analyze large datasets securely and efficiently.\n*   **Machine Learning Engineers:** Engineers focused on training and deploying machine learning models.\n*   **Security Engineers:** Professionals responsible for ensuring the security of AI infrastructure and applications.\n*   **Enterprises:** Organizations looking to leverage AI for various business applications while maintaining security and control.\n*   **AI Research Teams:** Researchers who require scalable and reproducible environments for AI experiments and evaluations.\n*   **Organizations working with AI-Generated code:** Companies and teams needing to safely execute code generated by AI systems.\n*   **Use Cases:**\n    *   **AI Agent Development:** Building and deploying AI agents that can perform tasks autonomously.\n    *   **LLM Applications:** Developing applications powered by Large Language Models.\n    *   **AI Evaluations:** Evaluating the performance and safety of AI models in controlled environments.\n    *   **Code Interpretation:** Running and analyzing untrusted code generated by AI systems.\n    *   **Data Analysis and Visualization:** Processing and visualizing large datasets using AI algorithms.\n    *   **Reinforcement Learning:** Training AI agents using reinforcement learning techniques.\n    *   **Automation:** Automating tasks and processes using AI-powered solutions.\n    *   **Secure Code Execution:** Safely executing code generated by AI systems without compromising infrastructure security.\n\n## Pricing (if available)\n\nPricing information for Daytona can be found on the Daytona website: daytona.io\n\nIt's recommended to visit the website or contact Daytona directly for the most up-to-date and detailed pricing plans, as they may vary based on usage, features, and enterprise requirements. Daytona offers a \"Start for Free\" option for initial exploration.\n\n## Common Questions\n\n**Q: What is Daytona?**\n\nA: Daytona is a secure and elastic infrastructure platform designed for running AI-generated code. It provides isolated environments (sandboxes) for executing code with zero risk to your infrastructure, offering features like programmatic control, real-time output streaming, and AI-first optimizations.\n\n**Q: How does Daytona ensure the security of my infrastructure?**\n\nA: Daytona uses separated and isolated runtime protection, ensuring that AI-generated code executes in secure sandboxes. This prevents malicious code from affecting the underlying infrastructure and protects sensitive data.\n\n**Q: What kind of AI workloads does Daytona support?**\n\nA: Daytona supports a wide range of AI workloads, including AI evaluations, code interpretation, coding agents, data analysis, data visualization, and reinforcement learning. It is optimized for LLMs, Agents, and Evals.\n\n**Q: Can I integrate Daytona with my existing Git repositories?**\n\nA: Yes, Daytona offers native Git operations and secure credential handling, allowing seamless integration with existing version control systems.\n\n**Q: How quickly can I create a sandbox with Daytona?**\n\nA: Daytona offers lightning-fast infrastructure with sandbox creation times of under 90ms.\n\n**Q: What APIs does Daytona provide for programmatic control?**\n\nA: Daytona provides APIs for File, Git, LSP (Language Server Protocol), and execution, allowing granular control over the runtime environment.\n\n**Q: Is Daytona suitable for enterprises?**\n\nA: Yes, Daytona offers enterprise-grade security and scalability, making it suitable for organizations of all sizes. It supports massive parallelization for concurrent AI workflows and offers certified security.\n\n**Q: Does Daytona support human-in-the-loop workflows?**\n\nA: Yes, Daytona provides full access for debugging, oversight, or intervention without breaking autonomy, supporting human-in-the-loop workflows.\n\n**Q: Where can I find documentation and support for Daytona?**\n\nA: Documentation and support resources can be found on the Daytona website: daytona.io.\n\n**Q: How can I get started with Daytona?**\n\nA: You can start for free by visiting the Daytona website and following the instructions to create an account and deploy your first AI application. The website also provides detailed documentation and examples to help you get started.\n\n## Contact & Resources\n\n*   **Website:** [daytona.io](https://daytona.io/)\n*   **Documentation:** Available on the Daytona website.\n*   **Support:** Contact information and support resources can be found on the Daytona website."
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2026-01-11T12:00:00Z",
+        "status": "active",
+        "session_id": "0d09d9ec-446c-41f4-b6e4-be7acb4c363a"
+      },
+      "updated_at": "2026-01-15T22:18:42.004871",
+      "status": "active"
+    }
+  }
+}

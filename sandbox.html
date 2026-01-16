@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVINCI-CODE | Agent Builder</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --surface: #FFFFFF;
+            --border: #E5E5E3;
+            --accent: #E85A24;
+            --text: #1A1A1A;
+            --text-sub: #6B6B6B;
+            --sidebar-bg: #F1F1EE;
+            --builder-bg: #FEFEFE;
+            --console-bg: #1A1A1A;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 12px;
+        }
+
+        .brand {
+            padding: 0 12px 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .nav-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-sub);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: white;
+            color: var(--text);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-section {
+            margin-top: 32px;
+        }
+
+        .nav-section-title {
+            padding: 0 12px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-sub);
+            opacity: 0.6;
+        }
+
+        /* MAIN STAGE */
+        .main-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .topbar {
+            height: 64px;
+            padding: 0 32px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            gap: 16px;
+        }
+
+        .btn-ghost {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            background: #1A1A1A;
+            border: none;
+            cursor: pointer;
+        }
+
+        .stage-content {
+            flex: 1;
+            display: flex;
+            padding: 40px;
+            gap: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* HERO PROMPT */
+        .hero-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 700px;
+            margin: 0 auto;
+            padding-top: 60px;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .prompt-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+        }
+
+        .prompt-card:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(232, 90, 36, 0.12);
+        }
+
+        .prompt-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            resize: none;
+            min-height: 100px;
+            color: var(--text);
+        }
+
+        .prompt-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .tag-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag-btn {
+            background: #F8F8F6;
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--text-sub);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .fire-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(232, 90, 36, 0.3);
+            transition: all 0.2s;
+        }
+
+        .fire-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .fire-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* BUILDER SIDESHEET */
+        .builder-sidesheet {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 520px;
+            background: var(--builder-bg);
+            border-left: 1px solid var(--border);
+            transform: translateX(100%);
+            transition: transform 0.4s var(--ease);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: -8px 0 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .builder-sidesheet.active {
+            transform: translateX(0);
+        }
+
+        .builder-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .builder-status {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .status-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-sub);
+        }
+
+        .status-subtitle {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .builder-timer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .builder-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .phase-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            opacity: 0.4;
+            transition: all 0.3s;
+        }
+
+        .phase-item.active {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .phase-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .phase-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .phase-num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #F0F0EE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        .phase-item.active .phase-num {
+            background: var(--accent);
+            color: white;
+        }
+
+        .phase-progress {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .phase-tasks {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .task-line {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-sub);
+            gap: 12px;
+        }
+
+        .task-pbar {
+            flex: 1;
+            height: 3px;
+            background: #F0F0EE;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .task-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .task-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        /* CONSOLE */
+        .builder-console {
+            background: var(--console-bg);
+            border-top: 1px solid var(--border);
+            padding: 20px;
+            max-height: 280px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            line-height: 1.7;
+            color: #A3A3A3;
+        }
+
+        .log-line {
+            margin-bottom: 4px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .log-time {
+            color: #555;
+        }
+
+        .log-tag {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .log-tag.planning {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60A5FA;
+        }
+
+        .log-tag.executing {
+            background: rgba(245, 158, 11, 0.15);
+            color: #FBB957;
+        }
+
+        .log-tag.verifying {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 520px;
+            width: 90%;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .modal-query {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-sub);
+            margin-bottom: 24px;
+        }
+
+        .modal-input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        .modal-input:focus {
+            border-color: var(--accent);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="brand">DAVINCI-CODE</div>
+        <div class="nav-item active">
+            <span class="material-icons-round" style="font-size: 20px;">add</span>
+            New task
+        </div>
+        <div class="nav-item">
+            <span class="material-icons-round" style="font-size: 20px;">search</span>
+            Search
+        </div>
+        <div class="nav-item">
+            <span class="material-icons-round" style="font-size: 20px;">folder_open</span>
+            Library
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Projects</div>
+            <div class="nav-item">
+                <span class="material-icons-round" style="font-size: 20px;">work</span>
+                E-commerce Bots
+            </div>
+            <div class="nav-item">
+                <span class="material-icons-round" style="font-size: 20px;">medical_services</span>
+                Healthcare Agents
+            </div>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">Tasks</div>
+            <div class="nav-item" id="currentTaskNav">
+                <span class="material-icons-round" style="font-size: 20px;">pending_actions</span>
+                Current
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN STAGE -->
+    <div class="main-stage">
+        <div class="topbar">
+            <button class="btn-ghost">
+                <span class="material-icons-round" style="font-size: 16px;">visibility</span>
+                Preview
+            </button>
+            <button class="btn-ghost">
+                <span class="material-icons-round" style="font-size: 16px;">terminal</span>
+                Console
+            </button>
+            <button class="btn-ghost">
+                <span class="material-icons-round" style="font-size: 16px;">share</span>
+                Share
+            </button>
+            <button class="btn-primary">Publish</button>
+        </div>
+
+        <div class="stage-content">
+            <!-- HERO PROMPT (Always visible) -->
+            <div class="hero-section">
+                <h1 class="hero-title">What can I do for you?</h1>
+                <div class="prompt-card">
+                    <textarea class="prompt-input" id="mainInput"
+                        placeholder="Build me a customer service agent for handling my sales and client interaction for Ferrari. The agent should be named 'SARAH'."></textarea>
+                    <div class="prompt-footer">
+                        <div class="tag-btns">
+                            <div class="tag-btn">
+                                <span class="material-icons-round" style="font-size: 14px;">mic</span>
+                                Voice Agent
+                            </div>
+                            <div class="tag-btn">
+                                <span class="material-icons-round" style="font-size: 14px;">code</span>
+                                Build Website
+                            </div>
+                            <div class="tag-btn">
+                                <span class="material-icons-round" style="font-size: 14px;">psychology</span>
+                                Custom App
+                            </div>
+                        </div>
+                        <button class="fire-btn" id="fireBtn">
+                            <span class="material-icons-round">arrow_upward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUILDER SIDESHEET (Slides in from right) -->
+            <div class="builder-sidesheet" id="builderSheet">
+                <div class="builder-header">
+                    <div class="builder-status">
+                        <div class="status-title">Mission</div>
+                        <div class="status-subtitle" id="missionName">Building Agent...</div>
+                    </div>
+                    <div class="builder-timer" id="timerDisplay">00:00</div>
+                </div>
+
+                <div class="builder-body">
+                    <!-- Phase 1 -->
+                    <div class="phase-item" id="phase1">
+                        <div class="phase-top">
+                            <div class="phase-label">
+                                <div class="phase-num">1</div>
+                                Configuring Voice
+                            </div>
+                            <div class="phase-progress" id="p1-progress">0%</div>
+                        </div>
+                        <div class="phase-tasks">
+                            <div class="task-line">
+                                <span>ElevenLabs API Handshake</span>
+                                <div class="task-pbar">
+                                    <div class="task-fill" id="p1t1"></div>
+                                </div>
+                                <span class="task-val" id="p1t1-val">0%</span>
+                            </div>
+                            <div class="task-line">
+                                <span>Voice ID Selection</span>
+                                <div class="task-pbar">
+                                    <div class="task-fill" id="p1t2"></div>
+                                </div>
+                                <span class="task-val" id="p1t2-val">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="phase-item" id="phase2">
+                        <div class="phase-top">
+                            <div class="phase-label">
+                                <div class="phase-num">2</div>
+                                Setting Up Agents
+                            </div>
+                            <div class="phase-progress" id="p2-progress">0%</div>
+                        </div>
+                        <div class="phase-tasks">
+                            <div class="task-line">
+                                <span>Planner & Executor Init</span>
+                                <div class="task-pbar">
+                                    <div class="task-fill" id="p2t1"></div>
+                                </div>
+                                <span class="task-val" id="p2t1-val">0%</span>
+                            </div>
+                            <div class="task-line">
+                                <span>Red-Team Verifier Setup</span>
+                                <div class="task-pbar">
+                                    <div class="task-fill" id="p2t2"></div>
+                                </div>
+                                <span class="task-val" id="p2t2-val">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="phase-item" id="phase3">
+                        <div class="phase-top">
+                            <div class="phase-label">
+                                <div class="phase-num">3</div>
+                                Building Framework
+                            </div>
+                            <div class="phase-progress" id="p3-progress">0%</div>
+                        </div>
+                        <div class="phase-tasks">
+                            <div class="task-line">
+                                <span>Firing M.M.A.R + 7 Agents</span>
+                                <div class="task-pbar">
+                                    <div class="task-fill" id="p3t1"></div>
+                                </div>
+                                <span class="task-val" id="p3t1-val">0%</span>
+                            </div>
+                            <div class="task-line">
+                                <span>ONNX Conversion</span>
+                                <div class="task-pbar">
+                                    <div class="task-fill" id="p3t2"></div>
+                                </div>
+                                <span class="task-val" id="p3t2-val">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="builder-console" id="consoleOutput"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARCHITECT MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <span class="material-icons-round">psychology</span>
+            </div>
+            <div class="modal-title">Architect Consultation</div>
+            <div class="modal-query" id="modalQuery">
+                "I see you're building a Ferrari assistant. Do you have specific model information or services I should
+                include in the knowledge base?"
+            </div>
+            <input type="text" class="modal-input" id="modalInput" placeholder="Type your answer here...">
+            <div class="modal-actions">
+                <button class="btn-ghost" onclick="skipModal()">Skip</button>
+                <button class="btn-primary" id="continueBtn">Continue Building</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+        let startTime = null;
+        let timerInterval = null;
+        let pollingInterval = null;
+        let lastResponse = null;
+
+        const fireBtn = document.getElementById('fireBtn');
+        const mainInput = document.getElementById('mainInput');
+        const builderSheet = document.getElementById('builderSheet');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalQuery = document.getElementById('modalQuery');
+        const modalInput = document.getElementById('modalInput');
+        const continueBtn = document.getElementById('continueBtn');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const missionName = document.getElementById('missionName');
+        const consoleOutput = document.getElementById('consoleOutput');
+
+        // Call Architect API
+        async function callArchitect(message) {
+            try {
+                const res = await fetch('http://localhost:8082/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, session_id: sessionId })
+                });
+                return await res.json();
+            } catch (e) {
+                console.error('API Error:', e);
+                return { next_question: "DONE", completeness_score: 100 };
+            }
+        }
+
+        // Trigger backend execution
+        async function triggerExecution() {
+            try {
+                await fetch('http://localhost:8082/api/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+            } catch (e) {
+                console.error('Execution trigger failed:', e);
+            }
+        }
+
+        // Poll logs from backend
+        async function pollLogs() {
+            try {
+                const res = await fetch('http://localhost:8082/api/logs');
+                const data = await res.json();
+
+                // Update console
+                consoleOutput.innerHTML = '';
+                data.logs.forEach(log => {
+                    const line = document.createElement('div');
+                    line.className = 'log-line';
+                    line.innerHTML = `
+                        <span class="log-time">${log.ts}</span>
+                        <span class="log-tag ${log.tag.toLowerCase()}">${log.tag.toUpperCase()}</span>
+                        <span>${log.msg}</span>
+                    `;
+                    consoleOutput.appendChild(line);
+                });
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+
+                // Map progress to phases
+                const p = data.progress;
+                updatePhase(1, p >= 10, Math.min(p * 2, 100), Math.min(p * 3, 100), Math.max(0, Math.min((p - 20) * 4, 100)));
+                updatePhase(2, p >= 40, Math.max(0, Math.min((p - 40) * 2.5, 100)), Math.max(0, Math.min((p - 40) * 3, 100)), Math.max(0, Math.min((p - 60) * 4, 100)));
+                updatePhase(3, p >= 70, Math.max(0, Math.min((p - 70) * 3.3, 100)), Math.max(0, Math.min((p - 70) * 4, 100)), Math.max(0, Math.min((p - 85) * 6, 100)));
+
+                if (data.complete) {
+                    clearInterval(pollingInterval);
+                    clearInterval(timerInterval);
+                }
+            } catch (e) {
+                console.error('Polling error:', e);
+            }
+        }
+
+        function updatePhase(phaseNum, isActive, overallProg, task1Prog, task2Prog) {
+            const phase = document.getElementById(`phase${phaseNum}`);
+            const progEl = document.getElementById(`p${phaseNum}-progress`);
+            const t1 = document.getElementById(`p${phaseNum}t1`);
+            const t2 = document.getElementById(`p${phaseNum}t2`);
+            const t1Val = document.getElementById(`p${phaseNum}t1-val`);
+            const t2Val = document.getElementById(`p${phaseNum}t2-val`);
+
+            if (isActive) phase.classList.add('active');
+            progEl.innerText = Math.round(overallProg) + '%';
+            t1.style.width = task1Prog + '%';
+            t2.style.width = task2Prog + '%';
+            t1Val.innerText = Math.round(task1Prog) + '%';
+            t2Val.innerText = Math.round(task2Prog) + '%';
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+                const secs = String(elapsed % 60).padStart(2, '0');
+                timerDisplay.innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function openBuilder() {
+            builderSheet.classList.add('active');
+            startTimer();
+            triggerExecution();
+            pollingInterval = setInterval(pollLogs, 1000);
+        }
+
+        function skipModal() {
+            modalOverlay.classList.remove('active');
+            openBuilder();
+        }
+
+        // Fire button handler
+        fireBtn.onclick = async () => {
+            const prompt = mainInput.value.trim();
+            if (!prompt) return;
+
+            fireBtn.disabled = true;
+            fireBtn.innerHTML = '<span class="material-icons-round loading">sync</span>';
+
+            lastResponse = await callArchitect(prompt);
+
+            if (lastResponse.identity && lastResponse.identity.name) {
+                missionName.innerText = `Building ${lastResponse.identity.name}...`;
+            }
+
+            if (lastResponse.next_question && lastResponse.next_question !== "DONE") {
+                modalQuery.innerText = `"${lastResponse.next_question}"`;
+                modalOverlay.classList.add('active');
+            } else {
+                openBuilder();
+            }
+
+            fireBtn.disabled = false;
+            fireBtn.innerHTML = '<span class="material-icons-round">arrow_upward</span>';
+        };
+
+        // Continue button in modal
+        continueBtn.onclick = async () => {
+            const answer = modalInput.value.trim();
+            if (!answer) {
+                skipModal();
+                return;
+            }
+
+            continueBtn.disabled = true;
+            continueBtn.innerText = "Consulting...";
+
+            lastResponse = await callArchitect(answer);
+            modalInput.value = "";
+
+            if (lastResponse.next_question && lastResponse.next_question !== "DONE" && lastResponse.completeness_score < 100) {
+                modalQuery.innerText = `"${lastResponse.next_question}"`;
+                continueBtn.disabled = false;
+                continueBtn.innerText = "Continue Building";
+            } else {
+                modalOverlay.classList.remove('active');
+                openBuilder();
+            }
+        };
+    </script>
+</body>
+
+</html>
