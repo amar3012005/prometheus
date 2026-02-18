@@ -3,7 +3,7 @@
 ## Current State (Simulation)
 The `davinci-code` backend currently **simulates** deployment. No actual K8s resources are created.
 
-## Proposed Production Flow
+## Proposed Production Flow.
 
 ### Step 1: Registry Generation
 ```
